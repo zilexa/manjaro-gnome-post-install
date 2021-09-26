@@ -1,3 +1,5 @@
+
+Before installing apps:
 /usr/share/applications/mimeinfo.cache do this:
 
 sudo replace org.gnome.Nautilus.desktop with nemo.desktop;
