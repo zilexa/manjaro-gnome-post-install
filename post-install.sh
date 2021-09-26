@@ -12,3 +12,9 @@ application/pdf=org.gnome.Evince.desktop;libreoffice-draw.desktop;
 [Default Applications]
 inode/directory=nemo.desktop;
 text/plain=pluma.desktop;
+
+
+File: /usr/share/applications/org.gnome.gedit.desktop
+replace gedit with pluma
+set Icon=org.gnome.pluma to Icon=org.gnome.gedit
+rename file to pluma.desktop
