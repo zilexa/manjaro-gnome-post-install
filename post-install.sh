@@ -1,7 +1,14 @@
+#!/bin/bash
+#
 # Might need this for pacman automation: yes | LC_ALL=en_US.UTF-8 pacman
 
 # Find and select the fastest mirror to install apps from
 sudo pacman-mirrors -g -P https --api && sudo pacman -Syyu
+
+echo "___________________________________________________________________________________"
+echo "                                                                                   " 
+echo "     Configure panel (taskbar), App menu (Arcmenu) and common system settings      "
+echo "___________________________________________________________________________________"
 
 # Arc Menu & Dash to Panel
 gsettings set org.gnome.shell.extensions.arcmenu.arc-menu-placement 'DTP'
@@ -84,6 +91,36 @@ gsettings set system.locale region 'nl_NL.UTF-8'
 gsettings set org.gnome.system.location enabled true
 gsettings set org.gnome.desktop.datetime automatic-timezone true
 
+echo "___________________________________________________________________________________"
+echo "                                                                                   " 
+echo "                          Simplify $HOME personal folders                          "
+echo "___________________________________________________________________________________"
+# Change default location of personal folders by editing $HOME/.config/user-dirs.dirs
+## Move /Templates to be subfolder of /Documents. 
+sudo sed -i -e 's+$HOME/Templates+$HOME/Documents/Templates+g' $HOME/.config/user-dirs.dirs
+## Disable Public folder because nobody uses it. 
+sudo sed -i -e 's+$HOME/Public+$HOME/Downloads+g' $HOME/.config/user-dirs.dirs
+## Rename Pictures to Photos
+sudo sed -i -e 's+$HOME/Pictures+$HOME/Photos+g' $HOME/.config/user-dirs.dirs
+## Rename Videos to Media making it the folder for tvshows/movies downloads or anything else that is not suppose to be in Photos. 
+sudo sed -i -e 's+$HOME/Videos+$HOME/Media+g' $HOME/.config/user-dirs.dirs
+
+# Now make the changes to the actual folders: 
+## Remove unused Pubic folder
+rmdir $HOME/Public
+## Move Templates folder into Documents because it does not make sense to be outside it. 
+mv $HOME/Templates $HOME/Documents/
+## Rename and move contents from Pictures to Photos, Videos to Media.
+mv /home/${USER}/Videos /home/${USER}/Media
+mv /home/${USER}/Pictures /home/${USER}/Photos
+
+
+echo "___________________________________________________________________________________"
+echo "                                                                                   " 
+echo "              Replace filemanager (Nautilus) with more intuitive Nemo              "
+echo "               Replace Text Editor (gedit) with more intuitive Pluma               "
+echo "___________________________________________________________________________________"
+
 # Change default texteditor Gedit to Pluma, keep the Text Editor name and icon
 # Backup the Text Editor shortcut
 sudo cp '/usr/share/applications/Text Editor.desktop' '/usr/share/applications/TextEditor.backup'
@@ -111,6 +148,7 @@ gsettings set .org.nemo.preferences inherit-folder-viewer true
 #[Default Applications]
 #inode/directory=nemo.desktop;
 #text/plain=pluma.desktop;
+
 
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
@@ -144,8 +182,11 @@ sudo pacman -S --noconfirm pinta
 sudo pacman -S --noconfirm digikam
 
 echo "___________________________________________________________________________________"
-echo "Firefox: Create a default profile setting to enable syncing of your toolbar layout " 
+echo "                                                                                   " 
+echo "                            Firefox default settings                               "
 echo "         (Applied for for all Firefox profiles created in the future.)             "
+echo "___________________________________________________________________________________"
+echo "      Create a default profile setting to enable syncing of your toolbar layout    " 
 echo "___________________________________________________________________________________"
 sudo tee -a /usr/lib/firefox/defaults/pref/autoconfig.js &>/dev/null << EOF
 pref("general.config.filename", "firefox.cfg");
@@ -155,37 +196,87 @@ sudo tee -a /usr/lib/firefox/firefox.cfg &>/dev/null << EOF
 // IMPORTANT: Start your code on the 2nd line
 defaultPref("services.sync.prefs.sync.browser.uiCustomization.state",true);
 EOF
-
-
-echo "_______________________________________"
-echo "   Simplify $HOME personal folders     "
-echo "_______________________________________"
-# Change default location of personal folders by editing $HOME/.config/user-dirs.dirs
-## Move /Templates to be subfolder of /Documents. 
-sudo sed -i -e 's+$HOME/Templates+$HOME/Documents/Templates+g' $HOME/.config/user-dirs.dirs
-## Disable Public folder because nobody uses it. 
-sudo sed -i -e 's+$HOME/Public+$HOME/Downloads+g' $HOME/.config/user-dirs.dirs
-## Rename Pictures to Photos
-sudo sed -i -e 's+$HOME/Pictures+$HOME/Photos+g' $HOME/.config/user-dirs.dirs
-## Rename Videos to Media making it the folder for tvshows/movies downloads or anything else that is not suppose to be in Photos. 
-sudo sed -i -e 's+$HOME/Videos+$HOME/Media+g' $HOME/.config/user-dirs.dirs
-
-# Now make the changes to the actual folders: 
-## Remove unused Pubic folder
-rmdir $HOME/Public
-## Move Templates folder into Documents because it does not make sense to be outside it. 
-mv $HOME/Templates $HOME/Documents/
-## Rename and move contents from Pictures to Photos, Videos to Media.
-mv /home/${USER}/Videos /home/${USER}/Media
-mv /home/${USER}/Pictures /home/${USER}/Photos
+# Firefox: use your own Firefox Sync Server for all Firefox profiles on this system
+echo "___________________________________________________________________________________"
+echo "                  Use your custom Firefox Sync Server by default                   " 
+echo "___________________________________________________________________________________"
+read -p "Would you like to use your own Firefox Sync Server? (y/n)" answer
+case ${answer:0:1} in
+    y|Y )
+    echo "Please type your Firefox Sync domain address, for example: firefox.mydomain.com"
+    read -p 'Firefox Sync domain address: ' ffsyncdomain
+    sudo tee -a /usr/lib/firefox/firefox.cfg &>/dev/null << EOF
+defaultPref("identity.sync.tokenserver.uri","https://$ffsyncdomain/token/1.0/sync/1.5");
+EOF
+    echo "Done. New firefox profile will use your Firefox sync server by default."
+    ;;
+    * )
+        echo "default Mozilla public sync server is used."
+    ;;
+esac
 
 
 echo "_________________________________________________________________________"
-echo "   OPTIONAL BUT RECOMMENDED TASKS (choose y if you don't know better)    "
+echo "                         OPTIONAL APPLICATIONS                           "
 echo "_________________________________________________________________________"
-#______________________________________
-#          OPTIONAL
-#______________________________________
+
+# Install Nextcloud Desktop Client for webDAV syncing with FileRun 
+echo "======================================="
+echo "---------------------------------------"
+read -p "Install Nextcloud Desktop Client for Nemo/Budgie? Recommended if you run a FileRun or WebDAV server (y / n)?" answer
+case ${answer:0:1} in
+    y|Y )
+        sudo pacman -S --noconfirm nextcloud-client
+    ;;
+    * )
+        echo "Skipping Nextcloud Desktop Client..."
+    ;;
+esac
+
+
+# Install Spotify
+echo "======================================="
+echo "---------------------------------------"
+read -p "Install Spotify (y/n)?" answer
+case ${answer:0:1} in
+    y|Y )
+        sudo pacman -S --noconfirm spotifyd
+    ;;
+    * )
+        echo "Skipping Spotify..." 
+    ;;
+esac
+
+# Install ALL Win10/Office365 fonts
+echo "======================================="
+echo "---------------------------------------"
+echo "A few MS Office available for Linux + a few commonly used additional MS Office fonts have been installed by this script." 
+echo "However, if you want your documents to look identical, you need to install all MS Office fonts."
+echo "If you believe you have the right to do so, the script will download a prepackaged copy of all MS Office365/Win10 fonts and install them."
+read -p "The win10-fonts.zip archive is required. Your browser will open the download page, continue (Y) or skip (N)? (Y/n)" answer
+case ${answer:0:1} in
+    y|Y )
+       xdg-open 'https://mega.nz/file/u4p02JCC#HnJOVyK8TYDqEyVXLkwghDLKlKfIq0kOlX6SPxH53u0'
+       read -p "Click any key when the download has finished completely..."
+       echo "please wait while extracting fonts to the system fonts folder (/usr/share/fonts), the downloaded file will be deleted afterwards." 
+       # Extract the manually downloaded file to a subfolder in the systems font folder
+       sudo tar -xf $HOME/Downloads/fonts-office365.tar.xz -C /usr/share/fonts
+       # Set permissions to allow non-root to use the fonts
+       sudo chown -R root:root /usr/share/fonts/office365
+       sudo chmod -R 755 /usr/share/fonts/office365
+       # Refresh the font cache (= register the fonts)
+       sudo fc-cache -f -v
+       # Remove the downloaded font file
+       rm $HOME/Downloads/fonts-office365.tar.xz
+    ;;
+    * )
+        echo "Not installing all win10/office365 fonts..."
+    ;;
+esac
+
+echo "_________________________________________________________________________"
+echo "                         ISOLATE PERSONAL FOLDERS                        "
+echo "_________________________________________________________________________"
 # OPTIONAL: IF THIS IS A COMMON PC OR LAPTOP, CREATE A SUBVOLUME FOR USER DATA.  
 echo "======================================="
 echo "---------------------------------------"
@@ -245,80 +336,5 @@ cd $HOME/Downloads
     ;;
     * )
         echo "Not creating userdata, this is not a common personal device." 
-    ;;
-esac
-
-
-# Install ALL Win10/Office365 fonts
-echo "======================================="
-echo "---------------------------------------"
-echo "A few MS Office available for Linux + a few commonly used additional MS Office fonts have been installed by this script." 
-echo "However, if you want your documents to look identical, you need to install all MS Office fonts."
-echo "If you believe you have the right to do so, the script will download a prepackaged copy of all MS Office365/Win10 fonts and install them."
-read -p "The win10-fonts.zip archive is required. Your browser will open the download page, continue (Y) or skip (N)? (Y/n)" answer
-case ${answer:0:1} in
-    y|Y )
-       xdg-open 'https://mega.nz/file/u4p02JCC#HnJOVyK8TYDqEyVXLkwghDLKlKfIq0kOlX6SPxH53u0'
-       read -p "Click any key when the download has finished completely..."
-       echo "please wait while extracting fonts to the system fonts folder (/usr/share/fonts), the downloaded file will be deleted afterwards." 
-       # Extract the manually downloaded file to a subfolder in the systems font folder
-       sudo tar -xf $HOME/Downloads/fonts-office365.tar.xz -C /usr/share/fonts
-       # Set permissions to allow non-root to use the fonts
-       sudo chown -R root:root /usr/share/fonts/office365
-       sudo chmod -R 755 /usr/share/fonts/office365
-       # Refresh the font cache (= register the fonts)
-       sudo fc-cache -f -v
-       # Remove the downloaded font file
-       rm $HOME/Downloads/fonts-office365.tar.xz
-    ;;
-    * )
-        echo "Not installing all win10/office365 fonts..."
-    ;;
-esac
-
-
-# Install Nextcloud Desktop Client for webDAV syncing with FileRun 
-echo "======================================="
-echo "---------------------------------------"
-read -p "Install Nextcloud Desktop Client for Nemo/Budgie? Recommended if you run a FileRun or WebDAV server (y / n)?" answer
-case ${answer:0:1} in
-    y|Y )
-        sudo pacman -S --noconfirm nextcloud-client
-    ;;
-    * )
-        echo "Skipping Nextcloud Desktop Client..."
-    ;;
-esac
-
-
-# Install Spotify
-echo "======================================="
-echo "---------------------------------------"
-read -p "Install Spotify (y/n)?" answer
-case ${answer:0:1} in
-    y|Y )
-        sudo pacman -S --noconfirm spotifyd
-    ;;
-    * )
-        echo "Skipping Spotify..." 
-    ;;
-esac
-
-
-# Firefox: use your own Firefox Sync Server for all Firefox profiles on this system
-echo "======================================="
-echo "---------------------------------------"
-read -p "Would you like to use your own Firefox Sync Server? (y/n)" answer
-case ${answer:0:1} in
-    y|Y )
-    echo "Please type your Firefox Sync domain address, for example: firefox.mydomain.com"
-    read -p 'Firefox Sync domain address: ' ffsyncdomain
-    sudo tee -a /usr/lib/firefox/firefox.cfg &>/dev/null << EOF
-defaultPref("identity.sync.tokenserver.uri","https://$ffsyncdomain/token/1.0/sync/1.5");
-EOF
-    echo "Done. New firefox profile will use your Firefox sync server by default."
-    ;;
-    * )
-        echo "default Mozilla public sync server is used."
     ;;
 esac
