@@ -3,7 +3,7 @@
 # Might need this for pacman automation: yes | LC_ALL=en_US.UTF-8 pacman
 
 # Find and select the fastest mirror to install apps from
-sudo pacman-mirrors -g -P https --api && sudo pacman -Syyu
+sudo pacman-mirrors -g --continent -P https --api && sudo pacman -Syyu
 
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
@@ -11,10 +11,10 @@ echo "     Configure panel (taskbar), App menu (Arcmenu) and common system setti
 echo "___________________________________________________________________________________"
 
 # Arc Menu & Dash to Panel
-gsettings set org.gnome.shell.extensions.arcmenu.arc-menu-placement 'DTP'
+gsettings set org.gnome.shell.extensions.arcmenu arc-menu-placement 'DTP'
 gsettings set org.gnome.shell.extensions.arcmenu menu-layout 'Eleven'
-gsettings set org.gnome.shell.disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu']"
-gsettings set org.gnome.shell.enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com']"
+gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu']"
+gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com']"
 gsettings set org.gnome.shell.extensions.arcmenu available-placement "[false, true, false]"
 gsettings set org.gnome.shell.extensions.dash-to-panel panel-positions '{"0":"LEFT"}'
 gsettings set org.gnome.desktop.interface show-battery-percentage true
@@ -77,7 +77,7 @@ gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from 
 gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to 8.75
 gsettings set org.gnome.desktop.screensaver picture-uri 'file:///usr/share/backgrounds/wallpapers-2018/palm-beach.jpg'
 gsettings set org.gnome.desktop.screensaver lock-enabled false
-gsettings set org.gnome.desktop.session idle-delay uint32 480
+gsettings set org.gnome.desktop.session idle-delay 'uint32 480'
 
 # cleanup
 gsettings set org.gnome.desktop.privacy remove-old-temp-files true
@@ -281,8 +281,11 @@ echo "_________________________________________________________________________"
 echo "======================================="
 echo "---------------------------------------"
 echo "Hit y if this a regular, personal device, laptop/desktop pc ( y /n )?"
-echo "Yes: Personal folders will be moved to (and linked back to home) and swapfile created on seperate root subvolumes. Swap will be properly configured for BTRFS."
-read -p "No: Nothing will be configured, make sure personal data is stored on a seperate subvolume and consider a swapfile or alternatively configure zram." answer
+echo "YES = Personal folders will be isolated by via a seperate subvolume (and linked back to $HOME folder)."
+echo "      Benefits: 1. allows you to easily configure backups and 'back-in-time' snapshots."
+echo "                2. Isolates personal folders, allows cean system re-install without deleting personal data." 
+echo "NO = nothing will be changed."
+read -p "Isolate personal data y/n ?" answer
 case ${answer:0:1} in
     y|Y )
 # Temporarily mount filesystem root
