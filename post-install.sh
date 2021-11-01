@@ -1,15 +1,14 @@
 #!/bin/bash
 #
 # Might need this for pacman automation: yes | LC_ALL=en_US.UTF-8 pacman
-
 # Find and select the fastest mirror to install apps from
 sudo pacman-mirrors -g --continent -P https --api && sudo pacman -Syyu
+
 
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
 echo "     Configure panel (taskbar), App menu (Arcmenu) and common system settings      "
 echo "___________________________________________________________________________________"
-
 # Arc Menu & Dash to Panel
 gsettings set org.gnome.shell.extensions.arcmenu arc-menu-placement 'DTP'
 gsettings set org.gnome.shell.extensions.arcmenu menu-layout 'Eleven'
@@ -87,9 +86,9 @@ gsettings set org.gnome.desktop.privacy remove-old-trash-files true
 gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
 
 # Locale
-gsettings set system.locale region 'nl_NL.UTF-8'
 gsettings set org.gnome.system.location enabled true
 gsettings set org.gnome.desktop.datetime automatic-timezone true
+
 
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
@@ -140,7 +139,7 @@ sudo gsettings set .org.nemo.preferences inherit-folder-viewer true
 #text/plain=pluma.desktop;
 
 # Change default texteditor Gedit to Pluma, keep the Text Editor name and icon
-# Backup the Text Editor shortcut
+# Backup the Text Editor shortcut (contains name and the preferred icon)
 sudo cp '/usr/share/applications/Text Editor.desktop' '/usr/share/applications/TextEditor.backup'
 # Change default app for text files 
 #sudo sed -i -e 's@org.gnome.gedit.desktop@pluma.desktop@g' /usr/share/applications/mimeinfo.cache
@@ -200,6 +199,7 @@ sudo pacman -S --noconfirm pinta
 #Install photo library management
 sudo pacman -S --noconfirm digikam
 
+
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
 echo "                            Firefox default settings                               "
@@ -238,7 +238,6 @@ esac
 echo "_________________________________________________________________________"
 echo "                         OPTIONAL APPLICATIONS                           "
 echo "_________________________________________________________________________"
-
 # Install Nextcloud Desktop Client for webDAV syncing with FileRun 
 echo "======================================="
 echo "---------------------------------------"
@@ -251,7 +250,6 @@ case ${answer:0:1} in
         echo "Skipping Nextcloud Desktop Client..."
     ;;
 esac
-
 
 # Install Spotify
 echo "======================================="
@@ -292,6 +290,7 @@ case ${answer:0:1} in
         echo "Not installing all win10/office365 fonts..."
     ;;
 esac
+
 
 echo "_________________________________________________________________________"
 echo "                         ISOLATE PERSONAL FOLDERS                        "
