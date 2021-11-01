@@ -120,6 +120,24 @@ echo "                                                                          
 echo "              Replace filemanager (Nautilus) with more intuitive Nemo              "
 echo "               Replace Text Editor (gedit) with more intuitive Pluma               "
 echo "___________________________________________________________________________________"
+# Change default filemanager Nautilus for Nemo 
+sudo sed -i -e 's@org.gnome.Nautilus.desktop@nemo.desktop@g' /usr/share/applications/mimeinfo.cache
+sudo pacman -S --noconfirm nemo
+# Configure Nemo to make it a bit more intuitive
+gsettings set .org.nemo.preferences quick-renames-with-pause-in-between true
+gsettings set .org.nemo.preferences date-format iso
+gsettings set .org.nemo.preferences show-reload-icon-toolbar true
+gsettings set .org.nemo.preferences default-folder-viewer 'list-view'
+gsettings set .org.nemo.preferences inherit-folder-viewer true
+## also when opening folders as with elevated privileges (root user)
+sudo gsettings set .org.nemo.preferences quick-renames-with-pause-in-between true
+sudo gsettings set .org.nemo.preferences date-format iso
+sudo gsettings set .org.nemo.preferences show-reload-icon-toolbar true
+sudo gsettings set .org.nemo.preferences default-folder-viewer 'list-view'
+sudo gsettings set .org.nemo.preferences inherit-folder-viewer true
+#[Default Applications]
+#inode/directory=nemo.desktop;
+#text/plain=pluma.desktop;
 
 # Change default texteditor Gedit to Pluma, keep the Text Editor name and icon
 # Backup the Text Editor shortcut
@@ -135,19 +153,20 @@ sudo sed -i -e 's@gedit@pluma@g' '/usr/share/applications/TextEditor.backup'
 sudo sed -i -e 's@Icon=org.gnome.pluma@Icon=org.gnome.gedit@g' '/usr/share/applications/TextEditor.backup'
 sudo mv '/usr/share/applications/TextEditor.backup' '/usr/share/applications/TextEditor.desktop'
 sudo sed -i -e 's@org.gnome.gedit.desktop@TextEditor.desktop@g' $HOME/.config/mimeapps.list 
-
-# Change default filemanager Nautilus for Nemo 
-sudo sed -i -e 's@org.gnome.Nautilus.desktop@nemo.desktop@g' /usr/share/applications/mimeinfo.cache
-sudo pacman -S --noconfirm nemo
-# Configure Nemo to make it a bit more intuitive
-gsettings set .org.nemo.preferences quick-renames-with-pause-in-between true
-gsettings set .org.nemo.preferences date-format iso
-gsettings set .org.nemo.preferences show-reload-icon-toolbar true
-gsettings set .org.nemo.preferences default-folder-viewer 'list-view'
-gsettings set .org.nemo.preferences inherit-folder-viewer true
-#[Default Applications]
-#inode/directory=nemo.desktop;
-#text/plain=pluma.desktop;
+#Configuration of Pluma
+gsettings set org.mate.pluma highlight-current-line true
+gsettings set org.mate.pluma bracket-matching true
+gsettings set org.mate.pluma display-line-numbers true
+gsettings set org.mate.pluma display-overview-map true
+gsettings set org.mate.pluma auto-indent true
+gsettings set org.mate.pluma active-plugins "['time', 'spell', 'sort', 'snippets', 'modelines', 'filebrowser', 'docinfo']"
+## also when opening files as with elevated privileges (root user)
+gsettings set org.mate.pluma highlight-current-line true
+gsettings set org.mate.pluma bracket-matching true
+gsettings set org.mate.pluma display-line-numbers true
+gsettings set org.mate.pluma display-overview-map true
+gsettings set org.mate.pluma auto-indent true
+gsettings set org.mate.pluma active-plugins "['time', 'spell', 'sort', 'snippets', 'modelines', 'filebrowser', 'docinfo']"
 
 
 echo "___________________________________________________________________________________"
@@ -295,16 +314,18 @@ sudo mount -o subvolid=5 /dev/nvme0n1p2 /mnt/system
 sudo btrfs subvolume create /mnt/system/@userdata
 ## unmount root filesystem
 sudo umount /mnt/system
-# Add lines to fstab to make it persistent after boot, you should manually fill in the UUID before rebooting
+# Get system fs UUID
+fs_uuid=$(findmnt / -o UUID -n)
+# Add @userdata subvolume to fstab to mount at boot
 sudo tee -a /etc/fstab &>/dev/null << EOF
 # Mount the BTRFS root subvolume @userdata
-UUID=COPYPASTE-THE-LONG-UUID-FROM-THE-TOP /mnt/userdata           btrfs   defaults,noatime,subvol=@userdata,compress-force=zstd:2  0  0
+UUID=${fs_uuid} /mnt/userdata  btrfs   defaults,noatime,subvol=@userdata,compress-force=zstd:2  0  0
 EOF
-## Temporarily mount @userdata subvolume and finish configuration
+
+## Temporarily mount @userdata subvolume to move existing personal folders and link them back to $HOME
 sudo mkdir /mnt/userdata
 sudo mount -o subvol=@userdata /dev/nvme0n1p2 /mnt/userdata
 ## Move personal user folders to the subvolume
-## Note I have already moved Desktop and Templates to my Documents folder via my config.sh file.  
 sudo mv /home/${USER}/Documents /mnt/userdata/
 sudo mv /home/${USER}/Desktop /mnt/userdata/
 sudo mv /home/${USER}/Downloads /mnt/userdata/
@@ -322,20 +343,6 @@ ln -s /mnt/userdata/Photos $HOME/Photos
 cd /
 cd $HOME
 cd $HOME/Downloads
-## Now open fstab for the user to copy paste the UUID
-echo "==========================================================================================================="
-echo "-----------------------------------------------------------------------------------------------------------"
-echo "Almost done, now a 2nd window will open and you need to copy/paste with your mouse the UUID from the top"
-echo "And paste it where it says !!Copy UUID HERE !!"
-echo "Then save changes with CTRL+O and exit the file with CTRL+X"
-echo "-----------------------------------------------------------------------------------------------------------"
-read -p "Are you ready to do this? Hit Enter and enter your password in the 2nd window to open the file."
-x-terminal-emulator -e sudo nano /etc/fstab
-read -p "When done in the 2nd window, hit ENTER in this window to continue..."
-cd /
-cd $HOME
-cd $HOME/Downloads
-
     ;;
     * )
         echo "Not creating userdata, this is not a common personal device." 
