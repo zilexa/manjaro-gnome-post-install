@@ -141,7 +141,7 @@ sudo gsettings set org.nemo.preferences inherit-folder-viewer true
 # Backup the Text Editor shortcut (contains name and the preferred icon)
 sudo cp '/usr/share/applications/org.gnome.gedit.desktop' '/usr/share/applications/TextEditor.backup'
 # Change default app for text files 
-#sudo sed -i -e 's@org.gnome.gedit.desktop@pluma.desktop@g' /usr/share/applications/mimeinfo.cache
+#sudo sed -i -e 's@org.gnome.gedit.desktop@TextEditor.desktop@g' /usr/share/applications/mimeinfo.cache
 # Remove default texteditor, install Pluma
 sudo pacman -R --noconfirm gedit
 sudo pacman -S --noconfirm pluma
@@ -150,7 +150,9 @@ sudo mv '/usr/share/applications/pluma.desktop' '/usr/share/applications/pluma.b
 sudo sed -i -e 's@gedit@pluma@g' '/usr/share/applications/TextEditor.backup'
 sudo sed -i -e 's@Icon=org.gnome.pluma@Icon=org.gnome.gedit@g' '/usr/share/applications/TextEditor.backup'
 sudo mv '/usr/share/applications/TextEditor.backup' '/usr/share/applications/TextEditor.desktop'
-sudo sed -i -e 's@org.gnome.gedit.desktop@TextEditor.desktop@g' $HOME/.config/mimeapps.list 
+sudo sed -i -e 's@org.gnome.gedit.desktop@TextEditor.desktop@g' $HOME/.config/mimeapps.list
+sudo sed -i -e 's@text/plain=TextEditor.desktop@text/plain=TextEditor.desktop@g' $HOME/.config/mimeapps.list
+
 #Configuration of Pluma
 gsettings set org.mate.pluma highlight-current-line true
 gsettings set org.mate.pluma bracket-matching true
