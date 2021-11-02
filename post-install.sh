@@ -18,7 +18,6 @@ gsettings set org.gnome.shell.extensions.arcmenu available-placement "[false, tr
 gsettings set org.gnome.shell.extensions.dash-to-panel panel-positions '{"0":"LEFT"}'
 gsettings set org.gnome.desktop.interface show-battery-percentage true
 gsettings set org.gnome.shell.extensions.arcmenu reload-theme true
-gsettings set org.gnome.shell.extensions.arcmenu reload-theme unset
 
 # Dash to Panel
 gsettings set org.gnome.shell.extensions.dash-to-panel animate-appicon-hover true
@@ -123,24 +122,24 @@ echo "__________________________________________________________________________
 sudo sed -i -e 's@org.gnome.Nautilus.desktop@nemo.desktop@g' /usr/share/applications/mimeinfo.cache
 sudo pacman -S --noconfirm nemo
 # Configure Nemo to make it a bit more intuitive
-gsettings set .org.nemo.preferences quick-renames-with-pause-in-between true
-gsettings set .org.nemo.preferences date-format iso
-gsettings set .org.nemo.preferences show-reload-icon-toolbar true
-gsettings set .org.nemo.preferences default-folder-viewer 'list-view'
-gsettings set .org.nemo.preferences inherit-folder-viewer true
+gsettings set org.nemo.preferences quick-renames-with-pause-in-between true
+gsettings set org.nemo.preferences date-format 'iso'
+gsettings set org.nemo.preferences show-reload-icon-toolbar true
+gsettings set org.nemo.preferences default-folder-viewer 'list-view'
+gsettings set org.nemo.preferences inherit-folder-viewer true
 ## also when opening folders as with elevated privileges (root user)
-sudo gsettings set .org.nemo.preferences quick-renames-with-pause-in-between true
-sudo gsettings set .org.nemo.preferences date-format iso
-sudo gsettings set .org.nemo.preferences show-reload-icon-toolbar true
-sudo gsettings set .org.nemo.preferences default-folder-viewer 'list-view'
-sudo gsettings set .org.nemo.preferences inherit-folder-viewer true
+sudo gsettings set org.nemo.preferences quick-renames-with-pause-in-between true
+sudo gsettings set org.nemo.preferences date-format 'iso'
+sudo gsettings set org.nemo.preferences show-reload-icon-toolbar true
+sudo gsettings set org.nemo.preferences default-folder-viewer 'list-view'
+sudo gsettings set org.nemo.preferences inherit-folder-viewer true
 #[Default Applications]
 #inode/directory=nemo.desktop;
 #text/plain=pluma.desktop;
 
 # Change default texteditor Gedit to Pluma, keep the Text Editor name and icon
 # Backup the Text Editor shortcut (contains name and the preferred icon)
-sudo cp '/usr/share/applications/Text Editor.desktop' '/usr/share/applications/TextEditor.backup'
+sudo cp '/usr/share/applications/org.gnome.gedit.desktop' '/usr/share/applications/TextEditor.backup'
 # Change default app for text files 
 #sudo sed -i -e 's@org.gnome.gedit.desktop@pluma.desktop@g' /usr/share/applications/mimeinfo.cache
 # Remove default texteditor, install Pluma
