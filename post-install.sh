@@ -163,6 +163,10 @@ gsettings set org.gnome.desktop.datetime automatic-timezone true
 gsettings set org.gnome.desktop.interface gtk-theme 'Matcha-dark-azul'
 gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
 
+# Desktop
+gsettings set org.gnome.shell.extensions.ding show-home false
+gsettings set org.gnome.shell.extensions.ding start-corner 'bottom-left'
+
 
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
