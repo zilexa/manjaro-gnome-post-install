@@ -89,7 +89,10 @@ gsettings set org.gnome.shell.extensions.arcmenu available-placement "[false, tr
 gsettings set org.gnome.shell.extensions.dash-to-panel panel-positions '{"0":"LEFT"}'
 gsettings set org.gnome.desktop.interface show-battery-percentage true
 gsettings set org.gnome.shell.extensions.arcmenu reload-theme true
-
+# Arc Menu Hot corner (top left) 
+gsettings set org.gnome.shell.extensions.arcmenu override-hot-corners true
+gsettings set org.gnome.shell.extensions.arcmenu custom-hot-corner-cmd "sh -c 'notify-send \"$(date)\"'"
+gsettings set org.gnome.shell.extensions.arcmenu hot-corners 'ToggleArcMenu'
 # Dash to Panel
 gsettings set org.gnome.shell.extensions.dash-to-panel animate-appicon-hover true
 gsettings set org.gnome.shell.extensions.dash-to-panel animate-appicon-hover-animation-extent "{'RIPPLE': 4, 'PLANK': 4, 'SIMPLE': 1}"
@@ -134,12 +137,12 @@ gsettings set org.gnome.shell.extensions.dash-to-panel trans-use-custom-opacity 
 gsettings set org.gnome.shell.extensions.dash-to-panel trans-use-dynamic-opacity true
 gsettings set org.gnome.shell.extensions.dash-to-panel tray-padding -1
 gsettings set org.gnome.shell.extensions.dash-to-panel window-preview-title-position 'TOP'
-
-#ARCMENU Hot corner (top left) 
-gsettings set org.gnome.shell.extensions.arcmenu override-hot-corners true
-gsettings set org.gnome.shell.extensions.arcmenu custom-hot-corner-cmd "sh -c 'notify-send \"$(date)\"'"
-gsettings set org.gnome.shell.extensions.arcmenu hot-corners 'ToggleArcMenu'
-
+# Desktop
+gsettings set org.gnome.shell.extensions.ding show-home false
+gsettings set org.gnome.shell.extensions.ding start-corner 'bottom-left'
+# Theme
+gsettings set org.gnome.desktop.interface gtk-theme 'Matcha-dark-azul'
+gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
 # Display
 gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic false
 gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from 22.0
@@ -147,25 +150,14 @@ gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to 8.
 gsettings set org.gnome.desktop.screensaver picture-uri 'file:///usr/share/backgrounds/wallpapers-2018/palm-beach.jpg'
 gsettings set org.gnome.desktop.screensaver lock-enabled false
 gsettings set org.gnome.desktop.session idle-delay 'uint32 480'
-
 # cleanup
 gsettings set org.gnome.desktop.privacy remove-old-temp-files true
 gsettings set org.gnome.desktop.privacy remove-old-trash-files true
-
 # Touchpad
 gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
-
 # Locale
 gsettings set org.gnome.system.location enabled true
 gsettings set org.gnome.desktop.datetime automatic-timezone true
-
-# Theme
-gsettings set org.gnome.desktop.interface gtk-theme 'Matcha-dark-azul'
-gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
-
-# Desktop
-gsettings set org.gnome.shell.extensions.ding show-home false
-gsettings set org.gnome.shell.extensions.ding start-corner 'bottom-left'
 
 
 echo "___________________________________________________________________________________"
