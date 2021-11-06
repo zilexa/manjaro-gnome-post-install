@@ -218,6 +218,11 @@ sudo pacman -S --noconfirm pinta
 #Install photo library management
 sudo pacman -S --noconfirm digikam
 
+# Pin common apps to Arc Menu
+gsettings get org.gnome.shell.extensions.arcmenu pinned-app-list "['Add/Remove Software', '', 'org.manjaro.pamac.manager.desktop', 'Strawberry', '', 'org.strawberrymusicplayer.strawberry.desktop', 'Audacity', '', 'audacity.desktop', 'Document Scanner', '', 'simple-scan.desktop', 'Settings', '', 'gnome-control-center.desktop', 'Manjaro Settings Manager', '', 'manjaro-settings-manager.desktop', 'gThumb Image Viewer', '', 'org.gnome.gThumb.desktop', 'digiKam', '', 'org.kde.digikam.desktop', 'Darktable Photo Workflow Software', '', 'darktable.desktop', 'Pinta Image Editor', '', 'pinta.desktop', 'HandBrake', '', 'fr.handbrake.ghb.desktop', 'LosslessCut', '', 'losslesscut-bin.desktop']"
+# Add most used apps to Panel (favourites)
+gsettings get org.gnome.shell favorite-apps "['nemo.desktop', 'firefox.desktop', 'org.gnome.gThumb.desktop', 'org.onlyoffice.desktopeditors.desktop', 'pluma.desktop', 'org.gnome.Calculator.desktop']"
+
 
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
@@ -234,10 +239,13 @@ sudo tee -a /usr/lib/firefox/firefox.cfg &>/dev/null << EOF
 // IMPORTANT: Start your code on the 2nd line
 defaultPref("services.sync.prefs.sync.browser.uiCustomization.state",true);
 EOF
-# Firefox: use your own Firefox Sync Server for all Firefox profiles on this system
-echo "___________________________________________________________________________________"
-echo "                  Use your custom Firefox Sync Server by default                   " 
-echo "___________________________________________________________________________________"
+
+
+echo "_________________________________________________________________________"
+echo "                         OPTIONAL APPLICATIONS                           "
+echo "_________________________________________________________________________"
+# Use your custom Firefox Sync Server by default
+echo "---------------------------------------"
 read -p "Would you like to use your own Firefox Sync Server? (y/n)" answer
 case ${answer:0:1} in
     y|Y )
@@ -253,33 +261,6 @@ EOF
     ;;
 esac
 
-
-echo "_________________________________________________________________________"
-echo "                         OPTIONAL APPLICATIONS                           "
-echo "_________________________________________________________________________"
-# Install Nextcloud Desktop Client for webDAV syncing with FileRun 
-echo "---------------------------------------"
-read -p "Install Nextcloud Desktop Client for Nemo/Budgie? Recommended if you run a FileRun or WebDAV server (y / n)?" answer
-case ${answer:0:1} in
-    y|Y )
-        sudo pacman -S --noconfirm nextcloud-client
-    ;;
-    * )
-        echo "Skipping Nextcloud Desktop Client..."
-    ;;
-esac
-
-# Install Spotify
-echo "---------------------------------------"
-read -p "Install Spotify (y/n)?" answer
-case ${answer:0:1} in
-    y|Y )
-        sudo pacman -S --noconfirm spotifyd
-    ;;
-    * )
-        echo "Skipping Spotify..." 
-    ;;
-esac
 
 # Install ALL Win10/Office365 fonts
 echo "---------------------------------------"
@@ -303,6 +284,31 @@ case ${answer:0:1} in
     ;;
     * )
         echo "Not installing all win10/office365 fonts..."
+    ;;
+esac
+
+
+# Install Nextcloud Desktop Client for webDAV syncing with FileRun 
+echo "---------------------------------------"
+read -p "Install Nextcloud Desktop Client for Nemo/Budgie? Recommended if you run a FileRun or WebDAV server (y / n)?" answer
+case ${answer:0:1} in
+    y|Y )
+        sudo pacman -S --noconfirm nextcloud-client
+    ;;
+    * )
+        echo "Skipping Nextcloud Desktop Client..."
+    ;;
+esac
+
+# Install Spotify
+echo "---------------------------------------"
+read -p "Install Spotify (y/n)?" answer
+case ${answer:0:1} in
+    y|Y )
+        sudo pacman -S --noconfirm spotifyd
+    ;;
+    * )
+        echo "Skipping Spotify..." 
     ;;
 esac
 
@@ -366,7 +372,7 @@ echo "_________________________________________________________________________"
 echo "               Configure BTRFS swap and enable hibernation               "
 echo "_________________________________________________________________________"
 echo "Highly recommended if this is a laptop. It will allow hybrid sleep and hibernation."
-echo "Not recommended for servers as you will configure zswap instead."
+echo "Select 'n' if this is your server: You don't need hibernate but zswap instead."
 read -p "Configure swapfile for BTRFS and enable hibernation y/n ?" answer
 case ${answer:0:1} in
     y|Y )
