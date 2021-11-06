@@ -2,7 +2,78 @@
 #
 # Might need this for pacman automation: yes | LC_ALL=en_US.UTF-8 pacman
 # Find and select the fastest mirror to install apps from
+echo "___________________________________________________________________________________"
+echo "                                                                                   " 
+echo "              Configure updates (every 6hrs > weekly), enable AUR                  "
+echo "                     Test and rank mirrors, select fastest                         "
+echo "___________________________________________________________________________________"
+# Weekly updates instead of 4x a day. No tray icon if there are no updates. Download in background. Enable AUR (Arch User Repository). 
+sudo sed -i -e 's@RefreshPeriod = 6@RefreshPeriod = 168@g' /etc/pamac.conf
+sudo sed -Ei '/NoUpdateHideIcon/s/^#//' /etc/pamac.conf
+sudo sed -Ei '/DownloadUpdates/s/^#//' /etc/pamac.conf
+sudo sed -Ei '/EnableAUR/s/^#//' /etc/pamac.conf
+sudo sed -Ei '/CheckAURUpdates/s/^#//' /etc/pamac.conf
+# Mirrors
 sudo pacman-mirrors -g --continent -P https --api && sudo pacman -Syyu
+
+
+echo "___________________________________________________________________________________"
+echo "                                                                                   " 
+echo "              Replace filemanager (Nautilus) with more intuitive Nemo              "
+echo "___________________________________________________________________________________"
+# Change default filemanager Nautilus for Nemo 
+sudo sed -i -e 's@org.gnome.Nautilus.desktop@nemo.desktop@g' /usr/share/applications/mimeinfo.cache
+sudo pacman -S --noconfirm nemo
+# Configure Nemo to make it a bit more intuitive
+gsettings set org.nemo.preferences quick-renames-with-pause-in-between true
+gsettings set org.nemo.preferences date-format 'iso'
+gsettings set org.nemo.preferences show-reload-icon-toolbar true
+gsettings set org.nemo.preferences default-folder-viewer 'list-view'
+gsettings set org.nemo.preferences inherit-folder-viewer true
+## also when opening folders as with elevated privileges (root user)
+sudo -u root dbus-launch gsettings set org.nemo.preferences quick-renames-with-pause-in-between true
+sudo -u root dbus-launch gsettings set org.nemo.preferences date-format 'iso'
+sudo -u root dbus-launch gsettings set org.nemo.preferences show-reload-icon-toolbar true
+sudo -u root dbus-launch gsettings set org.nemo.preferences default-folder-viewer 'list-view'
+sudo -u root dbus-launch gsettings set org.nemo.preferences inherit-folder-viewer true
+#[Default Applications]
+#inode/directory=nemo.desktop;
+#text/plain=pluma.desktop;
+
+echo "___________________________________________________________________________________"
+echo "                                                                                   " 
+echo "               Replace Text Editor (gedit) with more intuitive Pluma               "
+echo "___________________________________________________________________________________"
+# Change default texteditor Gedit to Pluma, keep the Text Editor name and icon
+# Backup the Text Editor shortcut (contains name and the preferred icon)
+#sudo cp '/usr/share/applications/org.gnome.gedit.desktop' '/usr/share/applications/TextEditor.backup'
+# Change default app for text files 
+# Remove default texteditor, install Pluma
+sudo pacman -R --noconfirm gedit
+sudo pacman -S --noconfirm pluma
+# Configure the backupped Text Editor to work with Pluma, keeping the name and logo
+sudo cp '/usr/share/applications/pluma.desktop' '/usr/share/applications/pluma.backup'
+sudo sed -i -e 's@pluma@Text Editor@g' '/usr/share/applications/pluma.desktop'
+sudo sed -i -e 's@Icon=org.gnome.pluma@Icon=org.gnome.gedit@g' '/usr/share/applications/pluma.desktop'
+#sudo mv '/usr/share/applications/TextEditor.backup' '/usr/share/applications/TextEditor.desktop'
+#sudo sed -i -e 's@org.gnome.gedit.desktop@TextEditor.desktop@g' /usr/share/applications/mimeinfo.cache
+sudo sed -i -e 's@org.gnome.gedit.desktop@Text Editor.desktop@g' $HOME/.config/mimeapps.list
+#sudo sed -i -e 's@text/plain=TextEditor.desktop@text/plain=TextEditor.desktop@g' $HOME/.config/mimeapps.list
+
+#Configuration of Pluma
+gsettings set org.mate.pluma highlight-current-line true
+gsettings set org.mate.pluma bracket-matching true
+gsettings set org.mate.pluma display-line-numbers true
+gsettings set org.mate.pluma display-overview-map true
+gsettings set org.mate.pluma auto-indent true
+gsettings set org.mate.pluma active-plugins "['time', 'spell', 'sort', 'snippets', 'modelines', 'filebrowser', 'docinfo']"
+## also when opening files as with elevated privileges (root user)
+sudo -u root dbus-launch gsettings set org.mate.pluma highlight-current-line true
+sudo -u root dbus-launch gsettings set org.mate.pluma bracket-matching true
+sudo -u root dbus-launch gsettings set org.mate.pluma display-line-numbers true
+sudo -u root dbus-launch gsettings set org.mate.pluma display-overview-map true
+sudo -u root dbus-launch gsettings set org.mate.pluma auto-indent true
+sudo -u root dbus-launch gsettings set org.mate.pluma active-plugins "['time', 'spell', 'sort', 'snippets', 'modelines', 'filebrowser', 'docinfo']"
 
 
 echo "___________________________________________________________________________________"
@@ -111,62 +182,9 @@ mv $HOME/Templates $HOME/Documents/
 ## Rename and move contents from Pictures to Photos, Videos to Media.
 mv /home/${USER}/Videos /home/${USER}/Media
 mv /home/${USER}/Pictures /home/${USER}/Photos
+org.nemo.window-state sidebar-bookmark-breakpoint 4
+org.nemo.window-state sidebar-bookmark-breakpoint 3
 
-
-echo "___________________________________________________________________________________"
-echo "                                                                                   " 
-echo "              Replace filemanager (Nautilus) with more intuitive Nemo              "
-echo "               Replace Text Editor (gedit) with more intuitive Pluma               "
-echo "___________________________________________________________________________________"
-# Change default filemanager Nautilus for Nemo 
-sudo sed -i -e 's@org.gnome.Nautilus.desktop@nemo.desktop@g' /usr/share/applications/mimeinfo.cache
-sudo pacman -S --noconfirm nemo
-# Configure Nemo to make it a bit more intuitive
-gsettings set org.nemo.preferences quick-renames-with-pause-in-between true
-gsettings set org.nemo.preferences date-format 'iso'
-gsettings set org.nemo.preferences show-reload-icon-toolbar true
-gsettings set org.nemo.preferences default-folder-viewer 'list-view'
-gsettings set org.nemo.preferences inherit-folder-viewer true
-## also when opening folders as with elevated privileges (root user)
-sudo gsettings set org.nemo.preferences quick-renames-with-pause-in-between true
-sudo gsettings set org.nemo.preferences date-format 'iso'
-sudo gsettings set org.nemo.preferences show-reload-icon-toolbar true
-sudo gsettings set org.nemo.preferences default-folder-viewer 'list-view'
-sudo gsettings set org.nemo.preferences inherit-folder-viewer true
-#[Default Applications]
-#inode/directory=nemo.desktop;
-#text/plain=pluma.desktop;
-
-# Change default texteditor Gedit to Pluma, keep the Text Editor name and icon
-# Backup the Text Editor shortcut (contains name and the preferred icon)
-#sudo cp '/usr/share/applications/org.gnome.gedit.desktop' '/usr/share/applications/TextEditor.backup'
-# Change default app for text files 
-# Remove default texteditor, install Pluma
-sudo pacman -R --noconfirm gedit
-sudo pacman -S --noconfirm pluma
-# Configure the backupped Text Editor to work with Pluma, keeping the name and logo
-sudo cp '/usr/share/applications/pluma.desktop' '/usr/share/applications/pluma.backup'
-sudo sed -i -e 's@pluma@Text Editor@g' '/usr/share/applications/pluma.desktop'
-sudo sed -i -e 's@Icon=org.gnome.pluma@Icon=org.gnome.gedit@g' '/usr/share/applications/pluma.desktop'
-#sudo mv '/usr/share/applications/TextEditor.backup' '/usr/share/applications/TextEditor.desktop'
-#sudo sed -i -e 's@org.gnome.gedit.desktop@TextEditor.desktop@g' /usr/share/applications/mimeinfo.cache
-sudo sed -i -e 's@org.gnome.gedit.desktop@Text Editor.desktop@g' $HOME/.config/mimeapps.list
-#sudo sed -i -e 's@text/plain=TextEditor.desktop@text/plain=TextEditor.desktop@g' $HOME/.config/mimeapps.list
-
-#Configuration of Pluma
-gsettings set org.mate.pluma highlight-current-line true
-gsettings set org.mate.pluma bracket-matching true
-gsettings set org.mate.pluma display-line-numbers true
-gsettings set org.mate.pluma display-overview-map true
-gsettings set org.mate.pluma auto-indent true
-gsettings set org.mate.pluma active-plugins "['time', 'spell', 'sort', 'snippets', 'modelines', 'filebrowser', 'docinfo']"
-## also when opening files as with elevated privileges (root user)
-gsettings set org.mate.pluma highlight-current-line true
-gsettings set org.mate.pluma bracket-matching true
-gsettings set org.mate.pluma display-line-numbers true
-gsettings set org.mate.pluma display-overview-map true
-gsettings set org.mate.pluma auto-indent true
-gsettings set org.mate.pluma active-plugins "['time', 'spell', 'sort', 'snippets', 'modelines', 'filebrowser', 'docinfo']"
 
 
 echo "___________________________________________________________________________________"
@@ -240,7 +258,6 @@ echo "_________________________________________________________________________"
 echo "                         OPTIONAL APPLICATIONS                           "
 echo "_________________________________________________________________________"
 # Install Nextcloud Desktop Client for webDAV syncing with FileRun 
-echo "======================================="
 echo "---------------------------------------"
 read -p "Install Nextcloud Desktop Client for Nemo/Budgie? Recommended if you run a FileRun or WebDAV server (y / n)?" answer
 case ${answer:0:1} in
@@ -253,7 +270,6 @@ case ${answer:0:1} in
 esac
 
 # Install Spotify
-echo "======================================="
 echo "---------------------------------------"
 read -p "Install Spotify (y/n)?" answer
 case ${answer:0:1} in
@@ -266,19 +282,17 @@ case ${answer:0:1} in
 esac
 
 # Install ALL Win10/Office365 fonts
-echo "======================================="
 echo "---------------------------------------"
-echo "A few MS Office available for Linux + a few commonly used additional MS Office fonts have been installed by this script." 
-echo "However, if you want your documents to look identical, you need to install all MS Office fonts."
-echo "If you believe you have the right to do so, the script will download a prepackaged copy of all MS Office365/Win10 fonts and install them."
-read -p "The win10-fonts.zip archive is required. Your browser will open the download page, continue (Y) or skip (N)? (Y/n)" answer
+echo "Install all MS Office365 fonts, for full compatibility with MS Office files?"
+echo "Only choose 'y' if you believe you have the license and approval of MS to download all their fonts." 
+read -p "Your browser will open and you need to download the fonts package. Continue? (Y/n)" answer
 case ${answer:0:1} in
     y|Y )
        xdg-open 'https://mega.nz/file/u4p02JCC#HnJOVyK8TYDqEyVXLkwghDLKlKfIq0kOlX6SPxH53u0'
-       read -p "Click any key when the download has finished completely..."
+       read -p "Click any key when the download has finished AND you saved the file to your Downloads..."
        echo "please wait while extracting fonts to the system fonts folder (/usr/share/fonts), the downloaded file will be deleted afterwards." 
        # Extract the manually downloaded file to a subfolder in the systems font folder
-       sudo tar -xf $HOME/Downloads/fonts-office365.tar.xz -C /usr/share/fonts
+       sudo tar -xvf $HOME/Downloads/fonts-office365.tar.xz -C /usr/share/fonts
        # Set permissions to allow non-root to use the fonts
        sudo chown -R root:root /usr/share/fonts/office365
        sudo chmod -R 755 /usr/share/fonts/office365
@@ -297,7 +311,6 @@ echo "_________________________________________________________________________"
 echo "                         ISOLATE PERSONAL FOLDERS                        "
 echo "_________________________________________________________________________"
 # OPTIONAL: IF THIS IS A COMMON PC OR LAPTOP, CREATE A SUBVOLUME FOR USER DATA.  
-echo "======================================="
 echo "---------------------------------------"
 echo "Hit y if this a regular, personal device, laptop/desktop pc ( y /n )?"
 echo "YES = Personal folders will be isolated by via a seperate subvolume (and linked back to $HOME folder)."
@@ -346,5 +359,73 @@ cd $HOME/Downloads
     ;;
     * )
         echo "Not creating userdata, this is not a common personal device." 
+    ;;
+esac
+
+echo "_________________________________________________________________________"
+echo "               Configure BTRFS swap and enable hibernation               "
+echo "_________________________________________________________________________"
+echo "Highly recommended if this is a laptop. It will allow hybrid sleep and hibernation."
+echo "Not recommended for servers as you will configure zswap instead."
+read -p "Configure swapfile for BTRFS and enable hibernation y/n ?" answer
+case ${answer:0:1} in
+    y|Y )
+# Calculate required swap size
+ram=$(grep "MemTotal" /proc/meminfo | tr -d " " | sed -r "s/(\w+):([0-9]+)(\w+)/\\2/g") 
+size=$(printf "%.0f\n" $(echo "$ram * 1.5 / 1000" | bc ))
+
+# Configure swapfile on btrfs nested subvolume to maintain TimeShift compatibility
+sudo btrfs subvolume create /@swap
+sudo touch /@swap/swapfile
+sudo truncate -s 0 /@swap/swapfile
+sudo chattr +C /@swap/swapfile
+sudo btrfs property set /@swap/swapfile compression none
+sudo dd if=/dev/zero of=/@swap/swapfile bs=1M count=$size status=progress
+sudo chmod 0600 /@swap/swapfile
+sudo mkswap /@swap/swapfile
+sudo echo "# Created by a script\n/swapfile\tnone\tswap\tsw\t0\t0" >> /etc/fstab
+[[ -z $(swapon -s | grep "/@swap/swapfile") ]] && swapon /@swap/swapfile
+
+# Enable Hibernation
+pamac install pm-utils
+offset=$(filefrag -v /@swap/swapfile | awk '{ if($1=="0:"){print substr($4, 1, length($4)-2)} }')
+uuid=$(findmnt -no UUID -T /@swap/swapfile)
+mkdir -p /etc/default/grub.d/
+
+if [[ -z $(grep "source /etc/default/grub.d/*" /etc/default/grub) ]]
+	then
+		echo -e "\n\nsource /etc/default/grub.d/*" >> /etc/default/grub  
+fi
+echo -e "# Added by a script\nGRUB_CMDLINE_LINUX_DEFAULT=\"\$GRUB_CMDLINE_LINUX_DEFAULT resume=UUID=$uuid resume_offset=$offset\"" > /etc/default/grub.d/resume.cfg
+
+if [[ -z $(grep "resume" /etc/mkinitcpio.conf) ]]
+	then
+		sed -i "s/filesystems/filesystems resume/g" /etc/mkinitcpio.conf 
+fi
+
+# Due no support for btrfs we need to bypass the memory check
+mkdir -p /etc/systemd/system/systemd-logind.service.d/		
+mkdir -p /etc/systemd/system/systemd-hibernate.service.d/		
+logind="/etc/systemd/system/systemd-logind.service.d/bypass_hibernation_memory_check.conf"
+hibernate="/etc/systemd/system/systemd-hibernate.service.d/bypass_hibernation_memory_check.conf"
+
+if [[ ! -f $logind ]]
+	then
+		echo -e "#Added by a script\nEnvironment=SYSTEMD_BYPASS_HIBERNATION_MEMORY_CHECK=1" \
+		>  /etc/systemd/system/systemd-logind.service.d/bypass_hibernation_memory_check.conf
+fi
+
+if [[ ! -f $hibernate ]]
+	then
+		echo -e "#Added by a script\nEnvironment=SYSTEMD_BYPASS_HIBERNATION_MEMORY_CHECK=1" \
+		> /etc/systemd/system/systemd-hibernate.service.d/bypass_hibernation_memory_check.conf
+fi
+grub-mkconfig -o /boot/grub/grub.cfg
+mkinitcpio -P
+
+sudo sed -i -e 's@#HibernateDelaySec=180min@HibernateDelaySec=60min@g' /etc/systemd/sleep.conf
+    ;;
+    * )
+        echo "Not configuring BTRFS swapfile and hibernation. It is recommended you configure zswap." 
     ;;
 esac
