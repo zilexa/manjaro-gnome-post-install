@@ -159,6 +159,10 @@ gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
 gsettings set org.gnome.system.location enabled true
 gsettings set org.gnome.desktop.datetime automatic-timezone true
 
+# Theme
+gsettings set org.gnome.desktop.interface gtk-theme 'Matcha-dark-azul'
+gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
+
 
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
