@@ -169,19 +169,27 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot "['Pr
 
 
 echo "___________________________________________________________________________________"
-     "                  Touchpad Gestures: 4 instead of 3 fingers                        "
+     "                   1) Touchpad Gestures: 4 instead of 3 fingers:                   "
      "       this way, you can use 3-finger touchpad gestures within applications        "
+     "           2) Hot Corners Extended: allow config of screen hot corners             " 
 echo "___________________________________________________________________________________"
+#!/bin/bash
 # Download the gnome extension "Gesture Improvements"
 wget -O $HOME/Downloads/gestures.zip https://extensions.gnome.org/extension-data/gestureImprovementsgestures.v17.shell-extension.zip
 # Get the UUID of the extension
-EXTUUID=$(unzip -c $HOME/Downloads/gestures.zip metadata.json | grep uuid | cut -d \" -f4)
-# Create a subfolder in the Extensions folder with the UUID as name
-mkdir -p $HOME/.local/share/gnome-shell/extensions/$EXTUUID
-# Unzip the files there
-unzip $HOME/Downloads/gestures.zip -d $HOME/.local/share/gnome-shell/extensions/$EXTUUID/
-# Add to enabled extensions, for next boot
-gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', '$EXTUUID']"
+EXTUUID1=$(unzip -c $HOME/Downloads/gestures.zip metadata.json | grep uuid | cut -d \" -f4)
+# Unzip the files in the Extensions folder with the UUID as foldername
+mkdir -p $HOME/.local/share/gnome-shell/extensions/$EXTUUID1
+unzip $HOME/Downloads/gestures.zip -d $HOME/.local/share/gnome-shell/extensions/$EXTUUID1/
+
+# Do the same for extension "Custom Hot Corners Extended" 
+wget -O $HOME/Downloads/hotcorners.zip https://extensions.gnome.org/extension-data/custom-hot-corners-extendedG-dH.github.com.v10.shell-extension.zip
+EXTUUID2=$(unzip -c $HOME/Downloads/hotcorners.zip metadata.json | grep uuid | cut -d \" -f4)
+mkdir -p $HOME/.local/share/gnome-shell/extensions/$EXTUUID2
+unzip $HOME/Downloads/gestures.zip -d $HOME/.local/share/gnome-shell/extensions/$EXTUUID2/
+
+# Add both to enabled gnome extensions, for next boot
+gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', '$EXTUUID1','$EXTUUID2']"
 
 
 echo "___________________________________________________________________________________"
