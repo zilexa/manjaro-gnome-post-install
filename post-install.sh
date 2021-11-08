@@ -161,6 +161,12 @@ gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
 # Locale
 gsettings set org.gnome.system.location enabled true
 gsettings set org.gnome.desktop.datetime automatic-timezone true
+# Save area select screenshot via PrintScr instead of Shift+PrintScr 
+gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot "@as []"
+gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot "@as []"
+gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot "['<Shift>Print']"
+gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot "['Print']"
+
 
 echo "___________________________________________________________________________________"
      "                  Touchpad Gestures: 4 instead of 3 fingers                        "
@@ -168,10 +174,12 @@ echo "__________________________________________________________________________
 echo "___________________________________________________________________________________"
 # Install the gnome extension "Gesture Improvements"
 wget -O $HOME/Downloads/gestures.zip https://extensions.gnome.org/extension-data/gestureImprovementsgestures.v17.shell-extension.zip
-unzip $HOME/Downloads/gestures.zip
-mv deadbeef-config-layout-master/lib $HOME/.local/
-rm -r deadbeef-config-layout-master
-rm gestures.zip
+EXTUUID=$(unzip -c $HOME/Downloads/gestures.zip metadata.json | grep uuid | cut -d \" -f4)
+mkdir -p $HOME/.local/share/gnome-shell/extensions/$EXTUUID
+unzip $HOME/Downloads/gestures.zip -d $HOME/.local/share/gnome-shell/extensions/$EXTUUID/
+gnome-extensions enable $EXTUUID
+
+
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
 echo "                          Simplify $HOME personal folders                          "
