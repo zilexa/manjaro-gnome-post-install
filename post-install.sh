@@ -172,12 +172,16 @@ echo "__________________________________________________________________________
      "                  Touchpad Gestures: 4 instead of 3 fingers                        "
      "       this way, you can use 3-finger touchpad gestures within applications        "
 echo "___________________________________________________________________________________"
-# Install the gnome extension "Gesture Improvements"
+# Download the gnome extension "Gesture Improvements"
 wget -O $HOME/Downloads/gestures.zip https://extensions.gnome.org/extension-data/gestureImprovementsgestures.v17.shell-extension.zip
+# Get the UUID of the extension
 EXTUUID=$(unzip -c $HOME/Downloads/gestures.zip metadata.json | grep uuid | cut -d \" -f4)
+# Create a subfolder in the Extensions folder with the UUID as name
 mkdir -p $HOME/.local/share/gnome-shell/extensions/$EXTUUID
+# Unzip the files there
 unzip $HOME/Downloads/gestures.zip -d $HOME/.local/share/gnome-shell/extensions/$EXTUUID/
-gnome-extensions enable $EXTUUID
+# Add to enabled extensions, for next boot
+gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', '$EXTUUID']"
 
 
 echo "___________________________________________________________________________________"
