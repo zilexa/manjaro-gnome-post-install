@@ -162,7 +162,16 @@ gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
 gsettings set org.gnome.system.location enabled true
 gsettings set org.gnome.desktop.datetime automatic-timezone true
 
-
+echo "___________________________________________________________________________________"
+     "                  Touchpad Gestures: 4 instead of 3 fingers                        "
+     "       this way, you can use 3-finger touchpad gestures within applications        "
+echo "___________________________________________________________________________________"
+# Install the gnome extension "Gesture Improvements"
+wget -O $HOME/Downloads/gestures.zip https://extensions.gnome.org/extension-data/gestureImprovementsgestures.v17.shell-extension.zip
+unzip $HOME/Downloads/gestures.zip
+mv deadbeef-config-layout-master/lib $HOME/.local/
+rm -r deadbeef-config-layout-master
+rm gestures.zip
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
 echo "                          Simplify $HOME personal folders                          "
