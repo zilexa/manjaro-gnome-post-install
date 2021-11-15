@@ -99,3 +99,5 @@ _Now, run the script, note you will be asked to make choices (y/n) or enter info
 ```
 bash postinstall.sh
 ```
+
+When done, close the window and reboot. Enjoy!
