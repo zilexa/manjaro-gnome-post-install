@@ -88,12 +88,12 @@ Make sure you select "Erase disk" and "BTRFS" as file system. Also make sure to 
 _When installation is finished, close the "Welcome" window and launch Terminal_ \
 The icon looks like this: ![Terminal-icon](https://user-images.githubusercontent.com/3430004/141796815-32347b36-f890-4e43-ba18-33a221c5bf70.png)
 
-_Copy paste the following, this will change path to your Downloads folder and download the post-install script:_ \
+_Copy paste the following, this will change path to your Downloads folder and download the post-install script:_
 ```
 cd Downloads && wget https://raw.githubusercontent.com/zilexa/Ubuntu-Budgie-Post-Install-Script/master/postinstall.sh
 ```
 
-Optionally, read the script and adjust to your needs. \
+Optionally, read the script and adjust to your needs.
 
 _Now, run the script, note you will be asked to make choices (y/n) or enter information:_ 
 ```
