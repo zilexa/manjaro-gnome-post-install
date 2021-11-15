@@ -454,6 +454,9 @@ ram=$(grep "MemTotal" /proc/meminfo | tr -d " " | sed -r "s/(\w+):([0-9]+)(\w+)/
 size=$(printf "%.0f\n" $(echo "$ram * 1.5 / 1000" | bc ))
 
 # Configure swapfile on btrfs nested subvolume to maintain TimeShift compatibility
+sudo swapoff -a
+sudo rm -rf /swap
+sudo rm -rf /swap/swapfile
 sudo btrfs subvolume create /@swap
 sudo touch /@swap/swapfile
 sudo truncate -s 0 /@swap/swapfile
