@@ -14,7 +14,7 @@ sudo sed -Ei '/DownloadUpdates/s/^#//' /etc/pamac.conf
 sudo sed -Ei '/EnableAUR/s/^#//' /etc/pamac.conf
 sudo sed -Ei '/CheckAURUpdates/s/^#//' /etc/pamac.conf
 # Mirrors
-sudo pacman-mirrors -g --continent -P https --api && sudo pacman -Syyu
+sudo pacman-mirrors -g --continent -P https --api && sudo pacman -Syyu --noconfirm
 
 
 echo "___________________________________________________________________________________"
