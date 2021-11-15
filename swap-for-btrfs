@@ -21,7 +21,7 @@ btrfs property set /@swap/swapfile compression none
 dd if=/dev/zero of=/@swap/swapfile bs=1M count=$size status=progress
 chmod 0600 /@swap/swapfile
 mkswap /@swap/swapfile
-su -c "echo -e '# Swapfile for hibernation support, on nested subvolume\n/@swap/swapfile\tnone\tswap\tsw\t0\t0' >> /etc/fstab" 
+echo -e '# Swapfile for hibernation support, on nested subvolume\n/@swap/swapfile\tnone\tswap\tsw\t0\t0' >> /etc/fstab
 [[ -z $(swapon -s | grep "/@swap/swapfile") ]] && swapon /@swap/swapfile
 
 # Enable Hibernation
