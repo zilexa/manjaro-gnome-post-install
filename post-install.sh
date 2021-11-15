@@ -454,9 +454,13 @@ ram=$(grep "MemTotal" /proc/meminfo | tr -d " " | sed -r "s/(\w+):([0-9]+)(\w+)/
 size=$(printf "%.0f\n" $(echo "$ram * 1.5 / 1000" | bc ))
 
 # Configure swapfile on btrfs nested subvolume to maintain TimeShift compatibility
-sudo swapoff -a
-sudo rm -rf /swap
+# Disable current swap, remove its entries from fstab, mount fstab, remove swap folder and file
+sudo swapoff /swap/swapfile
+sudo sed -i"-backup" '/swap/d' /etc/fstab
+sudo mount -a
 sudo rm -rf /swap/swapfile
+sudo rm -rf /swap
+# Configure swap for BTRFS with hibernate support
 sudo btrfs subvolume create /@swap
 sudo touch /@swap/swapfile
 sudo truncate -s 0 /@swap/swapfile
