@@ -223,37 +223,37 @@ echo "__________________________________________________________________________
 echo "                                                                                   " 
 echo "         Install must-have applications for various common tasks                   "
 echo "___________________________________________________________________________________"
-#Install system cleanup tool
+# Install system cleanup tool
 sudo pacman -S --noconfirm bleachbit
 
-#Install handy desktop tools
+# Install handy desktop tools
 sudo pacman -S --noconfirm variety
 
 # Install a musicplayer that supports folder view library
 sudo pacman -S --noconfirm strawberry
 
-#Install Audacity audio editor and recorder
+# Install Audacity audio editor and recorder
 sudo pacman -S --noconfirm audacity
 
-#Install simple video editor (cut/trim videos)
+# Install simple video editor (cut/trim videos)
 #sudo pacman -S losslesscut
 
-#Install handbrake to convert videos
+# Install handbrake to convert videos
 sudo pacman -S --noconfirm handbrake
 
-#Install Darktable photo editor (like Adobe Photoshop)
+# Install Darktable photo editor (like Adobe Photoshop)
 sudo pacman -S --noconfirm darktable
 
-#Install simple image editor (like Paint)
+# Install simple image editor (like Paint)
 sudo pacman -S --noconfirm pinta
 
-#Install photo library management
+# Install photo library management
 sudo pacman -S --noconfirm digikam
 
 # Pin common apps to Arc Menu
-gsettings get org.gnome.shell.extensions.arcmenu pinned-app-list "['Add/Remove Software', '', 'org.manjaro.pamac.manager.desktop', 'Strawberry', '', 'org.strawberrymusicplayer.strawberry.desktop', 'Audacity', '', 'audacity.desktop', 'Document Scanner', '', 'simple-scan.desktop', 'Settings', '', 'gnome-control-center.desktop', 'Manjaro Settings Manager', '', 'manjaro-settings-manager.desktop', 'gThumb Image Viewer', '', 'org.gnome.gThumb.desktop', 'digiKam', '', 'org.kde.digikam.desktop', 'Darktable Photo Workflow Software', '', 'darktable.desktop', 'Pinta Image Editor', '', 'pinta.desktop', 'HandBrake', '', 'fr.handbrake.ghb.desktop', 'LosslessCut', '', 'losslesscut-bin.desktop']"
+gsettings set org.gnome.shell.extensions.arcmenu pinned-app-list "['Add/Remove Software', '', 'org.manjaro.pamac.manager.desktop', 'Strawberry', '', 'org.strawberrymusicplayer.strawberry.desktop', 'Audacity', '', 'audacity.desktop', 'Document Scanner', '', 'simple-scan.desktop', 'Settings', '', 'gnome-control-center.desktop', 'Manjaro Settings Manager', '', 'manjaro-settings-manager.desktop', 'gThumb Image Viewer', '', 'org.gnome.gThumb.desktop', 'digiKam', '', 'org.kde.digikam.desktop', 'Darktable Photo Workflow Software', '', 'darktable.desktop', 'Pinta Image Editor', '', 'pinta.desktop', 'HandBrake', '', 'fr.handbrake.ghb.desktop', 'LosslessCut', '', 'losslesscut-bin.desktop']"
 # Add most used apps to Panel (favourites)
-gsettings get org.gnome.shell favorite-apps "['nemo.desktop', 'firefox.desktop', 'org.gnome.gThumb.desktop', 'org.onlyoffice.desktopeditors.desktop', 'pluma.desktop', 'org.gnome.Calculator.desktop']"
+gsettings set org.gnome.shell favorite-apps "['nemo.desktop', 'firefox.desktop', 'org.gnome.gThumb.desktop', 'org.onlyoffice.desktopeditors.desktop', 'pluma.desktop', 'org.gnome.Calculator.desktop']"
 
 
 echo "___________________________________________________________________________________"
@@ -307,6 +307,7 @@ echo "---------------------------------------"
 read -p "Configure Remote Desktop to share your screen securely, if you need support from family/friends? (y/n)" answer
 case ${answer:0:1} in
     y|Y )
+    sudo pacman -S --noconfirm gnome-remote-desktop
     echo "Please create credentials to allow access by others:"
     read -p 'Remote Desktop access username: ' rdpuser
     read -p 'Remote Desktop access password: ' rdppw
