@@ -276,24 +276,6 @@ EOF
 echo "_________________________________________________________________________"
 echo "                         OPTIONAL APPLICATIONS                           "
 echo "_________________________________________________________________________"
-# Use your custom Firefox Sync Server by default
-echo "---------------------------------------"
-read -p "Would you like to use your own Firefox Sync Server? (y/n)" answer
-case ${answer:0:1} in
-    y|Y )
-    echo "Please type your Firefox Sync domain address, for example: firefox.mydomain.com"
-    read -p 'Firefox Sync domain address: ' ffsyncdomain
-    sudo tee -a /usr/lib/firefox/firefox.cfg &>/dev/null << EOF
-defaultPref("identity.sync.tokenserver.uri","https://$ffsyncdomain/token/1.0/sync/1.5");
-EOF
-    echo "Done. New firefox profile will use your Firefox sync server by default."
-    ;;
-    * )
-        echo "default Mozilla public sync server is used."
-    ;;
-esac
-
-
 # Install ALL Win10/Office365 fonts
 echo "---------------------------------------"
 echo "Install all MS Office365 fonts, for full compatibility with MS Office files?"
@@ -319,6 +301,64 @@ case ${answer:0:1} in
     ;;
 esac
 
+# Configure RDP credentials, Manjaro Gnome has built-in RDP support for screen sharing. However no UI is available yet to set the credentials.
+# After credentials have been created, you can simply enable/disable RDP by toggling "Screen Sharing" via Settings > Sharing. 
+echo "---------------------------------------"
+read -p "Configure Remote Desktop to share your screen securely, if you need support from family/friends? (y/n)" answer
+case ${answer:0:1} in
+    y|Y )
+    echo "Please create credentials to allow access by others:"
+    read -p 'Remote Desktop access username: ' rdpuser
+    read -p 'Remote Desktop access password: ' rdppw
+    echo "Your username/password will be $rdpuser/$rdppw."
+    read -p "A self-signed certificate is required and will be created. Hit [ENTER] to start and prepare to answer questions for the certificate." 
+    # Download the code snippet that generates RDP credentials
+    wget -O $HOME/Downloads/grd_rdp_credentials.c https://gitlab.gnome.org/-/snippets/1778/raw/master/grd_rdp_credentials.c
+    # Compile the file
+    gcc grd_rdp_credentials.c `pkg-config --libs --cflags libsecret-1`
+    # Use the program to store the credentials via libsecret
+    ./a.out $rdpuser $rdppw
+    # Create the server certificate and private keyfile
+    openssl genrsa -out tls.key 4096
+    openssl req -new -key tls.key -out tls.csr
+    openssl x509 -req -days 730 -signkey tls.key -in tls.csr -out tls.crt
+    # Move the certificate and keyfile to a better location
+    mkdir $HOME/.config/remote-desktop
+    mv $HOME/Downloads/tls.key $HOME/.config/remote-desktop/tls.key
+    mv $HOME/Downloads/tls.crt $HOME/.config/remote-desktop/tls.crt
+    # Set the location of the two files
+    gsettings set org.gnome.desktop.remote-desktop.rdp tls-key '$HOME/.config/remote-desktop/tls.key'
+    gsettings set org.gnome.desktop.remote-desktop.rdp tls-cert '$HOME/.config/remote-desktop/tls.crt'
+    # Cleanup
+    rm $HOME/Downloads/tls.csr
+    rm $HOME/Downloads/a.out
+    rm $HOME/Downloads/grd_rdp_credentials.c
+
+    echo "RDP credentials configured. Note RDP is still disabled! You can enable/disable RDP easily via Settings > Sharing > Share Screen."
+    ;;
+    * )
+        echo "RDP credentials not configured. Enabling 'Share Screen' will only work for VNC (slow), not RDP."
+    ;;
+esac
+
+
+# Use your custom Firefox Sync Server by default
+echo "---------------------------------------"
+read -p "Would you like to use your own Firefox Sync Server? (y/n)" answer
+case ${answer:0:1} in
+    y|Y )
+    echo "Please type your Firefox Sync domain address, for example: firefox.mydomain.com"
+    read -p 'Firefox Sync domain address: ' ffsyncdomain
+    sudo tee -a /usr/lib/firefox/firefox.cfg &>/dev/null << EOF
+defaultPref("identity.sync.tokenserver.uri","https://$ffsyncdomain/token/1.0/sync/1.5");
+EOF
+    echo "Done. New firefox profile will use your Firefox sync server by default."
+    ;;
+    * )
+        echo "default Mozilla public sync server is used."
+    ;;
+esac
+
 
 # Install Nextcloud Desktop Client for webDAV syncing with FileRun 
 echo "---------------------------------------"
@@ -331,6 +371,7 @@ case ${answer:0:1} in
         echo "Skipping Nextcloud Desktop Client..."
     ;;
 esac
+
 
 # Install Spotify
 echo "---------------------------------------"
@@ -421,7 +462,7 @@ sudo btrfs property set /@swap/swapfile compression none
 sudo dd if=/dev/zero of=/@swap/swapfile bs=1M count=$size status=progress
 sudo chmod 0600 /@swap/swapfile
 sudo mkswap /@swap/swapfile
-sudo echo "# Created by a script\n/swapfile\tnone\tswap\tsw\t0\t0" >> /etc/fstab
+sudo su -c "echo -e '# Created by a script\n/swapfile\tnone\tswap\tsw\t0\t0' >> /etc/fstab" 
 [[ -z $(swapon -s | grep "/@swap/swapfile") ]] && swapon /@swap/swapfile
 
 # Enable Hibernation
