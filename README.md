@@ -18,8 +18,10 @@ This script will:
   - Automatic timezone
   - PrintScr button allows Area selection and saves to /Pictures/Screenshots folder
   - Touchpad scroll direction set to mouse scroll direction (= disable natural scrolling)
-- Touchpad gestures extended: 4 finger desktop gestures (instead of default 3) to allow applications to bind 2 and 3 finger gestures. 
-- Hotcorners, instead of 1 hotcorner, every hotcorner can be configured. Top left triggers App menu, bottom left triggers Overview, bottom-right Desktop.
+
+### Gestures
+- Touchpad gestures extended: 4 finger system gestures (instead of default 3) to allow applications to bind 2 and 3 finger gestures. 
+- Hotcorners improved: instead of 1 hotcorner, every corner of the screen can be configured. Top left triggers App menu, bottom left triggers Overview, bottom-right Desktop.
 
 ### Reduce amount of personal folders
 - move Templates to Documents folder
