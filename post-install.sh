@@ -166,6 +166,9 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot "@as []"
 gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot "@as []"
 gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot "['<Shift>Print']"
 gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot "['Print']"
+# Store screenshots in a subfolder of Pictures
+mkdir $HOME/Pictures/Screenshots
+gsettings set org.gnome.gnome-screenshot auto-save-directory "file:///home/${USER}/Pictures/Screenshots/"
 
 
 echo "___________________________________________________________________________________"
@@ -202,7 +205,7 @@ sudo sed -i -e 's+$HOME/Templates+$HOME/Documents/Templates+g' $HOME/.config/use
 ## Disable Public folder because nobody uses it. 
 sudo sed -i -e 's+$HOME/Public+$HOME/Downloads+g' $HOME/.config/user-dirs.dirs
 ## Rename Pictures to Photos
-sudo sed -i -e 's+$HOME/Pictures+$HOME/Photos+g' $HOME/.config/user-dirs.dirs
+#sudo sed -i -e 's+$HOME/Pictures+$HOME/Photos+g' $HOME/.config/user-dirs.dirs
 ## Rename Videos to Media making it the folder for tvshows/movies downloads or anything else that is not suppose to be in Photos. 
 sudo sed -i -e 's+$HOME/Videos+$HOME/Media+g' $HOME/.config/user-dirs.dirs
 
@@ -213,7 +216,7 @@ rmdir $HOME/Public
 mv $HOME/Templates $HOME/Documents/
 ## Rename and move contents from Pictures to Photos, Videos to Media.
 mv /home/${USER}/Videos /home/${USER}/Media
-mv /home/${USER}/Pictures /home/${USER}/Photos
+#mv /home/${USER}/Pictures /home/${USER}/Photos
 org.nemo.window-state sidebar-bookmark-breakpoint 4
 org.nemo.window-state sidebar-bookmark-breakpoint 3
 
@@ -451,7 +454,7 @@ read -p "Configure swapfile for BTRFS and enable hibernation y/n ?" answer
 case ${answer:0:1} in
     y|Y )
 wget -O $HOME/Downloads/swapforbtrfs.sh https://raw.githubusercontent.com/zilexa/manjaro-gnome-post-install/main/swap-for-btrfs
-sudo su -c "bash -x swapforbtrfs.sh"
+sudo su -c "bash -x $HOME/Downloads/swapforbtrfs.sh"
     ;;
     * )
         echo "Not configuring BTRFS swapfile and hibernation. It is recommended you configure zswap." 
