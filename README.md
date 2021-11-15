@@ -4,10 +4,10 @@ Manjaro Gnome already has a very good Out-Of-The-Box Experience.
 This script will: 
 
 ### Desktop layout: minimal, easy, maximizing available screen
-- Dock disabled, Vertical Panel enabled with Favourite apps and an App Menu with "Eleven" layout
+- Dock disabled, Vertical Panel enabled with Favourite apps and an Arc Menu with "Eleven" layout
 - Pinned common applications to the menu and favourite apps to the Panel
 - Several toggles enabled/disabled to provide a smooth experience
-  - Several Panel and App Menu settings
+  - Several Panel, Arc Menu, Desktop settings
   - Week numbers in Calendar
   - Show battery percentage in taskbar
   - Enable auto night light
