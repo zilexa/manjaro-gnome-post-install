@@ -172,9 +172,9 @@ gsettings set org.gnome.gnome-screenshot auto-save-directory "file:///home/${USE
 
 
 echo "___________________________________________________________________________________"
-     "                   1) Touchpad Gestures: 4 instead of 3 fingers:                   "
-     "       this way, you can use 3-finger touchpad gestures within applications        "
-     "           2) Hot Corners Extended: allow config of screen hot corners             " 
+echo "                   1) Touchpad Gestures: 4 instead of 3 fingers:                   "
+echo "       this way, you can use 3-finger touchpad gestures within applications        "
+echo "           2) Hot Corners Extended: allow config of screen hot corners             " 
 echo "___________________________________________________________________________________"
 # Download the gnome extension "Gesture Improvements"
 wget -O $HOME/Downloads/gestures.zip https://extensions.gnome.org/extension-data/gestureImprovementsgestures.v17.shell-extension.zip
