@@ -226,6 +226,9 @@ echo "                                                                          
 echo "         Install must-have applications for various common tasks                   "
 echo "___________________________________________________________________________________"
 # Install system cleanup tool
+sudo pacman -S --noconfirm freeoffice
+
+# Install system cleanup tool
 sudo pacman -S --noconfirm bleachbit
 
 # Install handy desktop tools
@@ -237,17 +240,17 @@ sudo pacman -S --noconfirm strawberry
 # Install Audacity audio editor and recorder
 sudo pacman -S --noconfirm audacity
 
-# Install simple video editor (cut/trim videos)
-#sudo pacman -S losslesscut
+# Install simple video editor (cut/trim videos) from AUR repository
+sudo pamac install --no-confirm losslesscut-bin
 
 # Install handbrake to convert videos
 sudo pacman -S --noconfirm handbrake
 
-# Install Darktable photo editor (like Adobe Photoshop)
-sudo pacman -S --noconfirm darktable
-
 # Install simple image editor (like Paint)
 sudo pacman -S --noconfirm pinta
+
+# Install Darktable photo editor (like Adobe Photoshop)
+sudo pacman -S --noconfirm darktable
 
 # Install photo library management
 sudo pacman -S --noconfirm digikam
