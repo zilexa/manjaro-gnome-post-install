@@ -82,8 +82,8 @@ _Create a USB stick with the image._ \
 If on Gnome, go to Disks, select the usb stick, go to the 3-dot menu and select "restore from image". \
 If not on Linux, use [Rufus](https://rufus.ie/en/) for Windows or [UNetbootin](https://unetbootin.github.io/) for Linux/MacOS/Windows.  
 
-_Boot into Live via USB_ \
-- Figure out the F-key that will show the boot menu of your system. Select the USB stick. \
+_Boot into Live via USB_
+- Figure out the F-key that will show the boot menu of your system. Select the USB stick.
 - When booted and not connected via ethernet: go to the top-right system icons, click, select "WiFi not connected > Select network and connect to WiFi. 
 - Launch the installer. 
 - During installation, select your preffered language (like British English en_GB) and locale (like nl_NL) and keyboard (like "US, Euro on 5").  
