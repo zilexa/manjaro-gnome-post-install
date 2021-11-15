@@ -39,7 +39,6 @@ This script will:
 - Enable AUR and updates
 - Download updates and hide systray icon if no update is available
 - Test and rank mirrors and select the fastest mirror to download updates from
-- Allow installation of all MS Office 365 fonts for max compatibility
 
 #### File Manager (Nemo instead of Nautilus)
 - List view instead of large icon view, also for root user
@@ -83,9 +82,13 @@ _Create a USB stick with the image._ \
 If on Gnome, go to Disks, select the usb stick, go to the 3-dot menu and select "restore from image". \
 If not on Linux, use [Rufus](https://rufus.ie/en/) for Windows or [UNetbootin](https://unetbootin.github.io/) for Linux/MacOS/Windows.  
 
-_Boot via USB_ \
-Figure out the F-key that will show the boot menu of your system. Select the USB stick. \
-Make sure you select "Erase disk" and "BTRFS" as file system. Also make sure to select no swap. 
+_Boot into Live via USB_ \
+- Figure out the F-key that will show the boot menu of your system. Select the USB stick. \
+- When booted and not connected via ethernet: go to the top-right system icons, click, select "WiFi not connected > Select network and connect to WiFi. 
+- Launch the installer. 
+- During installation, select your preffered language (like British English en_GB) and locale (like nl_NL) and keyboard (like "US, Euro on 5").  
+- Make sure you select "Erase disk" and "BTRFS" as file system. Also make sure to select no swap. 
+
 
 _When installation is finished, close the "Welcome" window and launch Terminal_ \
 The Terminal icon ![Terminal-icon](https://user-images.githubusercontent.com/3430004/141796815-32347b36-f890-4e43-ba18-33a221c5bf70.png)  is shown on the dock at the bottom. 
