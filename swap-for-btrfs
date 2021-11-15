@@ -25,7 +25,7 @@ echo -e '# Swapfile for hibernation support, on nested subvolume\n/@swap/swapfil
 [[ -z $(swapon -s | grep "/@swap/swapfile") ]] && swapon /@swap/swapfile
 
 # Enable Hibernation
-pacman -S --noconfirm install pm-utils
+pacman -S --noconfirm pm-utils
 offset=$(filefrag -v /@swap/swapfile | awk '{ if($1=="0:"){print substr($4, 1, length($4)-2)} }')
 uuid=$(findmnt -no UUID -T /@swap/swapfile)
 mkdir -p /etc/default/grub.d/
