@@ -204,8 +204,6 @@ echo "__________________________________________________________________________
 sudo sed -i -e 's+$HOME/Templates+$HOME/Documents/Templates+g' $HOME/.config/user-dirs.dirs
 ## Disable Public folder because nobody uses it. 
 sudo sed -i -e 's+$HOME/Public+$HOME/Downloads+g' $HOME/.config/user-dirs.dirs
-## Rename Pictures to Photos
-#sudo sed -i -e 's+$HOME/Pictures+$HOME/Photos+g' $HOME/.config/user-dirs.dirs
 ## Rename Videos to Media making it the folder for tvshows/movies downloads or anything else that is not suppose to be in Photos. 
 sudo sed -i -e 's+$HOME/Videos+$HOME/Media+g' $HOME/.config/user-dirs.dirs
 
@@ -219,8 +217,9 @@ mv /home/${USER}/Videos /home/${USER}/Media
 #mv /home/${USER}/Pictures /home/${USER}/Photos
 org.nemo.window-state sidebar-bookmark-breakpoint 4
 org.nemo.window-state sidebar-bookmark-breakpoint 3
-
-
+# Create folders for storing photo albums and for Digikam database
+mkdir $HOME/Pictures/Albums
+mkdir $HOME/Pictures/digikam-db && chattr +C $HOME/Pictures/digikam-db
 
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
@@ -427,14 +426,14 @@ sudo mv /home/${USER}/Desktop /mnt/userdata/
 sudo mv /home/${USER}/Downloads /mnt/userdata/
 sudo mv /home/${USER}/Media /mnt/userdata/
 sudo mv /home/${USER}/Music /mnt/userdata/
-sudo mv /home/${USER}/Photos /mnt/userdata/
+sudo mv /home/${USER}/Pictures /mnt/userdata/
 ## Link personal folders inside subvolume back into home subvolume
 ln -s /mnt/userdata/Documents $HOME/Documents
 ln -s /mnt/userdata/Desktop $HOME/Desktop
 ln -s /mnt/userdata/Downloads $HOME/Downloads
 ln -s /mnt/userdata/Media $HOME/Media
 ln -s /mnt/userdata/Music $HOME/Music
-ln -s /mnt/userdata/Photos $HOME/Photos
+ln -s /mnt/userdata/Pictures $HOME/Pictures
 #Current Downloads folder has been moved, enter the moved Downloads folder 
 cd /
 cd $HOME
