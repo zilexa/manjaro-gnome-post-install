@@ -52,9 +52,9 @@ echo "__________________________________________________________________________
 sudo pacman -R --noconfirm gedit
 sudo pacman -S --noconfirm pluma
 # Configure the backupped Text Editor to work with Pluma, keeping the name and logo
-sudo cp '/usr/share/applications/pluma.desktop' '/usr/share/applications/pluma.backup'
-sudo sed -i -e 's@pluma@Text Editor@g' '/usr/share/applications/pluma.desktop'
-sudo sed -i -e 's@Icon=org.gnome.pluma@Icon=org.gnome.gedit@g' '/usr/share/applications/pluma.desktop'
+sudo cp '/usr/share/applications/pluma.desktop' '/usr/share/applications/plumabackup.backup'
+sudo sed -i -e 's@Pluma@Text Editor@g' '/usr/share/applications/pluma.desktop'
+sudo sed -i -e 's@Icon=accessories-text-editor@Icon=org.gnome.gedit@g' '/usr/share/applications/pluma.desktop'
 #sudo mv '/usr/share/applications/TextEditor.backup' '/usr/share/applications/TextEditor.desktop'
 #sudo sed -i -e 's@org.gnome.gedit.desktop@TextEditor.desktop@g' /usr/share/applications/mimeinfo.cache
 sudo sed -i -e 's@org.gnome.gedit.desktop@Text Editor.desktop@g' $HOME/.config/mimeapps.list
