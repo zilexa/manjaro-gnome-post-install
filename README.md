@@ -85,7 +85,7 @@ _Boot via USB_ \
 Figure out the F-key that will show the boot menu of your system. Select the USB stick. \
 Make sure you select "Erase disk" and "BTRFS" as file system. Also make sure to select no swap. 
 
-_When installation is finished, close the "Welcome" window and launch Terminal_
+_When installation is finished, close the "Welcome" window and launch Terminal_ \
 The icon looks like this: ![Terminal-icon](https://user-images.githubusercontent.com/3430004/141796815-32347b36-f890-4e43-ba18-33a221c5bf70.png)
 
 _Copy paste the following, this will change path to your Downloads folder and download the post-install script:_ \
