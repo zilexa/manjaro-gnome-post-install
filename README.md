@@ -90,7 +90,7 @@ The Terminal icon ![Terminal-icon](https://user-images.githubusercontent.com/343
 
 _Copy paste the following, this will change path to your Downloads folder and download the post-install script:_
 ```
-cd Downloads && wget https://raw.githubusercontent.com/zilexa/Ubuntu-Budgie-Post-Install-Script/master/postinstall.sh
+cd Downloads && wget https://raw.githubusercontent.com/zilexa/manjaro-gnome-post-install/main/post-install.sh
 ```
 
 Optionally, read the script and adjust to your needs.
