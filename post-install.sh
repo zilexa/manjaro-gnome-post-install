@@ -462,7 +462,7 @@ sudo btrfs property set /@swap/swapfile compression none
 sudo dd if=/dev/zero of=/@swap/swapfile bs=1M count=$size status=progress
 sudo chmod 0600 /@swap/swapfile
 sudo mkswap /@swap/swapfile
-sudo su -c "echo -e '# Created by a script\n/@swap/swapfile\tnone\tswap\tsw\t0\t0' >> /etc/fstab" 
+sudo su -c "echo -e '# Swapfile for hibernation support, on nested subvolume\n/@swap/swapfile\tnone\tswap\tsw\t0\t0' >> /etc/fstab" 
 [[ -z $(swapon -s | grep "/@swap/swapfile") ]] && swapon /@swap/swapfile
 
 # Enable Hibernation
