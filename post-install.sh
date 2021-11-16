@@ -194,8 +194,8 @@ mkdir -p $HOME/.local/share/gnome-shell/extensions/$EXTUUID2
 unzip $HOME/Downloads/hotcorners.zip -d $HOME/.local/share/gnome-shell/extensions/$EXTUUID2/
 
 # Add to enabled extensions, for next boot
-gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu', 'places-menu@gnome-shell-extensions.gcampax.github.com']"
-gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', '$EXTUUID1', '$EXTUUID2']"
+gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu', 'places-menu@gnome-shell-extensions.gcampax.github.com', '$EXTUUID2']"
+gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', '$EXTUUID1']"
 
 
 echo "___________________________________________________________________________________"
@@ -259,9 +259,9 @@ sudo pacman -S --noconfirm darktable
 sudo pacman -S --noconfirm digikam
 
 # Pin common apps to Arc Menu
-gsettings set org.gnome.shell.extensions.arcmenu pinned-app-list "['FreeOffice TextMaker', '', 'freeoffice-textmaker.desktop', 'FreeOffice PlanMaker', '', 'freeoffice-planmaker.desktop', 'FreeOffice Presentations', '', 'freeoffice-presentations.desktop', 'Document Scanner', '', 'simple-scan.desktop', 'Pinta Image Editor', '', 'pinta.desktop', 'gThumb Image Viewer', '', 'org.gnome.gThumb.desktop', 'digiKam', '', 'org.kde.digikam.desktop', 'Darktable Photo Workflow Software', '', 'darktable.desktop', 'Strawberry', '', 'org.strawberrymusicplayer.strawberry.desktop', 'Audacity', '', 'audacity.desktop', 'HandBrake', '', 'fr.handbrake.ghb.desktop', 'LosslessCut', '', 'losslesscut-bin.desktop', 'BleachBit', '', 'org.bleachbit.BleachBit.desktop', 'Add/Remove Software', '', 'org.manjaro.pamac.manager.desktop', 'Terminal', '', 'org.gnome.Terminal.desktop']"
+gsettings set org.gnome.shell.extensions.arcmenu pinned-app-list "['FreeOffice TextMaker', '', 'freeoffice-textmaker.desktop', 'FreeOffice PlanMaker', '', 'freeoffice-planmaker.desktop', 'FreeOffice Presentations', '', 'freeoffice-presentations.desktop', 'ONLYOFFICE Desktop Editors', '', 'org.onlyoffice.desktopeditors.desktop', 'Document Scanner', '', 'simple-scan.desktop', 'Pinta Image Editor', '', 'pinta.desktop', 'digiKam', '', 'org.kde.digikam.desktop', 'Darktable Photo Workflow Software', '', 'darktable.desktop', 'Strawberry', '', 'org.strawberrymusicplayer.strawberry.desktop', 'Audacity', '', 'audacity.desktop', 'HandBrake', '', 'fr.handbrake.ghb.desktop', 'LosslessCut', '', 'losslesscut-bin.desktop', 'Add/Remove Software', '', 'org.manjaro.pamac.manager.desktop', 'BleachBit', '', 'org.bleachbit.BleachBit.desktop', 'Tweaks', '', 'org.gnome.tweaks.desktop', 'Extensions', '', 'org.gnome.Extensions.desktop', 'Terminal', '', 'org.gnome.Terminal.desktop']"
 # Add most used apps to Panel (favourites)
-gsettings set org.gnome.shell favorite-apps "['nemo.desktop', 'firefox.desktop', 'org.gnome.gThumb.desktop', 'org.onlyoffice.desktopeditors.desktop', 'pluma.desktop', 'org.gnome.Calculator.desktop']"
+gsettings set org.gnome.shell favorite-apps "['nemo.desktop', 'firefox.desktop', 'org.gnome.gThumb.desktop', 'pluma.desktop', 'org.gnome.Calculator.desktop']"
 
 
 echo "___________________________________________________________________________________"
