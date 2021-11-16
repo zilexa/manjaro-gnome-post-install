@@ -67,6 +67,8 @@ gsettings set org.mate.pluma display-line-numbers true
 gsettings set org.mate.pluma display-overview-map true
 gsettings set org.mate.pluma auto-indent true
 gsettings set org.mate.pluma active-plugins "['time', 'spell', 'sort', 'snippets', 'modelines', 'filebrowser', 'docinfo']"
+gsettings set org.mate.pluma color-scheme 'cobalt'
+
 ## also when opening files as with elevated privileges (root user)
 sudo -u root dbus-launch gsettings set org.mate.pluma highlight-current-line true
 sudo -u root dbus-launch gsettings set org.mate.pluma bracket-matching true
@@ -74,7 +76,7 @@ sudo -u root dbus-launch gsettings set org.mate.pluma display-line-numbers true
 sudo -u root dbus-launch gsettings set org.mate.pluma display-overview-map true
 sudo -u root dbus-launch gsettings set org.mate.pluma auto-indent true
 sudo -u root dbus-launch gsettings set org.mate.pluma active-plugins "['time', 'spell', 'sort', 'snippets', 'modelines', 'filebrowser', 'docinfo']"
-
+sudo -u root dbus-launch gsettings set org.mate.pluma color-scheme 'cobalt'
 
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
@@ -141,8 +143,8 @@ gsettings set org.gnome.shell.extensions.dash-to-panel window-preview-title-posi
 gsettings set org.gnome.shell.extensions.ding show-home false
 gsettings set org.gnome.shell.extensions.ding start-corner 'bottom-left'
 # Theme
-gsettings set org.gnome.desktop.interface gtk-theme 'Matcha-dark-azul'
-gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
+gsettings set org.gnome.desktop.interface gtk-theme 'Matcha-dark-sea'
+gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark-Maia'
 # Display
 gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic false
 gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from 22.0
