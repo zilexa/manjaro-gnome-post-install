@@ -192,8 +192,10 @@ wget -O $HOME/Downloads/hotcorners.zip https://extensions.gnome.org/extension-da
 EXTUUID2=$(unzip -c $HOME/Downloads/hotcorners.zip metadata.json | grep uuid | cut -d \" -f4)
 mkdir -p $HOME/.local/share/gnome-shell/extensions/$EXTUUID2
 unzip $HOME/Downloads/hotcorners.zip -d $HOME/.local/share/gnome-shell/extensions/$EXTUUID2/
+gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-right-0 action 'show-desktop-mon'
+gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-left-0 action 'toggle-overview'
 
-# Add to enabled extensions, for next boot
+#Enable extensions (Workspace indicator, thumb drive menu, Gesture Improvements), keep Hot Corners disabled due to Arc Menu Hot Corner conflict 
 gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu', 'places-menu@gnome-shell-extensions.gcampax.github.com', '$EXTUUID2']"
 gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', '$EXTUUID1']"
 
