@@ -280,6 +280,8 @@ EOF
 sudo tee -a /usr/lib/firefox/firefox.cfg &>/dev/null << EOF
 // IMPORTANT: Start your code on the 2nd line
 defaultPref("services.sync.prefs.sync.browser.uiCustomization.state",true);
+user_pref("browser.toolbars.bookmarks.visibility", "always");
+user_pref("browser.uiCustomization.state", "{\"placements\":{\"widget-overflow-fixed-list\":[\"screenshot-button\",\"print-button\",\"add-ons-button\",\"library-button\",\"bookmarks-menu-button\",\"preferences-button\",\"panic-button\"],\"nav-bar\":[\"back-button\",\"forward-button\",\"stop-reload-button\",\"customizableui-special-spring1\",\"downloads-button\",\"ublock0_raymondhill_net-browser-action\",\"urlbar-container\",\"customizableui-special-spring2\"],\"toolbar-menubar\":[\"menubar-items\"],\"TabsToolbar\":[\"tabbrowser-tabs\",\"alltabs-button\"],\"PersonalToolbar\":[\"fxa-toolbar-menu-button\",\"history-panelmenu\",\"personal-bookmarks\"]},\"seen\":[\"developer-button\",\"save-to-pocket-button\",\"_d133e097-46d9-4ecc-9903-fa6a722a6e0e_-browser-action\",\"ublock0_raymondhill_net-browser-action\",\"_contain-facebook-browser-action\",\"sponsorblocker_ajay_app-browser-action\"],\"dirtyAreaCache\":[\"nav-bar\",\"PersonalToolbar\",\"toolbar-menubar\",\"TabsToolbar\",\"widget-overflow-fixed-list\"],\"currentVersion\":17,\"newElementCount\":5}");
 EOF
 
 
