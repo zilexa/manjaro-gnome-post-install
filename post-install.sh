@@ -426,7 +426,8 @@ case ${answer:0:1} in
     y|Y )
 # Temporarily mount filesystem root
 sudo mkdir /mnt/system
-sudo mount -o subvolid=5 /dev/nvme0n1p2 /mnt/system
+SYSTEMDRIVE=$(df / | grep / | cut -d" " -f1)
+sudo mount -o subvolid=5 $SYSTEMDRIVE /mnt/system
 # create a root subvolume for user personal folders in the root filesystem
 sudo btrfs subvolume create /mnt/system/@userdata
 ## unmount root filesystem
