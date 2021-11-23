@@ -282,6 +282,8 @@ EOF
 sudo tee -a /usr/lib/firefox/distribution/policies.json &>/dev/null << EOF
 {
   "policies": {
+    "DisableProfileImport": true,
+    "NoDefaultBookmarks": true,
     "Extensions": {
       "Install": ["https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/bypass-paywalls-clean/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/sponsorblock/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/facebook-container/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/google-container/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/nord-polar-night-theme/latest.xpi"]
     }
