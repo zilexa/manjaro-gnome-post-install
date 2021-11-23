@@ -92,9 +92,8 @@ gsettings set org.gnome.shell.extensions.dash-to-panel panel-positions '{"0":"LE
 gsettings set org.gnome.desktop.interface show-battery-percentage true
 gsettings set org.gnome.shell.extensions.arcmenu reload-theme true
 # Arc Menu Hot corner (top left) 
-gsettings set org.gnome.shell.extensions.arcmenu override-hot-corners true
-gsettings set org.gnome.shell.extensions.arcmenu custom-hot-corner-cmd "sh -c 'notify-send \"$(date)\"'"
-gsettings set org.gnome.shell.extensions.arcmenu hot-corners 'ToggleArcMenu'
+gsettings set org.gnome.shell.extensions.arcmenu override-hot-corners false
+gsettings set org.gnome.shell.extensions.arcmenu hot-corners 'Default'
 # Dash to Panel
 gsettings set org.gnome.shell.extensions.dash-to-panel animate-appicon-hover true
 gsettings set org.gnome.shell.extensions.dash-to-panel animate-appicon-hover-animation-extent "{'RIPPLE': 4, 'PLANK': 4, 'SIMPLE': 1}"
@@ -196,8 +195,8 @@ gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-b
 gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-left-0 action 'toggle-overview'
 
 #Enable extensions (Workspace indicator, thumb drive menu, Gesture Improvements), keep Hot Corners disabled due to Arc Menu Hot Corner conflict 
-gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu', 'places-menu@gnome-shell-extensions.gcampax.github.com', '$EXTUUID2']"
-gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', '$EXTUUID1']"
+gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu', 'places-menu@gnome-shell-extensions.gcampax.github.com']"
+gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', '$EXTUUID1', '$EXTUUID2']"
 
 
 echo "___________________________________________________________________________________"
