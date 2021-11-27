@@ -195,11 +195,13 @@ wget -O $HOME/Downloads/hotcorners.zip https://extensions.gnome.org/extension-da
 EXTUUID2=$(unzip -c $HOME/Downloads/hotcorners.zip metadata.json | grep uuid | cut -d \" -f4)
 mkdir -p $HOME/.local/share/gnome-shell/extensions/$EXTUUID2
 unzip $HOME/Downloads/hotcorners.zip -d $HOME/.local/share/gnome-shell/extensions/$EXTUUID2/
-gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-right-0 action 'show-desktop-mon'
-gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-left-0 action 'toggle-overview'
-
 ## FIX FOR ARCMENU - can be deleted after fix is released via updates
 sudo wget -O /usr/share/gnome-shell/extensions/arcmenu@arcmenu.com/controller.js https://gitlab.com/arcmenu/ArcMenu/-/raw/master/controller.js 
+# Configure Hot Corners
+gsettings set org.gnome.desktop.interface.enable-hot-corners false
+gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-top-left-0 action 'toggle-arcmenu'
+gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-right-0 action 'show-desktop-mon'
+gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-left-0 action 'toggle-overview'
 
 #Enable extensions (Workspace indicator, thumb drive menu, Gesture Improvements), keep Hot Corners disabled due to Arc Menu Hot Corner conflict 
 gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu', 'places-menu@gnome-shell-extensions.gcampax.github.com']"
