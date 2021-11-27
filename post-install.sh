@@ -7,6 +7,8 @@ echo "                                                                          
 echo "              Configure updates (every 6hrs > weekly), enable AUR                  "
 echo "                     Test and rank mirrors, select fastest                         "
 echo "___________________________________________________________________________________"
+# Remove unused apps
+sudo pacman -Rsn --noconfirm geary
 # Weekly updates instead of 4x a day. No tray icon if there are no updates. Download in background. Enable AUR (Arch User Repository). 
 sudo sed -i -e 's@RefreshPeriod = 6@RefreshPeriod = 168@g' /etc/pamac.conf
 sudo sed -Ei '/NoUpdateHideIcon/s/^#//' /etc/pamac.conf
