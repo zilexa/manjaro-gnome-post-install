@@ -182,21 +182,26 @@ echo "       this way, you can use 3-finger touchpad gestures within application
 echo "           2) Hot Corners Extended: allow config of screen hot corners             " 
 echo "___________________________________________________________________________________"
 # Download the gnome extension "Gesture Improvements"
-wget -O $HOME/Downloads/gestures.zip https://extensions.gnome.org/extension-data/gestureImprovementsgestures.v17.shell-extension.zip
+#wget -O $HOME/Downloads/gestures.zip https://extensions.gnome.org/extension-data/gestureImprovementsgestures.v17.shell-extension.zip
 # Get the UUID of the extension
-EXTUUID1=$(unzip -c $HOME/Downloads/gestures.zip metadata.json | grep uuid | cut -d \" -f4)
+#EXTUUID1=$(unzip -c $HOME/Downloads/gestures.zip metadata.json | grep uuid | cut -d \" -f4)
 # Create a subfolder in the Extensions folder with the UUID as name
-mkdir -p $HOME/.local/share/gnome-shell/extensions/$EXTUUID1
+#mkdir -p $HOME/.local/share/gnome-shell/extensions/$EXTUUID1
 # Unzip the files there
-unzip $HOME/Downloads/gestures.zip -d $HOME/.local/share/gnome-shell/extensions/$EXTUUID1/
+#unzip $HOME/Downloads/gestures.zip -d $HOME/.local/share/gnome-shell/extensions/$EXTUUID1/
 
 # Do the same for extension "Custom Hot Corners Extended" 
-wget -O $HOME/Downloads/hotcorners.zip https://extensions.gnome.org/extension-data/custom-hot-corners-extendedG-dH.github.com.v10.shell-extension.zip
-EXTUUID2=$(unzip -c $HOME/Downloads/hotcorners.zip metadata.json | grep uuid | cut -d \" -f4)
-mkdir -p $HOME/.local/share/gnome-shell/extensions/$EXTUUID2
-unzip $HOME/Downloads/hotcorners.zip -d $HOME/.local/share/gnome-shell/extensions/$EXTUUID2/
+#wget -O $HOME/Downloads/hotcorners.zip https://extensions.gnome.org/extension-data/custom-hot-corners-extendedG-dH.github.com.v10.shell-extension.zip
+#EXTUUID2=$(unzip -c $HOME/Downloads/hotcorners.zip metadata.json | grep uuid | cut -d \" -f4)
+#mkdir -p $HOME/.local/share/gnome-shell/extensions/$EXTUUID2
+#unzip $HOME/Downloads/hotcorners.zip -d $HOME/.local/share/gnome-shell/extensions/$EXTUUID2/
 ## FIX FOR ARCMENU - can be deleted after fix is released via updates
-sudo wget -O /usr/share/gnome-shell/extensions/arcmenu@arcmenu.com/controller.js https://gitlab.com/arcmenu/ArcMenu/-/raw/master/controller.js 
+#sudo wget -O /usr/share/gnome-shell/extensions/arcmenu@arcmenu.com/controller.js https://gitlab.com/arcmenu/ArcMenu/-/raw/master/controller.js 
+
+# Install via Pamac, to enable auto-update
+sudo pamac install --no-confirm gnome-gesture-improvements
+sudo pamac install --no-confirm gnome-shell-extension-custom-hot-corners-extended
+
 # Configure Hot Corners
 gsettings set org.gnome.desktop.interface.enable-hot-corners false
 gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-top-left-0 action 'toggle-arcmenu'
