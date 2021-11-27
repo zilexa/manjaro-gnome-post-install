@@ -413,6 +413,20 @@ case ${answer:0:1} in
     ;;
 esac
 
+# Get a Firefox shortcut for 2 profiles
+echo "======================================="
+echo "---------------------------------------"
+echo "Firefox: would you like to be able to launch different profiles (2), by simply right-clicking the Firefox shortcut?"
+read -p "Only useful if multiple users use this machine and each user has its own Firefox profile. (y/n)?" answer
+case ${answer:0:1} in
+    y|Y )
+        echo adding profiles to right-click of Firefox shortcut... 
+        wget --no-check-certificate -P $HOME/.local/share/applications https://raw.githubusercontent.com/zilexa/Ubuntu-Budgie-Post-Install-Script/master/firefox/firefox.desktop
+    ;;
+    * )
+        echo "Keeping the Firefox shortcut as is..."
+    ;;
+esac
 
 echo "_________________________________________________________________________"
 echo "                         ISOLATE PERSONAL FOLDERS                        "
