@@ -170,7 +170,11 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot "['Pr
 # Store screenshots in a subfolder of Pictures
 mkdir $HOME/Pictures/Screenshots
 gsettings set org.gnome.gnome-screenshot auto-save-directory "file:///home/${USER}/Pictures/Screenshots/"
-
+# Keyboard shortcut: Ctrl+Alt+T opens Terminal
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"                  
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Terminal'         
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'gnome-terminal'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Ctrl><Alt>T' 
 
 echo "___________________________________________________________________________________"
 echo "                   1) Touchpad Gestures: 4 instead of 3 fingers:                   "
@@ -414,7 +418,6 @@ case ${answer:0:1} in
 esac
 
 # Get a Firefox shortcut for 2 profiles
-echo "======================================="
 echo "---------------------------------------"
 echo "Firefox: would you like to be able to launch different profiles (2), by simply right-clicking the Firefox shortcut?"
 read -p "Only useful if multiple users use this machine and each user has its own Firefox profile. (y/n)?" answer
