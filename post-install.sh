@@ -82,7 +82,7 @@ sudo -u root dbus-launch gsettings set org.mate.pluma color-scheme 'cobalt'
 
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
-echo "     Configure panel (taskbar), App menu (Arcmenu) and common system settings      "
+echo "     Configure panel (taskbar), App menu (Arcmenu) and common dessktop, GUI settings      "
 echo "___________________________________________________________________________________"
 # Arc Menu & Dash to Panel
 gsettings set org.gnome.shell.extensions.arcmenu arc-menu-placement 'DTP'
@@ -117,12 +117,12 @@ gsettings set org.gnome.shell.extensions.dash-to-panel isolate-workspaces true
 gsettings set org.gnome.shell.extensions.dash-to-panel leftbox-padding -1
 gsettings set org.gnome.shell.extensions.dash-to-panel overview-click-to-exit true
 gsettings set org.gnome.shell.extensions.dash-to-panel panel-anchors '{"0":"MIDDLE"}'
-gsettings set org.gnome.shell.extensions.dash-to-panel panel-element-positions '{"0":[{"element":"showAppsButton","visible":false,"position":"stackedTL"},{"element":"activitiesButton","visible":false,"position":"stackedTL"},{"element":"leftBox","visible":true,"position":"stackedTL"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"centerBox","visible":true,"position":"stackedBR"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"dateMenu","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedBR"},{"element":"desktopButton","visible":false,"position":"stackedBR"}]}'
+gsettings set org.gnome.shell.extensions.dash-to-panel panel-element-positions '{"0":[{"element":"activitiesButton","visible":false,"position":"stackedTL"},{"element":"showAppsButton","visible":false,"position":"stackedTL"},{"element":"leftBox","visible":true,"position":"stackedTL"},{"element":"taskbar","visible":true,"position":"centered"},{"element":"centerBox","visible":true,"position":"stackedBR"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"dateMenu","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedBR"},{"element":"desktopButton","visible":false,"position":"stackedBR"}]}'
 gsettings set org.gnome.shell.extensions.dash-to-panel panel-lengths '{"0":100}'
 gsettings set org.gnome.shell.extensions.dash-to-panel panel-position 'BOTTOM'
 gsettings set org.gnome.shell.extensions.dash-to-panel panel-positions '{"0":"LEFT"}'
-gsettings set org.gnome.shell.extensions.dash-to-panel panel-size 48
-gsettings set org.gnome.shell.extensions.dash-to-panel panel-sizes '{"0":48}'
+gsettings set org.gnome.shell.extensions.dash-to-panel panel-size 51
+gsettings set org.gnome.shell.extensions.dash-to-panel panel-sizes '{"0":51}'
 gsettings set org.gnome.shell.extensions.dash-to-panel secondarymenu-contains-showdetails false
 gsettings set org.gnome.shell.extensions.dash-to-panel show-running-apps true
 gsettings set org.gnome.shell.extensions.dash-to-panel status-icon-padding -1
@@ -140,6 +140,10 @@ gsettings set org.gnome.shell.extensions.dash-to-panel trans-use-custom-opacity 
 gsettings set org.gnome.shell.extensions.dash-to-panel trans-use-dynamic-opacity true
 gsettings set org.gnome.shell.extensions.dash-to-panel tray-padding -1
 gsettings set org.gnome.shell.extensions.dash-to-panel window-preview-title-position 'TOP'
+gsettings set org.gnome.shell.extensions.dash-to-panel panel-element-positions 
+# Worspaces
+gsettings set org.gnome.mutter dynamic-workspaces false
+gsettings set org.gnome.desktop.wm.preferences num-workspaces 2
 # Desktop
 gsettings set org.gnome.shell.extensions.ding show-home false
 gsettings set org.gnome.shell.extensions.ding start-corner 'bottom-left'
@@ -164,19 +168,43 @@ gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
 # Locale
 gsettings set org.gnome.system.location enabled true
 gsettings set org.gnome.desktop.datetime automatic-timezone true
-# Save area select screenshot via PrintScr instead of Shift+PrintScr 
-gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot "@as []"
-gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot "@as []"
-gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot "['<Shift>Print']"
-gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot "['Print']"
-# Store screenshots in a subfolder of Pictures
-mkdir $HOME/Pictures/Screenshots
-gsettings set org.gnome.gnome-screenshot auto-save-directory "file:///home/${USER}/Pictures/Screenshots/"
 # Keyboard shortcut: Ctrl+Alt+T opens Terminal
 gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"                  
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Terminal'         
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'gnome-terminal'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Ctrl><Alt>T' 
+# Remove Gnome default screenshot shortcuts as they will always be stored in /Pictures instead of /Pictures/Screenshots
+gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot "@as []"
+gsettings set org.gnome.settings-daemon.plugins.media-keys window-screenshot "@as []"
+gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot "@as []"
+gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot-clip "@as []"
+gsettings set org.gnome.settings-daemon.plugins.media-keys window-screenshot-clip "@as []"
+gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot-clip "@as []"
+# Create Screenshots folder
+mkdir $HOME/Pictures/Screenshots
+gsettings set org.gnome.gnome-screenshot auto-save-directory "file:///home/${USER}/Pictures/Screenshots/"
+# Create custom screenshot shortcuts, only custom shortcuts ARE stored to the auto-save-directory
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']"                  
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ name 'Area screenshot to custom folder'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command 'gnome-screenshot -a'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ binding 'Print'
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/']"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/ name 'Area screenshot to clipboard'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/ command 'gnome-screenshot -a -c'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/ binding '<Shift>Print'
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/ name 'Window screenshot to custom folder'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/ command 'gnome-screenshot -w -p'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/ binding '<Alt>Print'
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/']"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/ name 'window screenshot to clipboard'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/ command 'gnome-screenshot -w -c'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/ binding '<Primary>Print'
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/']"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/ name 'Interactive screenshot to cust folder'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/ command 'gnome-screenshot -i -p'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/ binding '<Primary><Shift>Print'
+
 
 echo "___________________________________________________________________________________"
 echo "                   1) Touchpad Gestures: 4 instead of 3 fingers:                   "
