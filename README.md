@@ -86,8 +86,8 @@ _Boot into Live via USB_
 - Figure out the F-key that will show the boot menu of your system. Select the USB stick.
 - When booted and not connected via ethernet: go to the top-right system icons, click, select "WiFi not connected > Select network and connect to WiFi. 
 - Launch the installer. 
-- During installation, select your preffered language (like British English en_GB) and locale (like nl_NL) and keyboard (like "US, Euro on 5").  
-- Make sure you select "Erase disk" and "BTRFS" as file system. Also make sure to select no swap. 
+- During installation, select your preffered language (like British English en_GB) and locale (like nl_NL) and keyboard (like "_**US, Euro on 5**_").  
+- Make sure you select **_"Erase disk"_** and **_"BTRFS"_** as file system. Also make sure to select **_no swap_**.
 
 
 _When installation is finished, close the "Welcome" window and launch Terminal_ \
