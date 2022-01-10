@@ -9,6 +9,7 @@ echo "                     Test and rank mirrors, select fastest                
 echo "___________________________________________________________________________________"
 # Remove unused apps
 sudo pacman -Rsn --noconfirm geary
+sudo pacman -Rsn --noconfirm onlyoffice-desktopeditors
 # Weekly updates instead of 4x a day. No tray icon if there are no updates. Download in background. Enable AUR (Arch User Repository). 
 sudo sed -i -e 's@RefreshPeriod = 6@RefreshPeriod = 168@g' /etc/pamac.conf
 sudo sed -Ei '/NoUpdateHideIcon/s/^#//' /etc/pamac.conf
@@ -270,10 +271,12 @@ echo "                                                                          
 echo "         Install must-have applications for various common tasks                   "
 echo "___________________________________________________________________________________"
 # Install system cleanup tool
-sudo pacman -S --noconfirm freeoffice
-
-# Install system cleanup tool
 sudo pacman -S --noconfirm bleachbit
+
+# Install easy and simple MS Office alternative with touchscreen support
+sudo pacman -S --noconfirm freeoffice
+# Install MS Office alternative with lots of features
+sudo pacman -S --noconfirm libreoffice-fresh
 
 # Install handy desktop tools
 sudo pacman -S --noconfirm variety
