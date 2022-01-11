@@ -7,9 +7,6 @@ echo "                                                                          
 echo "              Configure updates (every 6hrs > weekly), enable AUR                  "
 echo "                     Test and rank mirrors, select fastest                         "
 echo "___________________________________________________________________________________"
-# Remove unused apps
-sudo pacman -Rsn --noconfirm geary
-sudo pacman -Rsn --noconfirm onlyoffice-desktopeditors
 # Weekly updates instead of 4x a day. No tray icon if there are no updates. Download in background. Enable AUR (Arch User Repository). 
 sudo sed -i -e 's@RefreshPeriod = 6@RefreshPeriod = 168@g' /etc/pamac.conf
 sudo sed -Ei '/NoUpdateHideIcon/s/^#//' /etc/pamac.conf
@@ -21,7 +18,18 @@ sudo pacman-mirrors -g --continent -P https --api && sudo pacman -Syyu --noconfi
 
 
 echo "___________________________________________________________________________________"
-echo "                                                                                   " 
+echo "                                                                                   "
+echo "                                   APPLICATIONS                                    "
+echo "                                 remove unused apps                                "
+echo "___________________________________________________________________________________"
+# Remove unused apps
+sudo pacman -Rsn --noconfirm geary
+sudo pacman -Rsn --noconfirm onlyoffice-desktopeditors
+
+
+echo "___________________________________________________________________________________"
+echo "                                                                                   "
+echo "                                   APPLICATIONS                                    "
 echo "              Replace filemanager (Nautilus) with more intuitive Nemo              "
 echo "___________________________________________________________________________________"
 # Change default filemanager Nautilus for Nemo 
@@ -43,8 +51,10 @@ sudo -u root dbus-launch gsettings set org.nemo.preferences inherit-folder-viewe
 #inode/directory=nemo.desktop;
 #text/plain=pluma.desktop;
 
+
 echo "___________________________________________________________________________________"
-echo "                                                                                   " 
+echo "                                                                                   "
+echo "                                   APPLICATIONS                                    " 
 echo "               Replace Text Editor (gedit) with more intuitive Pluma               "
 echo "___________________________________________________________________________________"
 # Change default texteditor Gedit to Pluma, keep the Text Editor name and icon
@@ -80,6 +90,68 @@ sudo -u root dbus-launch gsettings set org.mate.pluma display-overview-map true
 sudo -u root dbus-launch gsettings set org.mate.pluma auto-indent true
 sudo -u root dbus-launch gsettings set org.mate.pluma active-plugins "['time', 'spell', 'sort', 'snippets', 'modelines', 'filebrowser', 'docinfo']"
 sudo -u root dbus-launch gsettings set org.mate.pluma color-scheme 'cobalt'
+
+
+echo "___________________________________________________________________________________"
+echo "                                                                                   " 
+echo "                                   APPLICATIONS                                    "    
+echo "         Install must-have applications for various common tasks                   "
+echo "___________________________________________________________________________________"
+# Install system cleanup tool
+sudo pacman -S --noconfirm bleachbit
+
+# Install MS Office alternative with touch support
+sudo pacman -S --noconfirm freeoffice
+
+# Install MS Office alternative with lots of features
+sudo pacman -S --noconfirm libreoffice-fresh
+
+# Install handy desktop tools
+sudo pacman -S --noconfirm variety
+
+# Install a musicplayer that supports folder view library
+sudo pacman -S --noconfirm strawberry
+
+# Install Audacity audio editor and recorder
+sudo pacman -S --noconfirm audacity
+
+# Install simple video editor (cut/trim videos) from AUR repository
+sudo pamac install --no-confirm losslesscut-bin
+
+# Install handbrake to convert videos
+sudo pacman -S --noconfirm handbrake
+
+# Install simple image editor (like Paint)
+sudo pacman -S --noconfirm pinta
+
+# Install Darktable photo editor (like Adobe Photoshop)
+sudo pacman -S --noconfirm darktable
+
+# Install photo library management
+sudo pacman -S --noconfirm digikam
+
+echo "___________________________________________________________________________________"
+echo "                                                                                   " 
+echo "                                   APPLICATIONS                                    "    
+echo "                  Set default apps, pin to Panel and Arc Menu                      "
+echo "___________________________________________________________________________________"
+# Common image files should open with image viewer (gThumb) by default, with photo editor (Showfoto, part of DigiKam) and image editor (Pinta) as alternatives
+sudo sed -i -e 's@image/jpg=pinta.desktop;@image/jpg=org.gnome.gThumb.desktop;org.kde.showfoto.desktop;pinta.desktop;@g' /usr/share/applications/mimeinfo.cache
+sudo sed -i -e 's@image/heic=org.kde.showfoto.desktop;@image/heic=org.gnome.gThumb.desktop;org.kde.showfoto.desktop;@g' /usr/share/applications/mimeinfo.cache
+sudo sed -i -e 's@image/heif=org.kde.showfoto.desktop;@image/heif=org.gnome.gThumb.desktop;org.kde.showfoto.desktop;@g' /usr/share/applications/mimeinfo.cache
+sudo sed -i -e 's@image/webp=org.kde.showfoto.desktop;@image/webp=org.gnome.gThumb.desktop;org.kde.showfoto.desktop;@g' /usr/share/applications/mimeinfo.cache
+sudo sed -i -e 's@tiff=org.gnome.Evince.desktop;org.gnome.gThumb.desktop;org.kde.showfoto.desktop;pinta.desktop;@tiff=org.gnome.gThumb.desktop;org.gnome.Evince.desktop;org.kde.showfoto.desktop;pinta.desktop;@g' /usr/share/applications/mimeinfo.cache
+# plain text files should open with text editor (Pluma) by default except for .csv files. Spreadsheet programs as backup (and default for .csv)
+sudo sed -i -e 's@text/plain=libreoffice-writer.desktop;pluma.desktop;@text/plain=pluma.desktop;libreoffice-writer.desktop;@g' /usr/share/applications/mimeinfo.cache
+sudo sed -i -e 's@text/tab-separated-values=libreoffice-calc.desktop;@text/tab-separated-values=pluma.desktop;libreoffice-calc.desktop;@g' /usr/share/applications/mimeinfo.cache
+sudo sed -i -e 's@text/comma-separated-values=libreoffice-calc.desktop;@text/comma-separated-values=pluma.desktop;libreoffice-calc.desktop;@g' /usr/share/applications/mimeinfo.cache
+sudo sed -i -e 's@text/csv=freeoffice-planmaker.desktop;libreoffice-calc.desktop;@text/csv=freeoffice-planmaker.desktop;libreoffice-calc.desktop;pluma.desktop;@g' /usr/share/applications/mimeinfo.cache
+
+# Pin common apps to Arc Menu
+gsettings set org.gnome.shell.extensions.arcmenu pinned-app-list "['FreeOffice TextMaker', '', 'freeoffice-textmaker.desktop', 'FreeOffice PlanMaker', '', 'freeoffice-planmaker.desktop', 'FreeOffice Presentations', '', 'freeoffice-presentations.desktop', 'ONLYOFFICE Desktop Editors', '', 'org.onlyoffice.desktopeditors.desktop', 'Document Scanner', '', 'simple-scan.desktop', 'Pinta Image Editor', '', 'pinta.desktop', 'digiKam', '', 'org.kde.digikam.desktop', 'Darktable Photo Workflow Software', '', 'darktable.desktop', 'Strawberry', '', 'org.strawberrymusicplayer.strawberry.desktop', 'Audacity', '', 'audacity.desktop', 'HandBrake', '', 'fr.handbrake.ghb.desktop', 'LosslessCut', '', 'losslesscut-bin.desktop', 'Add/Remove Software', '', 'org.manjaro.pamac.manager.desktop', 'BleachBit', '', 'org.bleachbit.BleachBit.desktop', 'Tweaks', '', 'org.gnome.tweaks.desktop', 'Extensions', '', 'org.gnome.Extensions.desktop', 'Terminal', '', 'org.gnome.Terminal.desktop']"
+# Add most used apps to Panel (favourites)
+gsettings set org.gnome.shell favorite-apps "['nemo.desktop', 'firefox.desktop', 'org.gnome.gThumb.desktop', 'pluma.desktop', 'org.gnome.Calculator.desktop']"
+
 
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
@@ -265,47 +337,6 @@ org.nemo.window-state sidebar-bookmark-breakpoint 3
 # Create folders for storing photo albums and for Digikam database
 mkdir $HOME/Pictures/Albums
 mkdir $HOME/Pictures/digikam-db && chattr +C $HOME/Pictures/digikam-db
-
-echo "___________________________________________________________________________________"
-echo "                                                                                   " 
-echo "         Install must-have applications for various common tasks                   "
-echo "___________________________________________________________________________________"
-# Install system cleanup tool
-sudo pacman -S --noconfirm bleachbit
-
-# Install easy and simple MS Office alternative with touchscreen support
-sudo pacman -S --noconfirm freeoffice
-# Install MS Office alternative with lots of features
-sudo pacman -S --noconfirm libreoffice-fresh
-
-# Install handy desktop tools
-sudo pacman -S --noconfirm variety
-
-# Install a musicplayer that supports folder view library
-sudo pacman -S --noconfirm strawberry
-
-# Install Audacity audio editor and recorder
-sudo pacman -S --noconfirm audacity
-
-# Install simple video editor (cut/trim videos) from AUR repository
-sudo pamac install --no-confirm losslesscut-bin
-
-# Install handbrake to convert videos
-sudo pacman -S --noconfirm handbrake
-
-# Install simple image editor (like Paint)
-sudo pacman -S --noconfirm pinta
-
-# Install Darktable photo editor (like Adobe Photoshop)
-sudo pacman -S --noconfirm darktable
-
-# Install photo library management
-sudo pacman -S --noconfirm digikam
-
-# Pin common apps to Arc Menu
-gsettings set org.gnome.shell.extensions.arcmenu pinned-app-list "['FreeOffice TextMaker', '', 'freeoffice-textmaker.desktop', 'FreeOffice PlanMaker', '', 'freeoffice-planmaker.desktop', 'FreeOffice Presentations', '', 'freeoffice-presentations.desktop', 'ONLYOFFICE Desktop Editors', '', 'org.onlyoffice.desktopeditors.desktop', 'Document Scanner', '', 'simple-scan.desktop', 'Pinta Image Editor', '', 'pinta.desktop', 'digiKam', '', 'org.kde.digikam.desktop', 'Darktable Photo Workflow Software', '', 'darktable.desktop', 'Strawberry', '', 'org.strawberrymusicplayer.strawberry.desktop', 'Audacity', '', 'audacity.desktop', 'HandBrake', '', 'fr.handbrake.ghb.desktop', 'LosslessCut', '', 'losslesscut-bin.desktop', 'Add/Remove Software', '', 'org.manjaro.pamac.manager.desktop', 'BleachBit', '', 'org.bleachbit.BleachBit.desktop', 'Tweaks', '', 'org.gnome.tweaks.desktop', 'Extensions', '', 'org.gnome.Extensions.desktop', 'Terminal', '', 'org.gnome.Terminal.desktop']"
-# Add most used apps to Panel (favourites)
-gsettings set org.gnome.shell favorite-apps "['nemo.desktop', 'firefox.desktop', 'org.gnome.gThumb.desktop', 'pluma.desktop', 'org.gnome.Calculator.desktop']"
 
 
 echo "___________________________________________________________________________________"
