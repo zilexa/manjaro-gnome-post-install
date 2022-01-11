@@ -140,6 +140,7 @@ echo "      Create a default profile setting to enable syncing of your toolbar l
 echo "___________________________________________________________________________________"
 # delete existing profiles
 rm -r /home/madhuri/.mozilla/firefox/*.default-release
+rm -r /home/madhuri/.mozilla/firefox/*.default-release
 rm -r /home/madhuri/.mozilla/firefox/*.default
 rm /home/madhuri/.mozilla/firefox/profiles.ini
 
