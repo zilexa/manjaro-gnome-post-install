@@ -426,8 +426,8 @@ case ${answer:0:1} in
     mv $HOME/Downloads/tls.key $HOME/.config/remote-desktop/tls.key
     mv $HOME/Downloads/tls.crt $HOME/.config/remote-desktop/tls.crt
     # Set the location of the two files
-    gsettings set org.gnome.desktop.remote-desktop.rdp tls-key '$HOME/.config/remote-desktop/tls.key'
-    gsettings set org.gnome.desktop.remote-desktop.rdp tls-cert '$HOME/.config/remote-desktop/tls.crt'
+    dconf write /org/gnome/desktop/remote-desktop/rdp/tls-key "'$HOME/.config/remote-desktop/tls.key'" 
+    dconf write /org/gnome/desktop/remote-desktop/rdp/tls-cert "'$HOME/.config/remote-desktop/tls.crt'"
     # Cleanup
     rm $HOME/Downloads/tls.csr
     rm $HOME/Downloads/a.out
