@@ -130,6 +130,45 @@ sudo pacman -S --noconfirm darktable
 # Install photo library management
 sudo pacman -S --noconfirm digikam
 
+
+echo "___________________________________________________________________________________"
+echo "                                                                                   " 
+echo "                            Firefox default settings                               "
+echo "         (Applied for for all Firefox profiles created in the future.)             "
+echo "___________________________________________________________________________________"
+echo "      Create a default profile setting to enable syncing of your toolbar layout    " 
+echo "___________________________________________________________________________________"
+# delete existing profiles
+rm -r /home/madhuri/.mozilla/firefox/*.default-release
+rm -r /home/madhuri/.mozilla/firefox/*.default
+rm /home/madhuri/.mozilla/firefox/profiles.ini
+
+# Enable default config
+sudo tee -a /usr/lib/firefox/defaults/pref/autoconfig.js &>/dev/null << EOF
+pref("general.config.filename", "firefox.cfg");
+pref("general.config.obscure_value", 0);
+EOF
+# Create default policies (install extensions and theme)
+sudo tee -a /usr/lib/firefox/distribution/policies.json &>/dev/null << EOF
+{
+  "policies": {
+    "DisableProfileImport": true,
+    "NoDefaultBookmarks": true,
+    "Extensions": {
+      "Install": ["https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/bypass-paywalls-clean/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/sponsorblock/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/facebook-container/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/google-container/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/nord-polar-night-theme/latest.xpi"]
+    }
+  }
+}
+EOF
+# Create default config
+sudo tee -a /usr/lib/firefox/firefox.cfg &>/dev/null << EOF
+// IMPORTANT: Start your code on the 2nd line
+defaultPref("services.sync.prefs.sync.browser.uiCustomization.state",true);
+defaultPref("browser.toolbars.bookmarks.visibility", "always");
+defaultPref("browser.uiCustomization.state", "{\"placements\":{\"widget-overflow-fixed-list\":[\"screenshot-button\",\"print-button\",\"save-to-pocket-button\",\"bookmarks-menu-button\",\"library-button\",\"preferences-button\",\"panic-button\"],\"nav-bar\":[\"back-button\",\"forward-button\",\"stop-reload-button\",\"customizableui-special-spring1\",\"downloads-button\",\"ublock0_raymondhill_net-browser-action\",\"urlbar-container\",\"customizableui-special-spring2\"],\"toolbar-menubar\":[\"menubar-items\"],\"TabsToolbar\":[\"tabbrowser-tabs\",\"new-tab-button\",\"alltabs-button\"],\"PersonalToolbar\":[\"fxa-toolbar-menu-button\",\"history-panelmenu\",\"personal-bookmarks\"]},\"seen\":[\"save-to-pocket-button\",\"_d133e097-46d9-4ecc-9903-fa6a722a6e0e_-browser-action\",\"_contain-facebook-browser-action\",\"sponsorblocker_ajay_app-browser-action\",\"ublock0_raymondhill_net-browser-action\",\"developer-button\"],\"dirtyAreaCache\":[\"nav-bar\",\"widget-overflow-fixed-list\",\"PersonalToolbar\"],\"currentVersion\":17,\"newElementCount\":3}");
+EOF
+
+
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
 echo "                                   APPLICATIONS                                    "    
@@ -338,38 +377,6 @@ org.nemo.window-state sidebar-bookmark-breakpoint 3
 mkdir $HOME/Pictures/Albums
 mkdir $HOME/Pictures/digikam-db && chattr +C $HOME/Pictures/digikam-db
 
-
-echo "___________________________________________________________________________________"
-echo "                                                                                   " 
-echo "                            Firefox default settings                               "
-echo "         (Applied for for all Firefox profiles created in the future.)             "
-echo "___________________________________________________________________________________"
-echo "      Create a default profile setting to enable syncing of your toolbar layout    " 
-echo "___________________________________________________________________________________"
-# Enable default config
-sudo tee -a /usr/lib/firefox/defaults/pref/autoconfig.js &>/dev/null << EOF
-pref("general.config.filename", "firefox.cfg");
-pref("general.config.obscure_value", 0);
-EOF
-# Create default policies (install extensions and theme)
-sudo tee -a /usr/lib/firefox/distribution/policies.json &>/dev/null << EOF
-{
-  "policies": {
-    "DisableProfileImport": true,
-    "NoDefaultBookmarks": true,
-    "Extensions": {
-      "Install": ["https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/bypass-paywalls-clean/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/sponsorblock/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/facebook-container/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/google-container/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/nord-polar-night-theme/latest.xpi"]
-    }
-  }
-}
-EOF
-# Create default config
-sudo tee -a /usr/lib/firefox/firefox.cfg &>/dev/null << EOF
-// IMPORTANT: Start your code on the 2nd line
-defaultPref("services.sync.prefs.sync.browser.uiCustomization.state",true);
-defaultPref("browser.toolbars.bookmarks.visibility", "always");
-defaultPref("browser.uiCustomization.state", "{\"placements\":{\"widget-overflow-fixed-list\":[\"screenshot-button\",\"print-button\",\"save-to-pocket-button\",\"bookmarks-menu-button\",\"library-button\",\"preferences-button\",\"panic-button\"],\"nav-bar\":[\"back-button\",\"forward-button\",\"stop-reload-button\",\"customizableui-special-spring1\",\"downloads-button\",\"ublock0_raymondhill_net-browser-action\",\"urlbar-container\",\"customizableui-special-spring2\"],\"toolbar-menubar\":[\"menubar-items\"],\"TabsToolbar\":[\"tabbrowser-tabs\",\"new-tab-button\",\"alltabs-button\"],\"PersonalToolbar\":[\"fxa-toolbar-menu-button\",\"history-panelmenu\",\"personal-bookmarks\"]},\"seen\":[\"save-to-pocket-button\",\"_d133e097-46d9-4ecc-9903-fa6a722a6e0e_-browser-action\",\"_contain-facebook-browser-action\",\"sponsorblocker_ajay_app-browser-action\",\"ublock0_raymondhill_net-browser-action\",\"developer-button\"],\"dirtyAreaCache\":[\"nav-bar\",\"widget-overflow-fixed-list\",\"PersonalToolbar\"],\"currentVersion\":17,\"newElementCount\":3}");
-EOF
 
 echo "_________________________________________________________________________"
 echo "                         OPTIONAL APPLICATIONS                           "
