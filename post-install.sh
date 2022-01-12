@@ -365,8 +365,7 @@ mv $HOME/Templates $HOME/Documents/
 ## Rename and move contents from Pictures to Photos, Videos to Media.
 mv /home/${USER}/Videos /home/${USER}/Media
 #mv /home/${USER}/Pictures /home/${USER}/Photos
-org.nemo.window-state sidebar-bookmark-breakpoint 4
-org.nemo.window-state sidebar-bookmark-breakpoint 3
+gsettings set org.nemo.window-state sidebar-bookmark-breakpoint 4
 # Create folders for storing photo albums and for Digikam database
 mkdir $HOME/Pictures/Albums
 mkdir $HOME/Pictures/digikam-db && chattr +C $HOME/Pictures/digikam-db
