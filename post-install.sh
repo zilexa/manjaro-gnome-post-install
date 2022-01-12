@@ -23,10 +23,10 @@ echo "                                   APPLICATIONS                           
 echo "                                 remove unused apps                                "
 echo "___________________________________________________________________________________"
 # Remove unused apps
+# -R removes package, -s removes its dependencies if they are not required by other packages, -n remove install configuration files
 sudo pacman -Rsn --noconfirm geary
 sudo pacman -Rsn --noconfirm onlyoffice-desktopeditors
 sudo pacman -Rsn --noconfirm firefox-gnome-theme-maia
-# -R removes package, -s removes its dependencies if they are not required by other packages, -n remove install configuration files
 
 
 echo "___________________________________________________________________________________"
@@ -65,7 +65,6 @@ sudo pacman -S --noconfirm pluma
 sudo cp '/usr/share/applications/pluma.desktop' '/usr/share/applications/plumabackup.backup'
 sudo sed -i -e 's@Pluma@Text Editor@g' '/usr/share/applications/pluma.desktop'
 sudo sed -i -e 's@Icon=accessories-text-editor@Icon=org.gnome.gedit@g' '/usr/share/applications/pluma.desktop'
-
 
 #Configuration of Pluma for user
 gsettings set org.mate.pluma highlight-current-line true
