@@ -59,23 +59,15 @@ echo "                                                                          
 echo "                                   APPLICATIONS                                    " 
 echo "               Replace Text Editor (gedit) with more intuitive Pluma               "
 echo "___________________________________________________________________________________"
-# Change default texteditor Gedit to Pluma, keep the Text Editor name and icon
-# Backup the Text Editor shortcut (contains name and the preferred icon)
-#sudo cp '/usr/share/applications/org.gnome.gedit.desktop' '/usr/share/applications/TextEditor.backup'
-# Change default app for text files 
-# Remove default texteditor, install Pluma
+# Change default texteditor Gedit to Pluma but keep the nicer looking Text Editor name and icon
 sudo pacman -R --noconfirm gedit
 sudo pacman -S --noconfirm pluma
-# Configure the backupped Text Editor to work with Pluma, keeping the name and logo
 sudo cp '/usr/share/applications/pluma.desktop' '/usr/share/applications/plumabackup.backup'
 sudo sed -i -e 's@Pluma@Text Editor@g' '/usr/share/applications/pluma.desktop'
 sudo sed -i -e 's@Icon=accessories-text-editor@Icon=org.gnome.gedit@g' '/usr/share/applications/pluma.desktop'
-#sudo mv '/usr/share/applications/TextEditor.backup' '/usr/share/applications/TextEditor.desktop'
-#sudo sed -i -e 's@org.gnome.gedit.desktop@TextEditor.desktop@g' /usr/share/applications/mimeinfo.cache
-sudo sed -i -e 's@org.gnome.gedit.desktop@Text Editor.desktop@g' $HOME/.config/mimeapps.list
-#sudo sed -i -e 's@text/plain=TextEditor.desktop@text/plain=TextEditor.desktop@g' $HOME/.config/mimeapps.list
 
-#Configuration of Pluma
+
+#Configuration of Pluma for user
 gsettings set org.mate.pluma highlight-current-line true
 gsettings set org.mate.pluma bracket-matching true
 gsettings set org.mate.pluma display-line-numbers true
@@ -84,7 +76,7 @@ gsettings set org.mate.pluma auto-indent true
 gsettings set org.mate.pluma active-plugins "['time', 'spell', 'sort', 'snippets', 'modelines', 'filebrowser', 'docinfo']"
 gsettings set org.mate.pluma color-scheme 'cobalt'
 
-## also when opening files as with elevated privileges (root user)
+#Configuration of Pluma for root/elevated privileges
 sudo -u root dbus-launch gsettings set org.mate.pluma highlight-current-line true
 sudo -u root dbus-launch gsettings set org.mate.pluma bracket-matching true
 sudo -u root dbus-launch gsettings set org.mate.pluma display-line-numbers true
