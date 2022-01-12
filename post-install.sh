@@ -25,6 +25,8 @@ echo "__________________________________________________________________________
 # Remove unused apps
 sudo pacman -Rsn --noconfirm geary
 sudo pacman -Rsn --noconfirm onlyoffice-desktopeditors
+sudo pacman -Rsn --noconfirm firefox-gnome-theme-maia
+# -R removes package, -s removes its dependencies if they are not required by other packages, -n remove install configuration files
 
 
 echo "___________________________________________________________________________________"
