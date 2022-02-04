@@ -80,19 +80,26 @@ This script will make it more intuitive, practical and easy to use by selecting 
 
 
 ## Quick Guide
-_Download Manjaro, Gnome edition:_
+_1. Download Manjaro, Gnome edition:_
 https://manjaro.org/download/
 
-_Create a USB stick with the image._ \
+_2. Create a USB stick with the image._ \
 If on Gnome, go to Disks, select the usb stick, go to the 3-dot menu and select "restore from image". \
 If not on Linux, use [Rufus](https://rufus.ie/en/) for Windows or [UNetbootin](https://unetbootin.github.io/) for Linux/MacOS/Windows.  
 
-_Boot into Live via USB_
-- Figure out the F-key that will show the boot menu of your system. Select the USB stick.
+_3. Configure BIOS to not use legacy BIOS, enable boot from USB_
+UEFI Bios still supports booting from legacy bios. This is the moment to disable legacy bios to ensure EFI boot is used. Changing this after installing an OS will prevent you from booting. 
+
+_4. Boot into Live via USB_
+- Google your motherboard, miniPC or laptop brand + Boot Menu Key to find out which key will allow you to select the boot device.
+- Turn your system off, insert USB. Turn on the system and tap the correct F-key until you get a menu that allows you to select your USB stick (usually brand name). 
 - When booted and not connected via ethernet: go to the top-right system icons, click, select "WiFi not connected > Select network and connect to WiFi. 
-- Launch the installer. 
-- During installation, select your preffered language (like British English en_GB) and locale (like nl_NL) and keyboard (like "_**US - Euro on 5**_").  
-- Make sure you select the correct drive to install on (NVME SSD recommended!)
+
+_5. Launch installer_
+After the boot from live USB process has finished, you can use Manjaro already and see how it works or continue installing it permanently.
+- First, make sure you have internet connection, the top right icons allow you to find your WiFi and connect if you are not linked via ethernet.
+- During installation, select your preffered language (like British English en_GB) and locale (like nl_NL) and keyboard (Note for EU users that prefer US International keyboard layout, there is a "_**US - Euro on 5**_").  
+- Make sure you select the correct drive to install on. You want to install on an NVME SSD.  
 - Select **_"Erase disk"_** and **_"BTRFS"_** as file system. Also make sure to select **_no swap_**.
 
 
