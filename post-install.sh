@@ -356,8 +356,10 @@ sudo mkdir -p /mnt/disks/systemdrive
 fs_uuid=$(findmnt / -o UUID -n)
 # Add mountpoint to FSTAB
 sudo tee -a /etc/fstab &>/dev/null << EOF
-# ON-DEMAND mountpoint for the systemdrive. for easy manual mount 
+
+# Allow easy manual mounting of btrfs root subvolume                         
 UUID=${fs_uuid} /mnt/disks/systemdrive  btrfs   subvolid=5,defaults,noatime,noauto  0  0
+
 EOF
 #Get device path of systemdrive, for example "/dev/nvme0n1p2" via #SYSTEMDRIVE=$(df / | grep / | cut -d" " -f1)
 
