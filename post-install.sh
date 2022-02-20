@@ -347,6 +347,23 @@ gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 
 
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
+echo "                          Create systemdrive mountpoint                            "
+echo "___________________________________________________________________________________"
+# Add an ON-DEMAND mountpoint in FSTAB for the systemdrive, to easily do a manual mount when needed (via "sudo mount /mnt/disks/systemdrive")
+# create mountpoint
+sudo mkdir -p /mnt/disks/systemdrive
+# Get the systemdrive UUID
+fs_uuid=$(findmnt / -o UUID -n)
+# Add mountpoint to FSTAB
+sudo tee -a /etc/fstab &>/dev/null << EOF
+# ON-DEMAND mountpoint for the systemdrive. for easy manual mount 
+UUID=${fs_uuid} /mnt/disks/systemdrive  btrfs   subvolid=5,defaults,noatime,noauto  0  0
+EOF
+#Get device path of systemdrive, for example "/dev/nvme0n1p2" via #SYSTEMDRIVE=$(df / | grep / | cut -d" " -f1)
+
+
+echo "___________________________________________________________________________________"
+echo "                                                                                   " 
 echo "                          Simplify $HOME personal folders                          "
 echo "___________________________________________________________________________________"
 # Change default location of personal folders by editing $HOME/.config/user-dirs.dirs
@@ -498,6 +515,7 @@ case ${answer:0:1} in
     ;;
 esac
 
+
 echo "_________________________________________________________________________"
 echo "                         ISOLATE PERSONAL FOLDERS                        "
 echo "_________________________________________________________________________"
@@ -512,13 +530,14 @@ read -p "Isolate personal data y/n ?" answer
 case ${answer:0:1} in
     y|Y )
 # Temporarily mount filesystem root
-sudo mkdir /mnt/system
-SYSTEMDRIVE=$(df / | grep / | cut -d" " -f1)
-sudo mount -o subvolid=5 $SYSTEMDRIVE /mnt/system
+sudo mount /mnt/disks/systemdrive
 # create a root subvolume for user personal folders in the root filesystem
-sudo btrfs subvolume create /mnt/system/@userdata
+sudo btrfs subvolume create /mnt/disks/systemdrive/@userdata
 ## unmount root filesystem
-sudo umount /mnt/system
+sudo umount /mnt/disks/systemdrive
+
+# Create mountpoint for @userdata
+sudo mkdir /mnt/userdata
 # Get system fs UUID
 fs_uuid=$(findmnt / -o UUID -n)
 # Add @userdata subvolume to fstab to mount at boot
@@ -526,10 +545,9 @@ sudo tee -a /etc/fstab &>/dev/null << EOF
 # Mount the BTRFS root subvolume @userdata
 UUID=${fs_uuid} /mnt/userdata  btrfs   defaults,noatime,subvol=@userdata,compress-force=zstd:2  0  0
 EOF
+# execute fstab, mounting userdata
+sudo mount -a
 
-## Temporarily mount @userdata subvolume to move existing personal folders and link them back to $HOME
-sudo mkdir /mnt/userdata
-sudo mount -o subvol=@userdata /dev/nvme0n1p2 /mnt/userdata
 ## Move personal user folders to the subvolume
 sudo mv /home/${USER}/Documents /mnt/userdata/
 sudo mv /home/${USER}/Desktop /mnt/userdata/
