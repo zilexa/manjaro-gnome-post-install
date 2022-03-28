@@ -133,7 +133,7 @@ sudo -u root dbus-launch gsettings set org.mate.pluma color-scheme 'cobalt'
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
 echo "                                   APPLICATIONS                                    "    
-echo "                  Set default apps, pin to Panel and Arc Menu                      "
+echo "                                 Set default apps                                  "
 echo "___________________________________________________________________________________"
 # Common image files should open with image viewer (gThumb) by default, with photo editor (Showfoto, part of DigiKam) and image editor (Pinta) as alternatives
 sudo sed -i -e 's@image/jpg=pinta.desktop;@image/jpg=org.gnome.gThumb.desktop;org.kde.showfoto.desktop;pinta.desktop;@g' /usr/share/applications/mimeinfo.cache
@@ -141,96 +141,91 @@ sudo sed -i -e 's@image/heic=org.kde.showfoto.desktop;@image/heic=org.gnome.gThu
 sudo sed -i -e 's@image/heif=org.kde.showfoto.desktop;@image/heif=org.gnome.gThumb.desktop;org.kde.showfoto.desktop;@g' /usr/share/applications/mimeinfo.cache
 sudo sed -i -e 's@image/webp=org.kde.showfoto.desktop;@image/webp=org.gnome.gThumb.desktop;org.kde.showfoto.desktop;@g' /usr/share/applications/mimeinfo.cache
 sudo sed -i -e 's@tiff=org.gnome.Evince.desktop;org.gnome.gThumb.desktop;org.kde.showfoto.desktop;pinta.desktop;@tiff=org.gnome.gThumb.desktop;org.gnome.Evince.desktop;org.kde.showfoto.desktop;pinta.desktop;@g' /usr/share/applications/mimeinfo.cache
-# plain text files should open with text editor (Pluma) by default except for .csv files. Spreadsheet programs as backup (and default for .csv)
-#udo sed -i -e 's@text/tab-separated-values=libreoffice-calc.desktop;@text/tab-separated-values=pluma.desktop;libreoffice-calc.desktop;@g' /usr/share/applications/mimeinfo.cache
-#udo sed -i -e 's@text/comma-separated-values=libreoffice-calc.desktop;@text/comma-separated-values=pluma.desktop;libreoffice-calc.desktop;@g' /usr/share/applications/mimeinfo.cache
-#udo sed -i -e 's@text/csv=libreoffice-calc.desktop;@text/csv=libreoffice-calc.desktop;pluma.desktop;@g' /usr/share/applications/mimeinfo.cache
-
+# Associate Nemo as default filemanager
+xdg-mime default nemo.desktop inode/directory
+# Associate Pluma as default text editor
+xdg-mime default pluma.desktop text/plain
 # Associate OnlyOffice by default
-xdg-mime default onlyoffice.desktopeditors.desktop text/comma-separated
-xdg-mime default onlyoffice.desktopeditors.desktop text/csv
-xdg-mime default onlyoffice.desktopeditors.desktop text/rtf
-xdg-mime default onlyoffice.desktopeditors.desktop text/spreadsheet
-xdg-mime default onlyoffice.desktopeditors.desktop text/tab-separated-values
-xdg-mime default onlyoffice.desktopeditors.desktop text/x-comma-separated-values
-xdg-mime default onlyoffice.desktopeditors.desktop text/x-csv
-xdg-mime default onlyoffice.desktopeditors.desktop application/x-msexcel
-xdg-mime default onlyoffice.desktopeditors.desktop application/x-ms-excel
-xdg-mime default onlyoffice.desktopeditors.desktop application/x-excel
-xdg-mime default onlyoffice.desktopeditors.desktop application/x-doc
-xdg-mime default onlyoffice.desktopeditors.desktop application/csv
-xdg-mime default onlyoffice.desktopeditors.desktop application/excel
-xdg-mime default onlyoffice.desktopeditors.desktop application/msexcel
-xdg-mime default onlyoffice.desktopeditors.desktop application/mspowerpoint
-xdg-mime default onlyoffice.desktopeditors.desktop application/msword
-xdg-mime default onlyoffice.desktopeditors.desktop application/rtf
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.ms-excel
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.ms-excel.sheet.binary.macroEnabled.12
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.ms-excel.sheet.binary.macroenabled.12
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.ms-excel.sheet.macroEnabled.12
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.ms-excel.sheet.macroenabled.12
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.ms-excel.template.macroEnabled.12
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.ms-excel.template.macroenabled.12
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.ms-powerpoint
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.ms-powerpoint.presentation.macroEnabled.12
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.ms-powerpoint.presentation.macroenabled.12
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.ms-powerpoint.slideshow.macroEnabled.12
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.ms-powerpoint.template.macroEnabled.12
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.ms-powerpoint.template.macroenabled.12
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.ms-word
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.ms-word.document.macroenabled.12
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.ms-word.template.macroenabled.12
-xdg-mime default onlyoffice.desktopeditors.desktop application/wordperfect
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.presentation
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.presentation-flat-xml
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.presentation-template
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.spreadsheet
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.spreadsheet-flat-xml
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.spreadsheet-template
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.text
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.text-flat-xml
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.text-master
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.text-master-template
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.text-template
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.text-web
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.openofficeorg.extension
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.presentationml.presentation
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.presentationml.slide
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.presentationml.slideshow
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.presentationml.template
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.spreadsheetml.template
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.wordprocessingml.document
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.wordprocessingml.template
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.palm
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.rar
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.rn-realmedia
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.rn-realmedia-vbr
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.stardivision.writer-global
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.sun.xml.base
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.sun.xml.calc
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.sun.xml.calc.template
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.sun.xml.draw
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.sun.xml.draw.template
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.sun.xml.impress
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.sun.xml.impress.template
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.sun.xml.math
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.sun.xml.writer
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.sun.xml.writer.global
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.sun.xml.writer.template
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.visio
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.wordperfect
-xdg-mime default onlyoffice.desktopeditors.desktop application/wordperfect
-xdg-mime default onlyoffice.desktopeditors.desktop application/x-123
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.wordprocessingml.document
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.presentationml.presentation
-xdg-mime default onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+xdg-mime default org.onlyoffice.desktopeditors.desktop text/comma-separated
+xdg-mime default org.onlyoffice.desktopeditors.desktop text/csv
+xdg-mime default org.onlyoffice.desktopeditors.desktop text/rtf
+xdg-mime default org.onlyoffice.desktopeditors.desktop text/spreadsheet
+xdg-mime default org.onlyoffice.desktopeditors.desktop text/tab-separated-values
+xdg-mime default org.onlyoffice.desktopeditors.desktop text/x-comma-separated-values
+xdg-mime default org.onlyoffice.desktopeditors.desktop text/x-csv
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/x-msexcel
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/x-ms-excel
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/x-excel
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/x-doc
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/csv
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/excel
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/msexcel
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/mspowerpoint
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/msword
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/rtf
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.ms-excel
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.ms-excel.sheet.binary.macroEnabled.12
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.ms-excel.sheet.binary.macroenabled.12
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.ms-excel.sheet.macroEnabled.12
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.ms-excel.sheet.macroenabled.12
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.ms-excel.template.macroEnabled.12
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.ms-excel.template.macroenabled.12
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.ms-powerpoint
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.ms-powerpoint.presentation.macroEnabled.12
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.ms-powerpoint.presentation.macroenabled.12
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.ms-powerpoint.slideshow.macroEnabled.12
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.ms-powerpoint.template.macroEnabled.12
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.ms-powerpoint.template.macroenabled.12
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.ms-word
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.ms-word.document.macroenabled.12
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.ms-word.template.macroenabled.12
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/wordperfect
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.presentation
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.presentation-flat-xml
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.presentation-template
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.spreadsheet
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.spreadsheet-flat-xml
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.spreadsheet-template
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.text
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.text-flat-xml
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.text-master
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.text-master-template
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.text-template
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.oasis.opendocument.text-web
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.openofficeorg.extension
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.presentationml.presentation
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.presentationml.slide
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.presentationml.slideshow
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.presentationml.template
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.spreadsheetml.template
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.wordprocessingml.document
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.wordprocessingml.template
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.palm
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.rar
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.rn-realmedia
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.rn-realmedia-vbr
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.stardivision.writer-global
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.sun.xml.base
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.sun.xml.calc
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.sun.xml.calc.template
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.sun.xml.draw
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.sun.xml.draw.template
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.sun.xml.impress
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.sun.xml.impress.template
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.sun.xml.math
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.sun.xml.writer
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.sun.xml.writer.global
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.sun.xml.writer.template
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.visio
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.wordperfect
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/wordperfect
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/x-123
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.wordprocessingml.document
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.presentationml.presentation
+xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+# Update association file
 update-desktop-database ~/.local/share/applications/
-
-# Pin common apps to Arc Menu
-gsettings set org.gnome.shell.extensions.arcmenu pinned-app-list "['Document Scanner', '', 'simple-scan.desktop', 'ONLYOFFICE Desktop Editors', '', 'org.onlyoffice.desktopeditors.desktop', 'LibreOffice Writer', '', 'libreoffice-writer.desktop', 'LibreOffice Calc', '', 'libreoffice-calc.desktop', 'LibreOffice Impress', '', 'libreoffice-impress.desktop', 'Add/Remove Software', '', 'org.manjaro.pamac.manager.desktop', 'digiKam', '', 'org.kde.digikam.desktop', 'Pinta Image Editor', '', 'pinta.desktop', 'GNU Image Manipulation Program', '', 'gimp.desktop', 'Strawberry', '', 'org.strawberrymusicplayer.strawberry.desktop', 'Audacity', '', 'audacity.desktop', 'HandBrake', '', 'fr.handbrake.ghb.desktop', 'LosslessCut', '', 'losslesscut-bin.desktop', 'BleachBit', '', 'org.bleachbit.BleachBit.desktop', 'Tweaks', '', 'org.gnome.tweaks.desktop', 'Extensions', '', 'org.gnome.Extensions.desktop', 'Terminal', '', 'org.gnome.Terminal.desktop']"
-# Add most used apps to Panel (favourites)
-gsettings set org.gnome.shell favorite-apps "['nemo.desktop', 'firefox.desktop', 'org.gnome.gThumb.desktop', 'pluma.desktop', 'org.gnome.Calculator.desktop']"
 
 
 echo "___________________________________________________________________________________"
@@ -305,8 +300,12 @@ EOF
 
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
-echo "     Configure panel (taskbar), App menu (Arcmenu) and common dessktop, GUI settings      "
+echo "  Configure panel (taskbar), App menu (Arcmenu) and common dessktop, GUI settings  "
 echo "___________________________________________________________________________________"
+# Pin common apps to Arc Menu
+gsettings set org.gnome.shell.extensions.arcmenu pinned-app-list "['Document Scanner', '', 'simple-scan.desktop', 'ONLYOFFICE Desktop Editors', '', 'org.onlyoffice.desktopeditors.desktop', 'LibreOffice Writer', '', 'libreoffice-writer.desktop', 'LibreOffice Calc', '', 'libreoffice-calc.desktop', 'LibreOffice Impress', '', 'libreoffice-impress.desktop', 'Add/Remove Software', '', 'org.manjaro.pamac.manager.desktop', 'digiKam', '', 'org.kde.digikam.desktop', 'Pinta Image Editor', '', 'pinta.desktop', 'GNU Image Manipulation Program', '', 'gimp.desktop', 'Strawberry', '', 'org.strawberrymusicplayer.strawberry.desktop', 'Audacity', '', 'audacity.desktop', 'HandBrake', '', 'fr.handbrake.ghb.desktop', 'LosslessCut', '', 'losslesscut-bin.desktop', 'BleachBit', '', 'org.bleachbit.BleachBit.desktop', 'Tweaks', '', 'org.gnome.tweaks.desktop', 'Extensions', '', 'org.gnome.Extensions.desktop', 'Terminal', '', 'org.gnome.Terminal.desktop']"
+# Add most used apps to Panel (favourites)
+gsettings set org.gnome.shell favorite-apps "['nemo.desktop', 'firefox.desktop', 'org.gnome.gThumb.desktop', 'pluma.desktop', 'org.gnome.Calculator.desktop']"
 # Arc Menu & Dash to Panel
 gsettings set org.gnome.shell.extensions.arcmenu arc-menu-placement 'DTP'
 gsettings set org.gnome.shell.extensions.arcmenu menu-layout 'Eleven'
