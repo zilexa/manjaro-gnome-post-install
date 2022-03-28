@@ -11,6 +11,8 @@ echo "__________________________________________________________________________
 # -R removes package, -s removes its dependencies if they are not required by other packages, -n remove install configuration files
 sudo pacman -Rsn --noconfirm geary
 sudo pacman -Rsn --noconfirm firefox-gnome-theme-maia
+# temporarily remove OnlyOffice and install after LibreOffice. This way, OnlyOffice will be the default for Office files, LibreOfice will be the alternative choice.
+sudo pacman -Rsn --noconfirm onlyoffice-desktopeditors
 
 
 echo "___________________________________________________________________________________"
@@ -36,8 +38,10 @@ echo "__________________________________________________________________________
 # Install system cleanup tool
 sudo pacman -S --noconfirm bleachbit
 
-# Install MS Office alternative with lots of features
+# Install MS Office alternative. LibreOffice is the most complete Microsoft Office alternative. 
 sudo pacman -S --noconfirm libreoffice-fresh
+# Now reinstall OnlyOffice to ensure it is the default Office editor, for most users, OnlyOffice is enough. 
+sudo pacman -S --noconfirm onlyoffice-desktopeditors
 
 # Install handy desktop tools
 sudo pacman -S --noconfirm variety
@@ -70,11 +74,12 @@ echo "              Replace filemanager (Nautilus) with more intuitive Nemo     
 echo "___________________________________________________________________________________"
 # Change default filemanager Nautilus for Nemo 
 sudo pacman -S --noconfirm nemo
-# Try to set as default, systemwide replacing Nautilus
+# Associate Nemo as the default filemanager
 sudo sed -i -e 's@org.gnome.Nautilus.desktop;@nemo.desktop;@g' /usr/share/applications/mimeinfo.cache
 sudo sed -i -e 's@nemo.desktop;nemo.desktop;@nemo.desktop;@g' /usr/share/applications/mimeinfo.cache
-# Still required to do this for the current user as well
-xdg-mime default nemo.desktop inode/directory 
+xdg-mime default nemo.desktop inode/directory
+update-desktop-database ~/.local/share/applications/
+
 # Configure Nemo to make it a bit more intuitive
 gsettings set org.nemo.preferences quick-renames-with-pause-in-between true
 gsettings set org.nemo.preferences date-format 'iso'
@@ -100,6 +105,10 @@ sudo pacman -S --noconfirm pluma
 sudo cp '/usr/share/applications/pluma.desktop' '/usr/share/applications/plumabackup.backup'
 sudo sed -i -e 's@Pluma@Text Editor@g' '/usr/share/applications/pluma.desktop'
 sudo sed -i -e 's@Icon=accessories-text-editor@Icon=org.gnome.gedit@g' '/usr/share/applications/pluma.desktop'
+# Associate Pluma as the default text editor
+sudo sed -i -e 's@libreoffice-writer.desktop;pluma.desktop;@pluma.desktop;libreoffice-writer.desktop;@g' /usr/share/applications/mimeinfo.cache
+xdg-mime default pluma.desktop text/plain 
+update-desktop-database ~/.local/share/applications/
 
 #Configuration of Pluma for user
 gsettings set org.mate.pluma highlight-current-line true
@@ -133,10 +142,47 @@ sudo sed -i -e 's@image/heif=org.kde.showfoto.desktop;@image/heif=org.gnome.gThu
 sudo sed -i -e 's@image/webp=org.kde.showfoto.desktop;@image/webp=org.gnome.gThumb.desktop;org.kde.showfoto.desktop;@g' /usr/share/applications/mimeinfo.cache
 sudo sed -i -e 's@tiff=org.gnome.Evince.desktop;org.gnome.gThumb.desktop;org.kde.showfoto.desktop;pinta.desktop;@tiff=org.gnome.gThumb.desktop;org.gnome.Evince.desktop;org.kde.showfoto.desktop;pinta.desktop;@g' /usr/share/applications/mimeinfo.cache
 # plain text files should open with text editor (Pluma) by default except for .csv files. Spreadsheet programs as backup (and default for .csv)
-#sudo sed -i -e 's@text/plain=libreoffice-writer.desktop;pluma.desktop;@text/plain=pluma.desktop;libreoffice-writer.desktop;@g' /usr/share/applications/mimeinfo.cache
-#sudo sed -i -e 's@text/tab-separated-values=libreoffice-calc.desktop;@text/tab-separated-values=pluma.desktop;libreoffice-calc.desktop;@g' /usr/share/applications/mimeinfo.cache
-#sudo sed -i -e 's@text/comma-separated-values=libreoffice-calc.desktop;@text/comma-separated-values=pluma.desktop;libreoffice-calc.desktop;@g' /usr/share/applications/mimeinfo.cache
-#sudo sed -i -e 's@text/csv=libreoffice-calc.desktop;@text/csv=libreoffice-calc.desktop;pluma.desktop;@g' /usr/share/applications/mimeinfo.cache
+#udo sed -i -e 's@text/tab-separated-values=libreoffice-calc.desktop;@text/tab-separated-values=pluma.desktop;libreoffice-calc.desktop;@g' /usr/share/applications/mimeinfo.cache
+#udo sed -i -e 's@text/comma-separated-values=libreoffice-calc.desktop;@text/comma-separated-values=pluma.desktop;libreoffice-calc.desktop;@g' /usr/share/applications/mimeinfo.cache
+#udo sed -i -e 's@text/csv=libreoffice-calc.desktop;@text/csv=libreoffice-calc.desktop;pluma.desktop;@g' /usr/share/applications/mimeinfo.cache
+
+xdg-mime default onlyoffice.desktopeditors text/comma-separated
+xdg-mime default onlyoffice.desktopeditors text/csv
+xdg-mime default onlyoffice.desktopeditors text/rtf
+xdg-mime default onlyoffice.desktopeditors text/spreadsheet
+xdg-mime default onlyoffice.desktopeditors text/tab-separated-values
+xdg-mime default onlyoffice.desktopeditors text/x-comma-separated-values
+xdg-mime default onlyoffice.desktopeditors text/x-csv
+xdg-mime default onlyoffice.desktopeditors application/x-msexcel
+xdg-mime default onlyoffice.desktopeditors application/x-ms-excel
+xdg-mime default onlyoffice.desktopeditors application/x-excel
+xdg-mime default onlyoffice.desktopeditors application/x-doc
+xdg-mime default onlyoffice.desktopeditors application/csv
+xdg-mime default onlyoffice.desktopeditors application/excel
+xdg-mime default onlyoffice.desktopeditors application/msexcel
+xdg-mime default onlyoffice.desktopeditors application/mspowerpoint
+xdg-mime default onlyoffice.desktopeditors application/msword
+xdg-mime default onlyoffice.desktopeditors application/rtf
+xdg-mime default onlyoffice.desktopeditors application/vnd.ms-excel
+xdg-mime default onlyoffice.desktopeditors application/vnd.ms-excel.sheet.binary.macroEnabled.12
+xdg-mime default onlyoffice.desktopeditors application/vnd.ms-excel.sheet.binary.macroenabled.12
+xdg-mime default onlyoffice.desktopeditors application/vnd.ms-excel.sheet.macroEnabled.12
+xdg-mime default onlyoffice.desktopeditors application/vnd.ms-excel.sheet.macroenabled.12
+xdg-mime default onlyoffice.desktopeditors application/vnd.ms-excel.template.macroEnabled.12
+xdg-mime default onlyoffice.desktopeditors application/vnd.ms-excel.template.macroenabled.12
+xdg-mime default onlyoffice.desktopeditors application/vnd.ms-powerpoint
+xdg-mime default onlyoffice.desktopeditors application/vnd.ms-powerpoint.presentation.macroEnabled.12
+xdg-mime default onlyoffice.desktopeditors application/vnd.ms-powerpoint.presentation.macroenabled.12
+xdg-mime default onlyoffice.desktopeditors application/vnd.ms-powerpoint.slideshow.macroEnabled.12
+xdg-mime default onlyoffice.desktopeditors application/vnd.ms-powerpoint.template.macroEnabled.12
+xdg-mime default onlyoffice.desktopeditors application/vnd.ms-powerpoint.template.macroenabled.12
+xdg-mime default onlyoffice.desktopeditors application/vnd.ms-word
+xdg-mime default onlyoffice.desktopeditors application/vnd.ms-word.document.macroenabled.12
+xdg-mime default onlyoffice.desktopeditors application/vnd.ms-word.template.macroenabled.12
+xdg-mime default onlyoffice.desktopeditors application/wordperfect
+
+update-desktop-database ~/.local/share/applications/
+
 
 # Pin common apps to Arc Menu
 gsettings set org.gnome.shell.extensions.arcmenu pinned-app-list "['Document Scanner', '', 'simple-scan.desktop', 'ONLYOFFICE Desktop Editors', '', 'org.onlyoffice.desktopeditors.desktop', 'LibreOffice Writer', '', 'libreoffice-writer.desktop', 'LibreOffice Calc', '', 'libreoffice-calc.desktop', 'LibreOffice Impress', '', 'libreoffice-impress.desktop', 'Add/Remove Software', '', 'org.manjaro.pamac.manager.desktop', 'digiKam', '', 'org.kde.digikam.desktop', 'Pinta Image Editor', '', 'pinta.desktop', 'GNU Image Manipulation Program', '', 'gimp.desktop', 'Strawberry', '', 'org.strawberrymusicplayer.strawberry.desktop', 'Audacity', '', 'audacity.desktop', 'HandBrake', '', 'fr.handbrake.ghb.desktop', 'LosslessCut', '', 'losslesscut-bin.desktop', 'BleachBit', '', 'org.bleachbit.BleachBit.desktop', 'Tweaks', '', 'org.gnome.tweaks.desktop', 'Extensions', '', 'org.gnome.Extensions.desktop', 'Terminal', '', 'org.gnome.Terminal.desktop']"
