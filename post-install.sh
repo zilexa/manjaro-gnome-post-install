@@ -110,8 +110,11 @@ sudo pamac install --no-confirm losslesscut-bin
 # Install handbrake to convert videos
 sudo pacman -S --noconfirm handbrake
 
-# Install simple image editor (like Paint)
+# Install simple image editor/creator (like Paint)
 sudo pacman -S --noconfirm pinta
+
+# Install photo editor
+sudo pacman -S --noconfirm gimp
 
 # Install photo library management
 sudo pacman -S --noconfirm digikam
