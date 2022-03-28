@@ -29,62 +29,6 @@ sudo pacman-mirrors -g --continent -P https --api && sudo pacman -Syyu --noconfi
 
 
 echo "___________________________________________________________________________________"
-echo "                                                                                   "
-echo "                                   APPLICATIONS                                    "
-echo "              Replace filemanager (Nautilus) with more intuitive Nemo              "
-echo "___________________________________________________________________________________"
-# Change default filemanager Nautilus for Nemo 
-sudo sed -i -e 's@org.gnome.Nautilus.desktop@nemo.desktop@g' /usr/share/applications/mimeinfo.cache
-sudo pacman -S --noconfirm nemo
-# Configure Nemo to make it a bit more intuitive
-gsettings set org.nemo.preferences quick-renames-with-pause-in-between true
-gsettings set org.nemo.preferences date-format 'iso'
-gsettings set org.nemo.preferences show-reload-icon-toolbar true
-gsettings set org.nemo.preferences default-folder-viewer 'list-view'
-gsettings set org.nemo.preferences inherit-folder-viewer true
-## also when opening folders as with elevated privileges (root user)
-sudo -u root dbus-launch gsettings set org.nemo.preferences quick-renames-with-pause-in-between true
-sudo -u root dbus-launch gsettings set org.nemo.preferences date-format 'iso'
-sudo -u root dbus-launch gsettings set org.nemo.preferences show-reload-icon-toolbar true
-sudo -u root dbus-launch gsettings set org.nemo.preferences default-folder-viewer 'list-view'
-sudo -u root dbus-launch gsettings set org.nemo.preferences inherit-folder-viewer true
-#[Default Applications]
-#inode/directory=nemo.desktop;
-#text/plain=pluma.desktop;
-
-
-echo "___________________________________________________________________________________"
-echo "                                                                                   "
-echo "                                   APPLICATIONS                                    " 
-echo "               Replace Text Editor (gedit) with more intuitive Pluma               "
-echo "___________________________________________________________________________________"
-# Change default texteditor Gedit to Pluma but keep the nicer looking Text Editor name and icon
-sudo pacman -R --noconfirm gedit
-sudo pacman -S --noconfirm pluma
-sudo cp '/usr/share/applications/pluma.desktop' '/usr/share/applications/plumabackup.backup'
-sudo sed -i -e 's@Pluma@Text Editor@g' '/usr/share/applications/pluma.desktop'
-sudo sed -i -e 's@Icon=accessories-text-editor@Icon=org.gnome.gedit@g' '/usr/share/applications/pluma.desktop'
-
-#Configuration of Pluma for user
-gsettings set org.mate.pluma highlight-current-line true
-gsettings set org.mate.pluma bracket-matching true
-gsettings set org.mate.pluma display-line-numbers true
-gsettings set org.mate.pluma display-overview-map true
-gsettings set org.mate.pluma auto-indent true
-gsettings set org.mate.pluma active-plugins "['time', 'spell', 'sort', 'snippets', 'modelines', 'filebrowser', 'docinfo']"
-gsettings set org.mate.pluma color-scheme 'cobalt'
-
-#Configuration of Pluma for root/elevated privileges
-sudo -u root dbus-launch gsettings set org.mate.pluma highlight-current-line true
-sudo -u root dbus-launch gsettings set org.mate.pluma bracket-matching true
-sudo -u root dbus-launch gsettings set org.mate.pluma display-line-numbers true
-sudo -u root dbus-launch gsettings set org.mate.pluma display-overview-map true
-sudo -u root dbus-launch gsettings set org.mate.pluma auto-indent true
-sudo -u root dbus-launch gsettings set org.mate.pluma active-plugins "['time', 'spell', 'sort', 'snippets', 'modelines', 'filebrowser', 'docinfo']"
-sudo -u root dbus-launch gsettings set org.mate.pluma color-scheme 'cobalt'
-
-
-echo "___________________________________________________________________________________"
 echo "                                                                                   " 
 echo "                                   APPLICATIONS                                    "    
 echo "         Install must-have applications for various common tasks                   "
@@ -118,6 +62,87 @@ sudo pacman -S --noconfirm gimp
 
 # Install photo library management
 sudo pacman -S --noconfirm digikam
+
+echo "___________________________________________________________________________________"
+echo "                                                                                   "
+echo "                                   APPLICATIONS                                    "
+echo "              Replace filemanager (Nautilus) with more intuitive Nemo              "
+echo "___________________________________________________________________________________"
+# Change default filemanager Nautilus for Nemo 
+sudo pacman -S --noconfirm nemo
+# Try to set as default, systemwide replacing Nautilus
+sudo sed -i -e 's@org.gnome.Nautilus.desktop;@nemo.desktop;@g' /usr/share/applications/mimeinfo.cache
+sudo sed -i -e 's@nemo.desktop;nemo.desktop;@nemo.desktop;@g' /usr/share/applications/mimeinfo.cache
+# Still required to do this for the current user as well
+xdg-mime default nemo.desktop inode/directory 
+# Configure Nemo to make it a bit more intuitive
+gsettings set org.nemo.preferences quick-renames-with-pause-in-between true
+gsettings set org.nemo.preferences date-format 'iso'
+gsettings set org.nemo.preferences show-reload-icon-toolbar true
+gsettings set org.nemo.preferences default-folder-viewer 'list-view'
+gsettings set org.nemo.preferences inherit-folder-viewer true
+## also when opening folders as with elevated privileges (root user)
+sudo -u root dbus-launch gsettings set org.nemo.preferences quick-renames-with-pause-in-between true
+sudo -u root dbus-launch gsettings set org.nemo.preferences date-format 'iso'
+sudo -u root dbus-launch gsettings set org.nemo.preferences show-reload-icon-toolbar true
+sudo -u root dbus-launch gsettings set org.nemo.preferences default-folder-viewer 'list-view'
+sudo -u root dbus-launch gsettings set org.nemo.preferences inherit-folder-viewer true
+
+
+echo "___________________________________________________________________________________"
+echo "                                                                                   "
+echo "                                   APPLICATIONS                                    " 
+echo "               Replace Text Editor (gedit) with more intuitive Pluma               "
+echo "___________________________________________________________________________________"
+# Change default texteditor Gedit to Pluma but keep the nicer looking Text Editor name and icon
+sudo pacman -R --noconfirm gedit
+sudo pacman -S --noconfirm pluma
+sudo cp '/usr/share/applications/pluma.desktop' '/usr/share/applications/plumabackup.backup'
+sudo sed -i -e 's@Pluma@Text Editor@g' '/usr/share/applications/pluma.desktop'
+sudo sed -i -e 's@Icon=accessories-text-editor@Icon=org.gnome.gedit@g' '/usr/share/applications/pluma.desktop'
+
+#Configuration of Pluma for user
+gsettings set org.mate.pluma highlight-current-line true
+gsettings set org.mate.pluma bracket-matching true
+gsettings set org.mate.pluma display-line-numbers true
+gsettings set org.mate.pluma display-overview-map true
+gsettings set org.mate.pluma auto-indent true
+gsettings set org.mate.pluma active-plugins "['time', 'spell', 'sort', 'snippets', 'modelines', 'filebrowser', 'docinfo']"
+gsettings set org.mate.pluma color-scheme 'cobalt'
+
+#Configuration of Pluma for root/elevated privileges
+sudo -u root dbus-launch gsettings set org.mate.pluma highlight-current-line true
+sudo -u root dbus-launch gsettings set org.mate.pluma bracket-matching true
+sudo -u root dbus-launch gsettings set org.mate.pluma display-line-numbers true
+sudo -u root dbus-launch gsettings set org.mate.pluma display-overview-map true
+sudo -u root dbus-launch gsettings set org.mate.pluma auto-indent true
+sudo -u root dbus-launch gsettings set org.mate.pluma active-plugins "['time', 'spell', 'sort', 'snippets', 'modelines', 'filebrowser', 'docinfo']"
+sudo -u root dbus-launch gsettings set org.mate.pluma color-scheme 'cobalt'
+
+
+
+echo "___________________________________________________________________________________"
+echo "                                                                                   " 
+echo "                                   APPLICATIONS                                    "    
+echo "                  Set default apps, pin to Panel and Arc Menu                      "
+echo "___________________________________________________________________________________"
+# Common image files should open with image viewer (gThumb) by default, with photo editor (Showfoto, part of DigiKam) and image editor (Pinta) as alternatives
+sudo sed -i -e 's@image/jpg=pinta.desktop;@image/jpg=org.gnome.gThumb.desktop;org.kde.showfoto.desktop;pinta.desktop;@g' /usr/share/applications/mimeinfo.cache
+sudo sed -i -e 's@image/heic=org.kde.showfoto.desktop;@image/heic=org.gnome.gThumb.desktop;org.kde.showfoto.desktop;@g' /usr/share/applications/mimeinfo.cache
+sudo sed -i -e 's@image/heif=org.kde.showfoto.desktop;@image/heif=org.gnome.gThumb.desktop;org.kde.showfoto.desktop;@g' /usr/share/applications/mimeinfo.cache
+sudo sed -i -e 's@image/webp=org.kde.showfoto.desktop;@image/webp=org.gnome.gThumb.desktop;org.kde.showfoto.desktop;@g' /usr/share/applications/mimeinfo.cache
+sudo sed -i -e 's@tiff=org.gnome.Evince.desktop;org.gnome.gThumb.desktop;org.kde.showfoto.desktop;pinta.desktop;@tiff=org.gnome.gThumb.desktop;org.gnome.Evince.desktop;org.kde.showfoto.desktop;pinta.desktop;@g' /usr/share/applications/mimeinfo.cache
+# plain text files should open with text editor (Pluma) by default except for .csv files. Spreadsheet programs as backup (and default for .csv)
+#sudo sed -i -e 's@text/plain=libreoffice-writer.desktop;pluma.desktop;@text/plain=pluma.desktop;libreoffice-writer.desktop;@g' /usr/share/applications/mimeinfo.cache
+#sudo sed -i -e 's@text/tab-separated-values=libreoffice-calc.desktop;@text/tab-separated-values=pluma.desktop;libreoffice-calc.desktop;@g' /usr/share/applications/mimeinfo.cache
+#sudo sed -i -e 's@text/comma-separated-values=libreoffice-calc.desktop;@text/comma-separated-values=pluma.desktop;libreoffice-calc.desktop;@g' /usr/share/applications/mimeinfo.cache
+#sudo sed -i -e 's@text/csv=libreoffice-calc.desktop;@text/csv=libreoffice-calc.desktop;pluma.desktop;@g' /usr/share/applications/mimeinfo.cache
+
+# Pin common apps to Arc Menu
+gsettings set org.gnome.shell.extensions.arcmenu pinned-app-list "['Document Scanner', '', 'simple-scan.desktop', 'ONLYOFFICE Desktop Editors', '', 'org.onlyoffice.desktopeditors.desktop', 'LibreOffice Writer', '', 'libreoffice-writer.desktop', 'LibreOffice Calc', '', 'libreoffice-calc.desktop', 'LibreOffice Impress', '', 'libreoffice-impress.desktop', 'Add/Remove Software', '', 'org.manjaro.pamac.manager.desktop', 'digiKam', '', 'org.kde.digikam.desktop', 'Pinta Image Editor', '', 'pinta.desktop', 'GNU Image Manipulation Program', '', 'gimp.desktop', 'Strawberry', '', 'org.strawberrymusicplayer.strawberry.desktop', 'Audacity', '', 'audacity.desktop', 'HandBrake', '', 'fr.handbrake.ghb.desktop', 'LosslessCut', '', 'losslesscut-bin.desktop', 'BleachBit', '', 'org.bleachbit.BleachBit.desktop', 'Tweaks', '', 'org.gnome.tweaks.desktop', 'Extensions', '', 'org.gnome.Extensions.desktop', 'Terminal', '', 'org.gnome.Terminal.desktop']"
+# Add most used apps to Panel (favourites)
+gsettings set org.gnome.shell favorite-apps "['nemo.desktop', 'firefox.desktop', 'org.gnome.gThumb.desktop', 'pluma.desktop', 'org.gnome.Calculator.desktop']"
+
 
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
@@ -187,29 +212,6 @@ defaultPref("browser.uiCustomization.state", "{\"placements\":{\"widget-overflow
 defaultPref("widget.use-xdg-desktop-portal.file-picker",1);
 defaultPref("widget.widget.use-xdg-desktop-portal.mime-handler",1);
 EOF
-
-
-echo "___________________________________________________________________________________"
-echo "                                                                                   " 
-echo "                                   APPLICATIONS                                    "    
-echo "                  Set default apps, pin to Panel and Arc Menu                      "
-echo "___________________________________________________________________________________"
-# Common image files should open with image viewer (gThumb) by default, with photo editor (Showfoto, part of DigiKam) and image editor (Pinta) as alternatives
-sudo sed -i -e 's@image/jpg=pinta.desktop;@image/jpg=org.gnome.gThumb.desktop;org.kde.showfoto.desktop;pinta.desktop;@g' /usr/share/applications/mimeinfo.cache
-sudo sed -i -e 's@image/heic=org.kde.showfoto.desktop;@image/heic=org.gnome.gThumb.desktop;org.kde.showfoto.desktop;@g' /usr/share/applications/mimeinfo.cache
-sudo sed -i -e 's@image/heif=org.kde.showfoto.desktop;@image/heif=org.gnome.gThumb.desktop;org.kde.showfoto.desktop;@g' /usr/share/applications/mimeinfo.cache
-sudo sed -i -e 's@image/webp=org.kde.showfoto.desktop;@image/webp=org.gnome.gThumb.desktop;org.kde.showfoto.desktop;@g' /usr/share/applications/mimeinfo.cache
-sudo sed -i -e 's@tiff=org.gnome.Evince.desktop;org.gnome.gThumb.desktop;org.kde.showfoto.desktop;pinta.desktop;@tiff=org.gnome.gThumb.desktop;org.gnome.Evince.desktop;org.kde.showfoto.desktop;pinta.desktop;@g' /usr/share/applications/mimeinfo.cache
-# plain text files should open with text editor (Pluma) by default except for .csv files. Spreadsheet programs as backup (and default for .csv)
-#sudo sed -i -e 's@text/plain=libreoffice-writer.desktop;pluma.desktop;@text/plain=pluma.desktop;libreoffice-writer.desktop;@g' /usr/share/applications/mimeinfo.cache
-#sudo sed -i -e 's@text/tab-separated-values=libreoffice-calc.desktop;@text/tab-separated-values=pluma.desktop;libreoffice-calc.desktop;@g' /usr/share/applications/mimeinfo.cache
-#sudo sed -i -e 's@text/comma-separated-values=libreoffice-calc.desktop;@text/comma-separated-values=pluma.desktop;libreoffice-calc.desktop;@g' /usr/share/applications/mimeinfo.cache
-#sudo sed -i -e 's@text/csv=libreoffice-calc.desktop;@text/csv=libreoffice-calc.desktop;pluma.desktop;@g' /usr/share/applications/mimeinfo.cache
-
-# Pin common apps to Arc Menu
-gsettings set org.gnome.shell.extensions.arcmenu pinned-app-list "['FreeOffice TextMaker', '', 'freeoffice-textmaker.desktop', 'FreeOffice PlanMaker', '', 'freeoffice-planmaker.desktop', 'FreeOffice Presentations', '', 'freeoffice-presentations.desktop', 'ONLYOFFICE Desktop Editors', '', 'org.onlyoffice.desktopeditors.desktop', 'Document Scanner', '', 'simple-scan.desktop', 'Pinta Image Editor', '', 'pinta.desktop', 'digiKam', '', 'org.kde.digikam.desktop', 'Darktable Photo Workflow Software', '', 'darktable.desktop', 'Strawberry', '', 'org.strawberrymusicplayer.strawberry.desktop', 'Audacity', '', 'audacity.desktop', 'HandBrake', '', 'fr.handbrake.ghb.desktop', 'LosslessCut', '', 'losslesscut-bin.desktop', 'Add/Remove Software', '', 'org.manjaro.pamac.manager.desktop', 'BleachBit', '', 'org.bleachbit.BleachBit.desktop', 'Tweaks', '', 'org.gnome.tweaks.desktop', 'Extensions', '', 'org.gnome.Extensions.desktop', 'Terminal', '', 'org.gnome.Terminal.desktop']"
-# Add most used apps to Panel (favourites)
-gsettings set org.gnome.shell favorite-apps "['nemo.desktop', 'firefox.desktop', 'org.gnome.gThumb.desktop', 'pluma.desktop', 'org.gnome.Calculator.desktop']"
 
 
 echo "___________________________________________________________________________________"
@@ -335,8 +337,8 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 
 
 echo "___________________________________________________________________________________"
-echo "                   1) Touchpad Gestures: 4 instead of 3 fingers:                   "
-echo "       this way, you can use 3-finger touchpad gestures within applications        "
+echo "               Configure 1) Touchpad Gestures: 4 instead of 3 fingers:             "
+echo "       this way, you can use 3-finger touchpad gestures within applications.       "
 echo "           2) Hot Corners Extended: allow config of screen hot corners             " 
 echo "___________________________________________________________________________________"
 # Download the gnome extension "Gesture Improvements"
@@ -360,15 +362,15 @@ echo "__________________________________________________________________________
 sudo pamac install --no-confirm gnome-gesture-improvements
 sudo pamac install --no-confirm gnome-shell-extension-custom-hot-corners-extended
 
+#Enable extensions (Workspace indicator, thumb drive menu, Gesture Improvements)
+gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu', 'places-menu@gnome-shell-extensions.gcampax.github.com']"
+gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'custom-hot-corners-extended@G-dH.github.com', 'gestureImprovements@gestures']"
+
 # Configure Hot Corners
 gsettings set org.gnome.desktop.interface.enable-hot-corners false
 gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-top-left-0 action 'toggle-arcmenu'
 gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-right-0 action 'show-desktop-mon'
 gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-left-0 action 'toggle-overview'
-
-#Enable extensions (Workspace indicator, thumb drive menu, Gesture Improvements), keep Hot Corners disabled due to Arc Menu Hot Corner conflict 
-gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu', 'places-menu@gnome-shell-extensions.gcampax.github.com']"
-gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', '$EXTUUID1', '$EXTUUID2']"
 
 
 echo "___________________________________________________________________________________"
@@ -388,6 +390,48 @@ UUID=${fs_uuid} /mnt/disks/systemdrive  btrfs   subvolid=5,defaults,noatime,noau
 
 EOF
 #Get device path of systemdrive, for example "/dev/nvme0n1p2" via #SYSTEMDRIVE=$(df / | grep / | cut -d" " -f1)
+
+
+echo "_________________________________________________________________________"
+echo "                         ISOLATE PERSONAL FOLDERS                        "
+echo "_________________________________________________________________________"
+# Temporarily mount filesystem root
+sudo mount /mnt/disks/systemdrive
+# create a root subvolume for user personal folders in the root filesystem
+sudo btrfs subvolume create /mnt/disks/systemdrive/@userdata
+## unmount root filesystem
+sudo umount /mnt/disks/systemdrive
+
+# Create mountpoint for @userdata
+sudo mkdir /mnt/userdata
+# Get system fs UUID
+fs_uuid=$(findmnt / -o UUID -n)
+# Add @userdata subvolume to fstab to mount at boot
+sudo tee -a /etc/fstab &>/dev/null << EOF
+# Mount the BTRFS root subvolume @userdata
+UUID=${fs_uuid} /mnt/userdata  btrfs   defaults,noatime,subvol=@userdata,compress-force=zstd:2  0  0
+EOF
+# execute fstab, mounting userdata
+sudo mount -a
+
+## Move personal user folders to the subvolume
+sudo mv /home/${USER}/Documents /mnt/userdata/
+sudo mv /home/${USER}/Desktop /mnt/userdata/
+sudo mv /home/${USER}/Downloads /mnt/userdata/
+sudo mv /home/${USER}/Media /mnt/userdata/
+sudo mv /home/${USER}/Music /mnt/userdata/
+sudo mv /home/${USER}/Pictures /mnt/userdata/
+## Link personal folders inside subvolume back into home subvolume
+ln -s /mnt/userdata/Documents $HOME/Documents
+ln -s /mnt/userdata/Desktop $HOME/Desktop
+ln -s /mnt/userdata/Downloads $HOME/Downloads
+ln -s /mnt/userdata/Media $HOME/Media
+ln -s /mnt/userdata/Music $HOME/Music
+ln -s /mnt/userdata/Pictures $HOME/Pictures
+#Current Downloads folder has been moved, enter the moved Downloads folder 
+cd /
+cd $HOME
+cd $HOME/Downloads
 
 
 echo "___________________________________________________________________________________"
@@ -414,6 +458,8 @@ gsettings set org.nemo.window-state sidebar-bookmark-breakpoint 4
 # Create folders for storing photo albums and for Digikam database
 mkdir $HOME/Pictures/Albums
 mkdir $HOME/Pictures/digikam-db && chattr +C $HOME/Pictures/digikam-db
+
+
 
 
 echo "_________________________________________________________________________"
@@ -569,62 +615,6 @@ case ${answer:0:1} in
     ;;
 esac
 
-
-echo "_________________________________________________________________________"
-echo "                         ISOLATE PERSONAL FOLDERS                        "
-echo "_________________________________________________________________________"
-# OPTIONAL: IF THIS IS A COMMON PC OR LAPTOP, CREATE A SUBVOLUME FOR USER DATA.  
-echo "---------------------------------------"
-echo "Hit y if this a regular, personal device, laptop/desktop pc ( y /n )?"
-echo "YES = Personal folders will be isolated by via a seperate subvolume (and linked back to $HOME folder)."
-echo "      Benefits: 1. allows you to easily configure backups and 'back-in-time' snapshots."
-echo "                2. Isolates personal folders, allows cean system re-install without deleting personal data." 
-echo "NO = nothing will be changed."
-read -p "Isolate personal data y/n ?" answer
-case ${answer:0:1} in
-    y|Y )
-# Temporarily mount filesystem root
-sudo mount /mnt/disks/systemdrive
-# create a root subvolume for user personal folders in the root filesystem
-sudo btrfs subvolume create /mnt/disks/systemdrive/@userdata
-## unmount root filesystem
-sudo umount /mnt/disks/systemdrive
-
-# Create mountpoint for @userdata
-sudo mkdir /mnt/userdata
-# Get system fs UUID
-fs_uuid=$(findmnt / -o UUID -n)
-# Add @userdata subvolume to fstab to mount at boot
-sudo tee -a /etc/fstab &>/dev/null << EOF
-# Mount the BTRFS root subvolume @userdata
-UUID=${fs_uuid} /mnt/userdata  btrfs   defaults,noatime,subvol=@userdata,compress-force=zstd:2  0  0
-EOF
-# execute fstab, mounting userdata
-sudo mount -a
-
-## Move personal user folders to the subvolume
-sudo mv /home/${USER}/Documents /mnt/userdata/
-sudo mv /home/${USER}/Desktop /mnt/userdata/
-sudo mv /home/${USER}/Downloads /mnt/userdata/
-sudo mv /home/${USER}/Media /mnt/userdata/
-sudo mv /home/${USER}/Music /mnt/userdata/
-sudo mv /home/${USER}/Pictures /mnt/userdata/
-## Link personal folders inside subvolume back into home subvolume
-ln -s /mnt/userdata/Documents $HOME/Documents
-ln -s /mnt/userdata/Desktop $HOME/Desktop
-ln -s /mnt/userdata/Downloads $HOME/Downloads
-ln -s /mnt/userdata/Media $HOME/Media
-ln -s /mnt/userdata/Music $HOME/Music
-ln -s /mnt/userdata/Pictures $HOME/Pictures
-#Current Downloads folder has been moved, enter the moved Downloads folder 
-cd /
-cd $HOME
-cd $HOME/Downloads
-    ;;
-    * )
-        echo "Not creating userdata, this is not a common personal device." 
-    ;;
-esac
 
 echo "_________________________________________________________________________"
 echo "               Configure BTRFS swap and enable hibernation               "
