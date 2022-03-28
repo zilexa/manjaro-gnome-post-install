@@ -3,6 +3,17 @@
 # Might need this for pacman automation: yes | LC_ALL=en_US.UTF-8 pacman
 # Find and select the fastest mirror to install apps from
 echo "___________________________________________________________________________________"
+echo "                                                                                   "
+echo "                                   APPLICATIONS                                    "
+echo "                                 remove unused apps                                "
+echo "___________________________________________________________________________________"
+# Remove unused apps
+# -R removes package, -s removes its dependencies if they are not required by other packages, -n remove install configuration files
+sudo pacman -Rsn --noconfirm geary
+sudo pacman -Rsn --noconfirm firefox-gnome-theme-maia
+
+
+echo "___________________________________________________________________________________"
 echo "                                                                                   " 
 echo "              Configure updates (every 6hrs > weekly), enable AUR                  "
 echo "                     Test and rank mirrors, select fastest                         "
@@ -15,18 +26,6 @@ sudo sed -Ei '/EnableAUR/s/^#//' /etc/pamac.conf
 sudo sed -Ei '/CheckAURUpdates/s/^#//' /etc/pamac.conf
 # Mirrors
 sudo pacman-mirrors -g --continent -P https --api && sudo pacman -Syyu --noconfirm
-
-
-echo "___________________________________________________________________________________"
-echo "                                                                                   "
-echo "                                   APPLICATIONS                                    "
-echo "                                 remove unused apps                                "
-echo "___________________________________________________________________________________"
-# Remove unused apps
-# -R removes package, -s removes its dependencies if they are not required by other packages, -n remove install configuration files
-sudo pacman -Rsn --noconfirm geary
-sudo pacman -Rsn --noconfirm onlyoffice-desktopeditors
-sudo pacman -Rsn --noconfirm firefox-gnome-theme-maia
 
 
 echo "___________________________________________________________________________________"
@@ -93,9 +92,6 @@ echo "__________________________________________________________________________
 # Install system cleanup tool
 sudo pacman -S --noconfirm bleachbit
 
-# Install MS Office alternative with touch support
-sudo pacman -S --noconfirm freeoffice
-
 # Install MS Office alternative with lots of features
 sudo pacman -S --noconfirm libreoffice-fresh
 
@@ -117,32 +113,56 @@ sudo pacman -S --noconfirm handbrake
 # Install simple image editor (like Paint)
 sudo pacman -S --noconfirm pinta
 
-# Install Darktable photo editor (like Adobe Photoshop)
-sudo pacman -S --noconfirm darktable
-
 # Install photo library management
 sudo pacman -S --noconfirm digikam
 
-
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
-echo "                            Firefox default settings                               "
-echo "         (Applied for for all Firefox profiles created in the future.)             "
+echo "                                   APPLICATIONS                                    "    
+echo "                       SET DEFAULT CONFIGURATION FOR APPS                          "
 echo "___________________________________________________________________________________"
-echo "      Create a default profile setting to enable syncing of your toolbar layout    " 
-echo "___________________________________________________________________________________"
-# delete existing profiles
-rm -r /home/madhuri/.mozilla/firefox/*.default-release
-rm -r /home/madhuri/.mozilla/firefox/*.default-release
-rm -r /home/madhuri/.mozilla/firefox/*.default
-rm /home/madhuri/.mozilla/firefox/profiles.ini
+# Timeshift default configuration
+sudo truncate -s 0 /etc/timeshift/default.json
+sudo tee -a /etc/timeshift/default.json &>/dev/null << EOF
+{
+  "backup_device_uuid" : "",
+  "parent_device_uuid" : "",
+  "do_first_run" : "true",
+  "btrfs_mode" : "true",
+  "include_btrfs_home" : "true",
+  "stop_cron_emails" : "true",
+  "btrfs_use_qgroup" : "false",
+  "schedule_monthly" : "true",
+  "schedule_weekly" : "true",
+  "schedule_daily" : "true",
+  "schedule_hourly" : "false",
+  "schedule_boot" : "false",
+  "count_monthly" : "1",
+  "count_weekly" : "2",
+  "count_daily" : "3",
+  "count_hourly" : "6",
+  "count_boot" : "5",
+  "snapshot_size" : "0",
+  "snapshot_count" : "0",
+  "exclude" : [
+  ],
+  "exclude-apps" : [
+  ]
+}
 
-# Enable default config
+# Firefox default settings - for current and future system users and profiles
+# Create default policies (install minimal set of extensions and theme, enable syncing of your toolbar layout, disable default Mozilla bookmarks)
+# first delete existing profiles
+rm -r $HOME/.mozilla/firefox/*.default-release
+rm -r $HOME/.mozilla/firefox/*.default
+rm $HOME/.mozilla/firefox/profiles.ini
+
+# Then enable default config
 sudo tee -a /usr/lib/firefox/defaults/pref/autoconfig.js &>/dev/null << EOF
 pref("general.config.filename", "firefox.cfg");
 pref("general.config.obscure_value", 0);
 EOF
-# Create default policies (install extensions and theme)
+# Now create default policies (install extensions and theme, enable syncing of your toolbar layout, disable default Mozilla bookmarks)
 sudo tee -a /usr/lib/firefox/distribution/policies.json &>/dev/null << EOF
 {
   "policies": {
@@ -175,10 +195,10 @@ sudo sed -i -e 's@image/heif=org.kde.showfoto.desktop;@image/heif=org.gnome.gThu
 sudo sed -i -e 's@image/webp=org.kde.showfoto.desktop;@image/webp=org.gnome.gThumb.desktop;org.kde.showfoto.desktop;@g' /usr/share/applications/mimeinfo.cache
 sudo sed -i -e 's@tiff=org.gnome.Evince.desktop;org.gnome.gThumb.desktop;org.kde.showfoto.desktop;pinta.desktop;@tiff=org.gnome.gThumb.desktop;org.gnome.Evince.desktop;org.kde.showfoto.desktop;pinta.desktop;@g' /usr/share/applications/mimeinfo.cache
 # plain text files should open with text editor (Pluma) by default except for .csv files. Spreadsheet programs as backup (and default for .csv)
-sudo sed -i -e 's@text/plain=libreoffice-writer.desktop;pluma.desktop;@text/plain=pluma.desktop;libreoffice-writer.desktop;@g' /usr/share/applications/mimeinfo.cache
-sudo sed -i -e 's@text/tab-separated-values=libreoffice-calc.desktop;@text/tab-separated-values=pluma.desktop;libreoffice-calc.desktop;@g' /usr/share/applications/mimeinfo.cache
-sudo sed -i -e 's@text/comma-separated-values=libreoffice-calc.desktop;@text/comma-separated-values=pluma.desktop;libreoffice-calc.desktop;@g' /usr/share/applications/mimeinfo.cache
-sudo sed -i -e 's@text/csv=freeoffice-planmaker.desktop;libreoffice-calc.desktop;@text/csv=freeoffice-planmaker.desktop;libreoffice-calc.desktop;pluma.desktop;@g' /usr/share/applications/mimeinfo.cache
+#sudo sed -i -e 's@text/plain=libreoffice-writer.desktop;pluma.desktop;@text/plain=pluma.desktop;libreoffice-writer.desktop;@g' /usr/share/applications/mimeinfo.cache
+#sudo sed -i -e 's@text/tab-separated-values=libreoffice-calc.desktop;@text/tab-separated-values=pluma.desktop;libreoffice-calc.desktop;@g' /usr/share/applications/mimeinfo.cache
+#sudo sed -i -e 's@text/comma-separated-values=libreoffice-calc.desktop;@text/comma-separated-values=pluma.desktop;libreoffice-calc.desktop;@g' /usr/share/applications/mimeinfo.cache
+#sudo sed -i -e 's@text/csv=libreoffice-calc.desktop;@text/csv=libreoffice-calc.desktop;pluma.desktop;@g' /usr/share/applications/mimeinfo.cache
 
 # Pin common apps to Arc Menu
 gsettings set org.gnome.shell.extensions.arcmenu pinned-app-list "['FreeOffice TextMaker', '', 'freeoffice-textmaker.desktop', 'FreeOffice PlanMaker', '', 'freeoffice-planmaker.desktop', 'FreeOffice Presentations', '', 'freeoffice-presentations.desktop', 'ONLYOFFICE Desktop Editors', '', 'org.onlyoffice.desktopeditors.desktop', 'Document Scanner', '', 'simple-scan.desktop', 'Pinta Image Editor', '', 'pinta.desktop', 'digiKam', '', 'org.kde.digikam.desktop', 'Darktable Photo Workflow Software', '', 'darktable.desktop', 'Strawberry', '', 'org.strawberrymusicplayer.strawberry.desktop', 'Audacity', '', 'audacity.desktop', 'HandBrake', '', 'fr.handbrake.ghb.desktop', 'LosslessCut', '', 'losslesscut-bin.desktop', 'Add/Remove Software', '', 'org.manjaro.pamac.manager.desktop', 'BleachBit', '', 'org.bleachbit.BleachBit.desktop', 'Tweaks', '', 'org.gnome.tweaks.desktop', 'Extensions', '', 'org.gnome.Extensions.desktop', 'Terminal', '', 'org.gnome.Terminal.desktop']"
@@ -246,7 +266,7 @@ gsettings set org.gnome.shell.extensions.dash-to-panel trans-use-custom-opacity 
 gsettings set org.gnome.shell.extensions.dash-to-panel trans-use-dynamic-opacity true
 gsettings set org.gnome.shell.extensions.dash-to-panel tray-padding -1
 gsettings set org.gnome.shell.extensions.dash-to-panel window-preview-title-position 'TOP'
-gsettings set org.gnome.shell.extensions.dash-to-panel panel-element-positions 
+#gsettings set org.gnome.shell.extensions.dash-to-panel panel-element-positions 
 # Worspaces
 gsettings set org.gnome.mutter dynamic-workspaces false
 gsettings set org.gnome.desktop.wm.preferences num-workspaces 2
@@ -401,7 +421,7 @@ read -p "Your browser will open and you need to download the fonts package. Cont
 case ${answer:0:1} in
     y|Y )
        xdg-open 'https://mega.nz/file/u4p02JCC#HnJOVyK8TYDqEyVXLkwghDLKlKfIq0kOlX6SPxH53u0'
-       read -p "Click any key when the download has finished AND you saved the file to your Downloads..."
+       read -p "PLEASE CLICK ENTER when the download has finished.... (ignore error that appears after you close Firefox)"
        echo "please wait while extracting fonts to the system fonts folder (/usr/share/fonts), the downloaded file will be deleted afterwards." 
        # Extract the manually downloaded file to a subfolder in the systems font folder
        sudo tar -xvf $HOME/Downloads/fonts-office365.tar.xz -C /usr/share/fonts
@@ -487,6 +507,32 @@ case ${answer:0:1} in
     ;;
     * )
         echo "Skipping Nextcloud Desktop Client..."
+    ;;
+esac
+
+# Install DarkTable
+echo "---------------------------------------"
+read -p "Install DarkTable? A Photoshop alternative focused on editing RAW photo files (y/n)?" answer
+case ${answer:0:1} in
+    y|Y )
+        sudo pacman -S --noconfirm darktable
+    ;;
+    * )
+        echo "Skipping Spotify..." 
+    ;;
+esac
+
+
+# Install FreeOffice
+echo "---------------------------------------"
+echo "OnlyOffice, a simple and light Office alternative with MS Office interface is installed. LibreOffice, a full MS Office alternative is also installed." 
+read -p "Would you like to replace OnlyOffice for FreeOffice? This is a touchscreen friendly light Office alternative. OnlyOffice is recommended if touch is not important." answer
+case ${answer:0:1} in
+    y|Y )
+        sudo pacman -S --noconfirm freeoffice
+    ;;
+    * )
+        echo "Not replacing OnlyOffice for FreeOffice..." 
     ;;
 esac
 
