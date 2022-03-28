@@ -274,7 +274,7 @@ gsettings set org.gnome.desktop.wm.preferences num-workspaces 2
 gsettings set org.gnome.shell.extensions.ding show-home false
 gsettings set org.gnome.shell.extensions.ding start-corner 'bottom-left'
 # Theme
-gsettings set org.gnome.desktop.interface gtk-theme 'Matcha-dark-sea'
+gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-maia-compact-dark'
 gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark-Maia'
 # Display
 gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic false
