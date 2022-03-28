@@ -152,6 +152,7 @@ sudo tee -a /etc/timeshift/default.json &>/dev/null << EOF
   "exclude-apps" : [
   ]
 }
+EOF
 
 # Firefox default settings - for current and future system users and profiles
 # Create default policies (install minimal set of extensions and theme, enable syncing of your toolbar layout, disable default Mozilla bookmarks)
@@ -165,7 +166,7 @@ sudo tee -a /usr/lib/firefox/defaults/pref/autoconfig.js &>/dev/null << EOF
 pref("general.config.filename", "firefox.cfg");
 pref("general.config.obscure_value", 0);
 EOF
-# Now create default policies (install extensions and theme, enable syncing of your toolbar layout, disable default Mozilla bookmarks)
+# Now create default policies (install extensions and theme, enable syncing of your toolbar layout, disable default Mozilla bookmarks, enable OS default filemanager)
 sudo tee -a /usr/lib/firefox/distribution/policies.json &>/dev/null << EOF
 {
   "policies": {
