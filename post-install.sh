@@ -145,6 +145,10 @@ sudo sed -i -e 's@tiff=org.gnome.Evince.desktop;org.gnome.gThumb.desktop;org.kde
 xdg-mime default nemo.desktop inode/directory
 # Associate Pluma as default text editor
 xdg-mime default pluma.desktop text/plain
+
+# DUE TO BUG IN ONLYOFFICE MANJARO PACKAGE, ONLYOFFICE IS NOT SET AS DEFAULT APP AFTER INSTALLATION. 
+# THE BELOW ASSOCIATES ONLYOFFICE AS DEFAULT FOR ALL SUPPORTED FILETYPES. LIBREOFFICE WILL BE 2ND. 
+# NOTE: SYSTEM-WIDE, LIBREOFFICE IS STILL DEFAULT, CHANGING THIS DOES NOT SURVIVE UPDATES. IF YOU CREATE NEW USER ACCOUNTS, APPLY THE BELOW COMMANDS.
 # Associate OnlyOffice by default
 xdg-mime default org.onlyoffice.desktopeditors.desktop text/comma-separated
 xdg-mime default org.onlyoffice.desktopeditors.desktop text/csv
