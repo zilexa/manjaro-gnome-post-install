@@ -156,9 +156,25 @@ xdg-mime default nemo.desktop inode/directory
 # Associate Pluma as default text editor
 xdg-mime default pluma.desktop text/plain
 
-# DUE TO BUG IN ONLYOFFICE MANJARO PACKAGE, ONLYOFFICE IS NOT SET AS DEFAULT APP AFTER INSTALLATION. 
-# THE BELOW ASSOCIATES ONLYOFFICE AS DEFAULT FOR ALL SUPPORTED FILETYPES. LIBREOFFICE WILL BE 2ND. 
-# NOTE: SYSTEM-WIDE, LIBREOFFICE IS STILL DEFAULT, CHANGING THIS DOES NOT SURVIVE UPDATES. IF YOU CREATE NEW USER ACCOUNTS, APPLY THE BELOW COMMANDS.
+# For some reason, Office and image files are still associated with LibreOffice and Gimp, even if you reinstall OnlyOffice and Gthumb. 
+# Discussed in this topic: 
+# Manual changes made to /usr/share/applications/mimeinfo.cache will not survive a system or related application update. 
+# To solve this (but only for the current user), the xdg-mime command can be used. 
+# Associate gThumb by default instead of Gimp
+xdg-mime default org.gnome.gThumb.desktop image/bmp
+xdg-mime default org.gnome.gThumb.desktop image/jpeg
+xdg-mime default org.gnome.gThumb.desktop image/jpg
+xdg-mime default org.gnome.gThumb.desktop image/gif
+xdg-mime default org.gnome.gThumb.desktop image/png
+xdg-mime default org.gnome.gThumb.desktop image/tiff
+xdg-mime default org.gnome.gThumb.desktop image/vnd.microsoft.icon
+xdg-mime default org.gnome.gThumb.desktop image/x-png
+xdg-mime default org.gnome.gThumb.desktop image/vnd.zbrush.pcx
+xdg-mime default org.gnome.gThumb.desktop image/x-tga
+xdg-mime default org.gnome.gThumb.desktop image/xpm
+xdg-mime default org.gnome.gThumb.desktop image/svg+xml
+xdg-mime default org.gnome.gThumb.desktop image/webp
+xdg-mime default org.gnome.gThumb.desktop image/jxl
 # Associate OnlyOffice by default
 xdg-mime default org.onlyoffice.desktopeditors.desktop text/comma-separated
 xdg-mime default org.onlyoffice.desktopeditors.desktop text/csv
@@ -238,7 +254,8 @@ xdg-mime default org.onlyoffice.desktopeditors.desktop application/x-123
 xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.wordprocessingml.document
 xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.presentationml.presentation
 xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-# Update association file
+
+# run this command to apply the changes to the mimeapps.list file
 update-desktop-database ~/.local/share/applications/
 
 
