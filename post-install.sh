@@ -24,7 +24,7 @@ sudo sed -Ei '/DownloadUpdates/s/^#//' /etc/pamac.conf
 sudo sed -Ei '/EnableAUR/s/^#//' /etc/pamac.conf
 sudo sed -Ei '/CheckAURUpdates/s/^#//' /etc/pamac.conf
 # Mirrors
-sudo pacman-mirrors -g --continent -P https --api && sudo pamac update -a --noconfirm
+sudo pacman-mirrors -g --continent -P https --api && pamac update -a --noconfirm
 
 
 echo "___________________________________________________________________________________"
@@ -33,36 +33,36 @@ echo "                                   APPLICATIONS                           
 echo "         Install must-have applications for various common tasks                   "
 echo "___________________________________________________________________________________"
 # Install system cleanup tool
-sudo pamac install --noconfirm bleachbit
+pamac install --noconfirm bleachbit
 
 # Install MS Office alternative. LibreOffice is the most complete Microsoft Office alternative. 
-sudo pamac install --noconfirm libreoffice-fresh
+pamac install --noconfirm libreoffice-fresh
 # Now reinstall OnlyOffice to ensure it is the default Office editor, for most users, OnlyOffice is enough. 
-sudo pamac install --noconfirm onlyoffice-desktopeditors
+pamac install --noconfirm onlyoffice-desktopeditors
 
 # Install handy desktop tools
-sudo pamac install --noconfirm variety
+pamac install --noconfirm variety
 
 # Install a musicplayer that supports folder view library
-sudo pamac install --noconfirm strawberry
+pamac install --noconfirm strawberry
 
 # Install Audacity audio editor and recorder
-sudo pamac install --noconfirm audacity
+pamac install --noconfirm audacity
 
 # Install simple video editor (cut/trim videos) from AUR repository
-sudo pamac install --no-confirm losslesscut-bin
+pamac install --no-confirm losslesscut-bin
 
 # Install handbrake to convert videos
-sudo pamac install --noconfirm handbrake
+pamac install --noconfirm handbrake
 
 # Install simple image editor/creator (like Paint)
-sudo pamac install --noconfirm pinta
+pamac install --noconfirm pinta
 
 # Install photo editor
-sudo pamac install --noconfirm gimp
+pamac install --noconfirm gimp
 
 # Install photo library management
-sudo pamac install --noconfirm digikam
+pamac install --noconfirm digikam
 
 # Clean old versions
 pamac clean --noconfirm
@@ -74,7 +74,7 @@ echo "                                   APPLICATIONS                           
 echo "              Replace filemanager (Nautilus) with more intuitive Nemo              "
 echo "___________________________________________________________________________________"
 # Change default filemanager Nautilus for Nemo 
-sudo pamac install --noconfirm nemo
+pamac install --noconfirm nemo
 # Associate Nemo as the default filemanager
 sudo sed -i -e 's@org.gnome.Nautilus.desktop;@nemo.desktop;@g' /usr/share/applications/mimeinfo.cache
 sudo sed -i -e 's@nemo.desktop;nemo.desktop;@nemo.desktop;@g' /usr/share/applications/mimeinfo.cache
@@ -452,8 +452,8 @@ echo "__________________________________________________________________________
 #sudo wget -O /usr/share/gnome-shell/extensions/arcmenu@arcmenu.com/controller.js https://gitlab.com/arcmenu/ArcMenu/-/raw/master/controller.js 
 
 # Install via Pamac, to enable auto-update
-sudo pamac install --no-confirm gnome-gesture-improvements
-sudo pamac install --no-confirm gnome-shell-extension-custom-hot-corners-extended
+pamac install --no-confirm gnome-gesture-improvements
+pamac install --no-confirm gnome-shell-extension-custom-hot-corners-extended
 
 #Enable extensions (Workspace indicator, thumb drive menu, Gesture Improvements)
 gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu', 'places-menu@gnome-shell-extensions.gcampax.github.com']"
@@ -643,7 +643,7 @@ echo "---------------------------------------"
 read -p "Install Nextcloud Desktop Client for Nemo/Budgie? Recommended if you run a FileRun or WebDAV server (y / n)?" answer
 case ${answer:0:1} in
     y|Y )
-        sudo pamac install --noconfirm nextcloud-client
+        pamac install --noconfirm nextcloud-client
     ;;
     * )
         echo "Skipping Nextcloud Desktop Client..."
@@ -655,7 +655,7 @@ echo "---------------------------------------"
 read -p "Install DarkTable? A Photoshop alternative focused on editing RAW photo files (y/n)?" answer
 case ${answer:0:1} in
     y|Y )
-        sudo pamac install --noconfirm darktable
+        pamac install --noconfirm darktable
     ;;
     * )
         echo "Skipping Spotify..." 
@@ -669,7 +669,7 @@ echo "OnlyOffice, a simple and light Office alternative with MS Office interface
 read -p "Would you like to replace OnlyOffice for FreeOffice? This is a touchscreen friendly light Office alternative. OnlyOffice is recommended if touch is not important." answer
 case ${answer:0:1} in
     y|Y )
-        sudo pamac install --noconfirm freeoffice
+        pamac install --noconfirm freeoffice
     ;;
     * )
         echo "Not replacing OnlyOffice for FreeOffice..." 
@@ -682,7 +682,7 @@ echo "---------------------------------------"
 read -p "Install Spotify (y/n)?" answer
 case ${answer:0:1} in
     y|Y )
-        sudo pamac install --noconfirm spotifyd
+        pamac install --noconfirm spotifyd
     ;;
     * )
         echo "Skipping Spotify..." 
