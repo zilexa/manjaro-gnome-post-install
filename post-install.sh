@@ -506,11 +506,11 @@ EOF
 # execute fstab, mounting userdata
 sudo mount -a
 
-## Move personal user folders to the subvolume
+## Move personal user folders to the subvolume, rename Videos to Media while doing that
 sudo mv /home/${USER}/Documents /mnt/userdata/
 sudo mv /home/${USER}/Desktop /mnt/userdata/
 sudo mv /home/${USER}/Downloads /mnt/userdata/
-sudo mv /home/${USER}/Media /mnt/userdata/
+sudo mv /home/${USER}/Videos /mnt/userdata/Media
 sudo mv /home/${USER}/Music /mnt/userdata/
 sudo mv /home/${USER}/Pictures /mnt/userdata/
 ## Link personal folders inside subvolume back into home subvolume
@@ -531,9 +531,9 @@ echo "                                                                          
 echo "                          Simplify $HOME personal folders                          "
 echo "___________________________________________________________________________________"
 # Change default location of personal folders by editing $HOME/.config/user-dirs.dirs
-## Move /Templates to be subfolder of /Documents. 
+## Move /Templates to become a subfolder of /Documents. 
 sudo sed -i -e 's+$HOME/Templates+$HOME/Documents/Templates+g' $HOME/.config/user-dirs.dirs
-## Disable Public folder because nobody uses it. 
+## Disable Public folder because nobody uses it. Just use Downloads for it.
 sudo sed -i -e 's+$HOME/Public+$HOME/Downloads+g' $HOME/.config/user-dirs.dirs
 ## Rename Videos to Media making it the folder for tvshows/movies downloads or anything else that is not suppose to be in Photos. 
 sudo sed -i -e 's+$HOME/Videos+$HOME/Media+g' $HOME/.config/user-dirs.dirs
@@ -543,15 +543,10 @@ sudo sed -i -e 's+$HOME/Videos+$HOME/Media+g' $HOME/.config/user-dirs.dirs
 rmdir $HOME/Public
 ## Move Templates folder into Documents because it does not make sense to be outside it. 
 mv $HOME/Templates $HOME/Documents/
-## Rename and move contents from Pictures to Photos, Videos to Media.
-mv /home/${USER}/Videos /home/${USER}/Media
-#mv /home/${USER}/Pictures /home/${USER}/Photos
-gsettings set org.nemo.window-state sidebar-bookmark-breakpoint 4
+#gsettings set org.nemo.window-state sidebar-bookmark-breakpoint 4
 # Create folders for storing photo albums and for Digikam database
 mkdir $HOME/Pictures/Albums
 mkdir $HOME/Pictures/digikam-db && chattr +C $HOME/Pictures/digikam-db
-
-
 
 
 echo "_________________________________________________________________________"
