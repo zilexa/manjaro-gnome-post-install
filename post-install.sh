@@ -9,7 +9,7 @@ echo "                                 remove unused apps                       
 echo "___________________________________________________________________________________"
 # Remove unused apps
 # temporarily remove OnlyOffice and install after LibreOffice. This way, OnlyOffice will be the default for Office files, LibreOfice will be the alternative choice.
-sudo pamac remove --no-confirm geary firefox-gnome-theme-maia onlyoffice-desktopeditors
+sudo pamac remove --no-confirm geary firefox-gnome-theme-maia
 
 
 echo "___________________________________________________________________________________"
@@ -31,15 +31,13 @@ pamac update -a --no-confirm
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
 echo "                                   APPLICATIONS                                    "    
-echo "         Install must-have applications for various common tasks                   "
+echo "             Install must-have applications for various common tasks               "
 echo "___________________________________________________________________________________"
 # Install system cleanup tool
 sudo pamac install --no-confirm bleachbit
 
 # Install MS Office alternative. LibreOffice is the most complete Microsoft Office alternative. 
 sudo pamac install --no-confirm libreoffice-fresh
-# Now reinstall OnlyOffice to ensure it is the default Office editor, for most users, OnlyOffice is enough. 
-sudo pamac install --no-confirm onlyoffice-desktopeditors
 
 # Install handy desktop tools
 sudo pamac install --no-confirm variety
@@ -70,9 +68,45 @@ pamac clean --no-confirm
 
 
 echo "___________________________________________________________________________________"
+echo "                      APPLICATIONS - Gnome Extensions                              "    
+echo " 1) Touchpad Gestures: 4 instead of 3 fingers, frees up 3-finger gestures for apps "
+echo " 2) Hot Corners Extended: allow config of screen hot corners                       " 
+echo "___________________________________________________________________________________"
+# Download the gnome extension "Gesture Improvements"
+#wget -O $HOME/Downloads/gestures.zip https://extensions.gnome.org/extension-data/gestureImprovementsgestures.v17.shell-extension.zip
+# Get the UUID of the extension
+#EXTUUID1=$(unzip -c $HOME/Downloads/gestures.zip metadata.json | grep uuid | cut -d \" -f4)
+# Create a subfolder in the Extensions folder with the UUID as name
+#mkdir -p $HOME/.local/share/gnome-shell/extensions/$EXTUUID1
+# Unzip the files there
+#unzip $HOME/Downloads/gestures.zip -d $HOME/.local/share/gnome-shell/extensions/$EXTUUID1/
+
+# Do the same for extension "Custom Hot Corners Extended" 
+#wget -O $HOME/Downloads/hotcorners.zip https://extensions.gnome.org/extension-data/custom-hot-corners-extendedG-dH.github.com.v10.shell-extension.zip
+#EXTUUID2=$(unzip -c $HOME/Downloads/hotcorners.zip metadata.json | grep uuid | cut -d \" -f4)
+#mkdir -p $HOME/.local/share/gnome-shell/extensions/$EXTUUID2
+#unzip $HOME/Downloads/hotcorners.zip -d $HOME/.local/share/gnome-shell/extensions/$EXTUUID2/
+## FIX FOR ARCMENU - can be deleted after fix is released via updates
+#sudo wget -O /usr/share/gnome-shell/extensions/arcmenu@arcmenu.com/controller.js https://gitlab.com/arcmenu/ArcMenu/-/raw/master/controller.js 
+
+# Install via Pamac, to enable auto-update
+sudo pamac install --no-confirm gnome-gesture-improvements
+sudo pamac install --no-confirm gnome-shell-extension-custom-hot-corners-extended
+
+#Enable extensions (Workspace indicator, thumb drive menu, Gesture Improvements)
+gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu', 'places-menu@gnome-shell-extensions.gcampax.github.com']"
+gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'custom-hot-corners-extended@G-dH.github.com', 'gestureImprovements@gestures']"
+# Configure Hot Corners
+gsettings set org.gnome.desktop.interface.enable-hot-corners true
+gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-top-left-0 action 'toggle-arcmenu'
+gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-right-0 action 'show-desktop-mon'
+gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-left-0 action 'toggle-overview'
+
+
+echo "___________________________________________________________________________________"
 echo "                                                                                   "
-echo "                                   APPLICATIONS                                    "
-echo "              Replace filemanager (Nautilus) with more intuitive Nemo              "
+echo "                        APPLICATIONS - replace default app                         "
+echo "             replace Nautilus filemanager with more friendly/usable Nemo           "
 echo "___________________________________________________________________________________"
 # Change default filemanager Nautilus for Nemo 
 sudo pamac install --no-confirm nemo
@@ -95,8 +129,8 @@ sudo -u root dbus-launch gsettings set org.nemo.preferences show-reload-icon-too
 sudo -u root dbus-launch gsettings set org.nemo.preferences default-folder-viewer 'list-view'
 sudo -u root dbus-launch gsettings set org.nemo.preferences inherit-folder-viewer true
 # Set Nemo bookmarks, reflecting folder that will be renamed later (Videos>Media)
-truncate -s 0 $HOME/.config/bookmarks
-tee -a $HOME/.config/bookmarks &>/dev/null << EOF
+truncate -s 0 $HOME/.config/gtk-3.0/bookmarks
+tee -a $HOME/.config/gtk-3.0/bookmarks &>/dev/null << EOF
 file:///home/${USER}/Downloads Downloads
 file:///home/${USER}/Documents Documents
 file:///home/${USER}/Music Music
@@ -106,7 +140,7 @@ EOF
 
 echo "___________________________________________________________________________________"
 echo "                                                                                   "
-echo "                                   APPLICATIONS                                    " 
+echo "                        APPLICATIONS - replace default app                         "
 echo "               Replace Text Editor (gedit) with more intuitive Pluma               "
 echo "___________________________________________________________________________________"
 # Change default texteditor Gedit to Pluma but keep the nicer looking Text Editor name and icon
@@ -143,7 +177,7 @@ sudo -u root dbus-launch gsettings set org.mate.pluma color-scheme 'cobalt'
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
 echo "                                   APPLICATIONS                                    "    
-echo "                                 Set default apps                                  "
+echo "                               Set file associations                               "
 echo "___________________________________________________________________________________"
 # Common image files should open with image viewer (gThumb) by default, with photo editor (Showfoto, part of DigiKam) and image editor (Pinta) as alternatives
 sudo sed -i -e 's@image/jpg=pinta.desktop;@image/jpg=org.gnome.gThumb.desktop;org.kde.showfoto.desktop;pinta.desktop;@g' /usr/share/applications/mimeinfo.cache
@@ -340,8 +374,8 @@ gsettings set org.gnome.shell favorite-apps "['nemo.desktop', 'firefox.desktop',
 # Arc Menu & Dash to Panel
 gsettings set org.gnome.shell.extensions.arcmenu arc-menu-placement 'DTP'
 gsettings set org.gnome.shell.extensions.arcmenu menu-layout 'Eleven'
-gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu']"
-gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com']"
+gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu', 'places-menu@gnome-shell-extensions.gcampax.github.com']"
+gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'custom-hot-corners-extended@G-dH.github.com', 'gestureImprovements@gestures']"
 gsettings set org.gnome.shell.extensions.arcmenu available-placement "[false, true, false]"
 gsettings set org.gnome.shell.extensions.dash-to-panel panel-positions '{"0":"LEFT"}'
 gsettings set org.gnome.desktop.interface show-battery-percentage true
@@ -453,43 +487,6 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/ name 'Interactive screenshot to cust folder'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/ command 'gnome-screenshot -i -p'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/ binding '<Primary><Shift>Print'
-
-
-echo "___________________________________________________________________________________"
-echo "               Configure 1) Touchpad Gestures: 4 instead of 3 fingers:             "
-echo "       this way, you can use 3-finger touchpad gestures within applications.       "
-echo "           2) Hot Corners Extended: allow config of screen hot corners             " 
-echo "___________________________________________________________________________________"
-# Download the gnome extension "Gesture Improvements"
-#wget -O $HOME/Downloads/gestures.zip https://extensions.gnome.org/extension-data/gestureImprovementsgestures.v17.shell-extension.zip
-# Get the UUID of the extension
-#EXTUUID1=$(unzip -c $HOME/Downloads/gestures.zip metadata.json | grep uuid | cut -d \" -f4)
-# Create a subfolder in the Extensions folder with the UUID as name
-#mkdir -p $HOME/.local/share/gnome-shell/extensions/$EXTUUID1
-# Unzip the files there
-#unzip $HOME/Downloads/gestures.zip -d $HOME/.local/share/gnome-shell/extensions/$EXTUUID1/
-
-# Do the same for extension "Custom Hot Corners Extended" 
-#wget -O $HOME/Downloads/hotcorners.zip https://extensions.gnome.org/extension-data/custom-hot-corners-extendedG-dH.github.com.v10.shell-extension.zip
-#EXTUUID2=$(unzip -c $HOME/Downloads/hotcorners.zip metadata.json | grep uuid | cut -d \" -f4)
-#mkdir -p $HOME/.local/share/gnome-shell/extensions/$EXTUUID2
-#unzip $HOME/Downloads/hotcorners.zip -d $HOME/.local/share/gnome-shell/extensions/$EXTUUID2/
-## FIX FOR ARCMENU - can be deleted after fix is released via updates
-#sudo wget -O /usr/share/gnome-shell/extensions/arcmenu@arcmenu.com/controller.js https://gitlab.com/arcmenu/ArcMenu/-/raw/master/controller.js 
-
-# Install via Pamac, to enable auto-update
-sudo pamac install --no-confirm gnome-gesture-improvements
-sudo pamac install --no-confirm gnome-shell-extension-custom-hot-corners-extended
-
-#Enable extensions (Workspace indicator, thumb drive menu, Gesture Improvements)
-gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu', 'places-menu@gnome-shell-extensions.gcampax.github.com']"
-gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'custom-hot-corners-extended@G-dH.github.com', 'gestureImprovements@gestures']"
-
-# Configure Hot Corners
-gsettings set org.gnome.desktop.interface.enable-hot-corners true
-gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-top-left-0 action 'toggle-arcmenu'
-gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-right-0 action 'show-desktop-mon'
-gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-left-0 action 'toggle-overview'
 
 
 echo "___________________________________________________________________________________"
