@@ -305,8 +305,10 @@ echo "                                   APPLICATIONS                           
 echo "                       SET DEFAULT CONFIGURATION FOR APPS                          "
 echo "___________________________________________________________________________________"
 # Timeshift default configuration
-sudo truncate -s 0 /etc/timeshift/default.json
-sudo tee -a /etc/timeshift/default.json &>/dev/null << EOF
+# For some reason, changing the default.json did not do the trick in disabling qgroups by default at first launch.
+# Changing timeshift.json helps. Probably, that is the only thing required. 
+sudo truncate -s 0 /etc/timeshift/timeshift.json
+sudo tee -a /etc/timeshift/timeshift.json &>/dev/null << EOF
 {
   "backup_device_uuid" : "",
   "parent_device_uuid" : "",
@@ -333,6 +335,7 @@ sudo tee -a /etc/timeshift/default.json &>/dev/null << EOF
   ]
 }
 EOF
+
 
 # Firefox default settings - for current and future system users and profiles
 # Create default policies (install minimal set of extensions and theme, enable syncing of your toolbar layout, disable default Mozilla bookmarks)
