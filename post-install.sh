@@ -94,7 +94,15 @@ sudo -u root dbus-launch gsettings set org.nemo.preferences date-format 'iso'
 sudo -u root dbus-launch gsettings set org.nemo.preferences show-reload-icon-toolbar true
 sudo -u root dbus-launch gsettings set org.nemo.preferences default-folder-viewer 'list-view'
 sudo -u root dbus-launch gsettings set org.nemo.preferences inherit-folder-viewer true
-
+# Set Nemo bookmarks, reflecting folder that will be renamed later (Videos>Media)
+truncate -s 0 $HOME/.config/bookmarks
+tee -a $HOME/.config/bookmarks &>/dev/null << EOF
+file:///home/${USER}/Downloads Downloads
+file:///home/${USER}/Documents Documents
+file:///home/${USER}/Music Music
+file:///home/${USER}/Pictures Pictures
+file:///home/${USER}/Media Media
+EOF
 
 echo "___________________________________________________________________________________"
 echo "                                                                                   "
@@ -488,8 +496,9 @@ EOF
 
 echo "_________________________________________________________________________"
 echo "                         ISOLATE PERSONAL FOLDERS                        "
+echo "                         SIMPLIFY PERSONAL FOLDERS                       "
 echo "_________________________________________________________________________"
-# Temporarily mount filesystem root
+# Temporarily mount filesystem root to create a new root subvolume
 sudo mount /mnt/disks/systemdrive
 # create a root subvolume for user personal folders in the root filesystem
 sudo btrfs subvolume create /mnt/disks/systemdrive/@userdata
@@ -508,6 +517,10 @@ EOF
 # execute fstab, mounting userdata
 sudo mount -a
 
+## Remove Public folder, nobody uses it. Will be registered to Downloads instead. 
+rmdir $HOME/Public
+## Move Templates folder into Documents because it does not make sense to be outside it. 
+mv $HOME/Templates $HOME/Documents/
 ## Move personal user folders to the subvolume, rename Videos to Media while doing that
 sudo mv /home/${USER}/Documents /mnt/userdata/
 sudo mv /home/${USER}/Desktop /mnt/userdata/
@@ -522,33 +535,22 @@ ln -s /mnt/userdata/Downloads $HOME/Downloads
 ln -s /mnt/userdata/Media $HOME/Media
 ln -s /mnt/userdata/Music $HOME/Music
 ln -s /mnt/userdata/Pictures $HOME/Pictures
-#Current Downloads folder has been moved, enter the moved Downloads folder 
+
+#Current Downloads folder has been moved, enter the moved Downloads folder to prevent errors while continuing this script
 cd /
 cd $HOME
 cd $HOME/Downloads
 
-
-echo "___________________________________________________________________________________"
-echo "                                                                                   " 
-echo "                          Simplify $HOME personal folders                          "
-echo "___________________________________________________________________________________"
-# Change default location of personal folders by editing $HOME/.config/user-dirs.dirs
-## Move /Templates to become a subfolder of /Documents. 
-sudo sed -i -e 's+$HOME/Templates+$HOME/Documents/Templates+g' $HOME/.config/user-dirs.dirs
-## Disable Public folder because nobody uses it. Just use Downloads for it.
-sudo sed -i -e 's+$HOME/Public+$HOME/Downloads+g' $HOME/.config/user-dirs.dirs
-## Rename Videos to Media making it the folder for tvshows/movies downloads or anything else that is not suppose to be in Photos. 
-sudo sed -i -e 's+$HOME/Videos+$HOME/Media+g' $HOME/.config/user-dirs.dirs
-
-# Now make the changes to the actual folders: 
-## Remove unused Pubic folder
-rmdir $HOME/Public
-## Move Templates folder into Documents because it does not make sense to be outside it. 
-mv $HOME/Templates $HOME/Documents/
-#gsettings set org.nemo.window-state sidebar-bookmark-breakpoint 4
 # Create folders for storing photo albums and for Digikam database
 mkdir $HOME/Pictures/Albums
 mkdir $HOME/Pictures/digikam-db && chattr +C $HOME/Pictures/digikam-db
+
+## Register removed Public folder to Downloads folder.
+sudo sed -i -e 's+$HOME/Public+$HOME/Downloads+g' $HOME/.config/user-dirs.dirs
+## Move /Templates into /Documents. 
+sudo sed -i -e 's+$HOME/Templates+$HOME/Documents/Templates+g' $HOME/.config/user-dirs.dirs
+## Register Videos as Media making it the folder for tvshows/movies downloads or anything else that is not suppose to be in Photos. 
+sudo sed -i -e 's+$HOME/Videos+$HOME/Media+g' $HOME/.config/user-dirs.dirs
 
 
 echo "_________________________________________________________________________"
