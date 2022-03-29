@@ -459,7 +459,7 @@ gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo
 gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'custom-hot-corners-extended@G-dH.github.com', 'gestureImprovements@gestures']"
 
 # Configure Hot Corners
-gsettings set org.gnome.desktop.interface.enable-hot-corners false
+gsettings set org.gnome.desktop.interface.enable-hot-corners true
 gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-top-left-0 action 'toggle-arcmenu'
 gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-right-0 action 'show-desktop-mon'
 gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-left-0 action 'toggle-overview'
