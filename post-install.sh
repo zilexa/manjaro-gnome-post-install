@@ -102,6 +102,18 @@ gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-t
 gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-right-0 action 'show-desktop-mon'
 gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-left-0 action 'toggle-overview'
 
+touch /tmp/set-hotcorners.sh
+tee -a /tmp/set-hotcorners.sh &>/dev/null << EOF
+#!/bin/bash
+#
+# Configure Hot Corners
+gsettings set org.gnome.desktop.interface.enable-hot-corners true
+gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-top-left-0 action 'toggle-arcmenu'
+gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-right-0 action 'show-desktop-mon'
+gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-left-0 action 'toggle-overview'
+EOF
+chmod +x /tmp/set-hotcorners.sh
+
 
 echo "___________________________________________________________________________________"
 echo "                                                                                   "
