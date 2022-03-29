@@ -9,7 +9,7 @@ echo "                                 remove unused apps                       
 echo "___________________________________________________________________________________"
 # Remove unused apps
 # temporarily remove OnlyOffice and install after LibreOffice. This way, OnlyOffice will be the default for Office files, LibreOfice will be the alternative choice.
-pamac remove --noconfirm geary firefox-gnome-theme-maia onlyoffice-desktopeditors
+pamac remove --no-confirm geary firefox-gnome-theme-maia onlyoffice-desktopeditors
 
 
 echo "___________________________________________________________________________________"
@@ -24,7 +24,8 @@ sudo sed -Ei '/DownloadUpdates/s/^#//' /etc/pamac.conf
 sudo sed -Ei '/EnableAUR/s/^#//' /etc/pamac.conf
 sudo sed -Ei '/CheckAURUpdates/s/^#//' /etc/pamac.conf
 # Mirrors
-sudo pacman-mirrors -g --continent -P https --api && pamac update -a --noconfirm
+sudo pacman-mirrors -g --continent -P https --api
+pamac update -a --no-confirm
 
 
 echo "___________________________________________________________________________________"
@@ -33,39 +34,39 @@ echo "                                   APPLICATIONS                           
 echo "         Install must-have applications for various common tasks                   "
 echo "___________________________________________________________________________________"
 # Install system cleanup tool
-pamac install --noconfirm bleachbit
+pamac install --no-confirm bleachbit
 
 # Install MS Office alternative. LibreOffice is the most complete Microsoft Office alternative. 
-pamac install --noconfirm libreoffice-fresh
+pamac install --no-confirm libreoffice-fresh
 # Now reinstall OnlyOffice to ensure it is the default Office editor, for most users, OnlyOffice is enough. 
-pamac install --noconfirm onlyoffice-desktopeditors
+pamac install --no-confirm onlyoffice-desktopeditors
 
 # Install handy desktop tools
-pamac install --noconfirm variety
+pamac install --no-confirm variety
 
 # Install a musicplayer that supports folder view library
-pamac install --noconfirm strawberry
+pamac install --no-confirm strawberry
 
 # Install Audacity audio editor and recorder
-pamac install --noconfirm audacity
+pamac install --no-confirm audacity
 
 # Install simple video editor (cut/trim videos) from AUR repository
 pamac install --no-confirm losslesscut-bin
 
 # Install handbrake to convert videos
-pamac install --noconfirm handbrake
+pamac install --no-confirm handbrake
 
 # Install simple image editor/creator (like Paint)
-pamac install --noconfirm pinta
+pamac install --no-confirm pinta
 
 # Install photo editor
-pamac install --noconfirm gimp
+pamac install --no-confirm gimp
 
 # Install photo library management
-pamac install --noconfirm digikam
+pamac install --no-confirm digikam
 
 # Clean old versions
-pamac clean --noconfirm
+pamac clean --no-confirm
 
 
 echo "___________________________________________________________________________________"
@@ -74,7 +75,7 @@ echo "                                   APPLICATIONS                           
 echo "              Replace filemanager (Nautilus) with more intuitive Nemo              "
 echo "___________________________________________________________________________________"
 # Change default filemanager Nautilus for Nemo 
-pamac install --noconfirm nemo
+pamac install --no-confirm nemo
 # Associate Nemo as the default filemanager
 sudo sed -i -e 's@org.gnome.Nautilus.desktop;@nemo.desktop;@g' /usr/share/applications/mimeinfo.cache
 sudo sed -i -e 's@nemo.desktop;nemo.desktop;@nemo.desktop;@g' /usr/share/applications/mimeinfo.cache
@@ -101,8 +102,8 @@ echo "                                   APPLICATIONS                           
 echo "               Replace Text Editor (gedit) with more intuitive Pluma               "
 echo "___________________________________________________________________________________"
 # Change default texteditor Gedit to Pluma but keep the nicer looking Text Editor name and icon
-pamac remove --noconfirm gedit
-pamac install --noconfirm pluma
+pamac remove --no-confirm gedit
+pamac install --no-confirm pluma
 sudo cp '/usr/share/applications/pluma.desktop' '/usr/share/applications/plumabackup.backup'
 sudo sed -i -e 's@Pluma@Text Editor@g' '/usr/share/applications/pluma.desktop'
 sudo sed -i -e 's@Icon=accessories-text-editor@Icon=org.gnome.gedit@g' '/usr/share/applications/pluma.desktop'
@@ -584,7 +585,7 @@ echo "---------------------------------------"
 read -p "Configure Remote Desktop to share your screen securely, if you need support from family/friends? (y/n)" answer
 case ${answer:0:1} in
     y|Y )
-    sudo pacman -S --noconfirm gnome-remote-desktop
+    sudo pacman -S --no-confirm gnome-remote-desktop
     echo "Please create credentials to allow access by others:"
     read -p 'Remote Desktop access username: ' rdpuser
     read -p 'Remote Desktop access password: ' rdppw
@@ -643,7 +644,7 @@ echo "---------------------------------------"
 read -p "Install Nextcloud Desktop Client for Nemo/Budgie? Recommended if you run a FileRun or WebDAV server (y / n)?" answer
 case ${answer:0:1} in
     y|Y )
-        pamac install --noconfirm nextcloud-client
+        pamac install --no-confirm nextcloud-client
     ;;
     * )
         echo "Skipping Nextcloud Desktop Client..."
@@ -655,7 +656,7 @@ echo "---------------------------------------"
 read -p "Install DarkTable? A Photoshop alternative focused on editing RAW photo files (y/n)?" answer
 case ${answer:0:1} in
     y|Y )
-        pamac install --noconfirm darktable
+        pamac install --no-confirm darktable
     ;;
     * )
         echo "Skipping Spotify..." 
@@ -669,7 +670,7 @@ echo "OnlyOffice, a simple and light Office alternative with MS Office interface
 read -p "Would you like to replace OnlyOffice for FreeOffice? This is a touchscreen friendly light Office alternative. OnlyOffice is recommended if touch is not important." answer
 case ${answer:0:1} in
     y|Y )
-        pamac install --noconfirm freeoffice
+        pamac install --no-confirm freeoffice
     ;;
     * )
         echo "Not replacing OnlyOffice for FreeOffice..." 
@@ -682,7 +683,7 @@ echo "---------------------------------------"
 read -p "Install Spotify (y/n)?" answer
 case ${answer:0:1} in
     y|Y )
-        pamac install --noconfirm spotifyd
+        pamac install --no-confirm spotifyd
     ;;
     * )
         echo "Skipping Spotify..." 
