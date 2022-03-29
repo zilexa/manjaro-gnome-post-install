@@ -8,11 +8,8 @@ echo "                                   APPLICATIONS                           
 echo "                                 remove unused apps                                "
 echo "___________________________________________________________________________________"
 # Remove unused apps
-# -R removes package, -s removes its dependencies if they are not required by other packages, -n remove install configuration files
-sudo pacman -Rsn --noconfirm geary
-sudo pacman -Rsn --noconfirm firefox-gnome-theme-maia
 # temporarily remove OnlyOffice and install after LibreOffice. This way, OnlyOffice will be the default for Office files, LibreOfice will be the alternative choice.
-sudo pacman -Rsn --noconfirm onlyoffice-desktopeditors
+pamac remove --noconfirm geary firefox-gnome-theme-maia onlyoffice-desktopeditors
 
 
 echo "___________________________________________________________________________________"
@@ -27,7 +24,7 @@ sudo sed -Ei '/DownloadUpdates/s/^#//' /etc/pamac.conf
 sudo sed -Ei '/EnableAUR/s/^#//' /etc/pamac.conf
 sudo sed -Ei '/CheckAURUpdates/s/^#//' /etc/pamac.conf
 # Mirrors
-sudo pacman-mirrors -g --continent -P https --api && sudo pacman -Syyu --noconfirm
+sudo pacman-mirrors -g --continent -P https --api && sudo pamac update -a --noconfirm
 
 
 echo "___________________________________________________________________________________"
@@ -67,13 +64,17 @@ sudo pamac install --noconfirm gimp
 # Install photo library management
 sudo pamac install --noconfirm digikam
 
+# Clean old versions
+pamac clean --noconfirm
+
+
 echo "___________________________________________________________________________________"
 echo "                                                                                   "
 echo "                                   APPLICATIONS                                    "
 echo "              Replace filemanager (Nautilus) with more intuitive Nemo              "
 echo "___________________________________________________________________________________"
 # Change default filemanager Nautilus for Nemo 
-sudo pacman -S --noconfirm nemo
+sudo pamac install --noconfirm nemo
 # Associate Nemo as the default filemanager
 sudo sed -i -e 's@org.gnome.Nautilus.desktop;@nemo.desktop;@g' /usr/share/applications/mimeinfo.cache
 sudo sed -i -e 's@nemo.desktop;nemo.desktop;@nemo.desktop;@g' /usr/share/applications/mimeinfo.cache
@@ -100,8 +101,8 @@ echo "                                   APPLICATIONS                           
 echo "               Replace Text Editor (gedit) with more intuitive Pluma               "
 echo "___________________________________________________________________________________"
 # Change default texteditor Gedit to Pluma but keep the nicer looking Text Editor name and icon
-sudo pacman -R --noconfirm gedit
-sudo pacman -S --noconfirm pluma
+pamac remove --noconfirm gedit
+pamac install --noconfirm pluma
 sudo cp '/usr/share/applications/pluma.desktop' '/usr/share/applications/plumabackup.backup'
 sudo sed -i -e 's@Pluma@Text Editor@g' '/usr/share/applications/pluma.desktop'
 sudo sed -i -e 's@Icon=accessories-text-editor@Icon=org.gnome.gedit@g' '/usr/share/applications/pluma.desktop'
@@ -642,7 +643,7 @@ echo "---------------------------------------"
 read -p "Install Nextcloud Desktop Client for Nemo/Budgie? Recommended if you run a FileRun or WebDAV server (y / n)?" answer
 case ${answer:0:1} in
     y|Y )
-        sudo pacman -S --noconfirm nextcloud-client
+        sudo pamac install --noconfirm nextcloud-client
     ;;
     * )
         echo "Skipping Nextcloud Desktop Client..."
@@ -654,7 +655,7 @@ echo "---------------------------------------"
 read -p "Install DarkTable? A Photoshop alternative focused on editing RAW photo files (y/n)?" answer
 case ${answer:0:1} in
     y|Y )
-        sudo pacman -S --noconfirm darktable
+        sudo pamac install --noconfirm darktable
     ;;
     * )
         echo "Skipping Spotify..." 
@@ -668,7 +669,7 @@ echo "OnlyOffice, a simple and light Office alternative with MS Office interface
 read -p "Would you like to replace OnlyOffice for FreeOffice? This is a touchscreen friendly light Office alternative. OnlyOffice is recommended if touch is not important." answer
 case ${answer:0:1} in
     y|Y )
-        sudo pacman -S --noconfirm freeoffice
+        sudo pamac install --noconfirm freeoffice
     ;;
     * )
         echo "Not replacing OnlyOffice for FreeOffice..." 
@@ -681,7 +682,7 @@ echo "---------------------------------------"
 read -p "Install Spotify (y/n)?" answer
 case ${answer:0:1} in
     y|Y )
-        sudo pacman -S --noconfirm spotifyd
+        sudo pamac install --noconfirm spotifyd
     ;;
     * )
         echo "Skipping Spotify..." 
