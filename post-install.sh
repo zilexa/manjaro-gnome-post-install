@@ -179,7 +179,6 @@ sudo -u root dbus-launch gsettings set org.mate.pluma active-plugins "['time', '
 sudo -u root dbus-launch gsettings set org.mate.pluma color-scheme 'cobalt'
 
 
-
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
 echo "                                   APPLICATIONS                                    "    
