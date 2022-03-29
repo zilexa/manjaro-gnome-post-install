@@ -36,36 +36,36 @@ echo "                                   APPLICATIONS                           
 echo "         Install must-have applications for various common tasks                   "
 echo "___________________________________________________________________________________"
 # Install system cleanup tool
-sudo pacman -S --noconfirm bleachbit
+sudo pamac install --noconfirm bleachbit
 
 # Install MS Office alternative. LibreOffice is the most complete Microsoft Office alternative. 
-sudo pacman -S --noconfirm libreoffice-fresh
+sudo pamac install --noconfirm libreoffice-fresh
 # Now reinstall OnlyOffice to ensure it is the default Office editor, for most users, OnlyOffice is enough. 
-sudo pacman -S --noconfirm onlyoffice-desktopeditors
+sudo pamac install --noconfirm onlyoffice-desktopeditors
 
 # Install handy desktop tools
-sudo pacman -S --noconfirm variety
+sudo pamac install --noconfirm variety
 
 # Install a musicplayer that supports folder view library
-sudo pacman -S --noconfirm strawberry
+sudo pamac install --noconfirm strawberry
 
 # Install Audacity audio editor and recorder
-sudo pacman -S --noconfirm audacity
+sudo pamac install --noconfirm audacity
 
 # Install simple video editor (cut/trim videos) from AUR repository
 sudo pamac install --no-confirm losslesscut-bin
 
 # Install handbrake to convert videos
-sudo pacman -S --noconfirm handbrake
+sudo pamac install --noconfirm handbrake
 
 # Install simple image editor/creator (like Paint)
-sudo pacman -S --noconfirm pinta
+sudo pamac install --noconfirm pinta
 
 # Install photo editor
-sudo pacman -S --noconfirm gimp
+sudo pamac install --noconfirm gimp
 
 # Install photo library management
-sudo pacman -S --noconfirm digikam
+sudo pamac install --noconfirm digikam
 
 echo "___________________________________________________________________________________"
 echo "                                                                                   "
