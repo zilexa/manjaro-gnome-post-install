@@ -111,10 +111,12 @@ echo "__________________________________________________________________________
 # Change default filemanager Nautilus for Nemo 
 sudo pamac install --no-confirm nemo
 # Associate Nemo as the default filemanager
-sudo sed -i -e 's@org.gnome.Nautilus.desktop;@nemo.desktop;@g' /usr/share/applications/mimeinfo.cache
-sudo sed -i -e 's@nemo.desktop;nemo.desktop;@nemo.desktop;@g' /usr/share/applications/mimeinfo.cache
+# For current user
 xdg-mime default nemo.desktop inode/directory
 update-desktop-database ~/.local/share/applications/
+# For root
+sudo xdg-mime default nemo.desktop inode/directory
+sudo update-desktop-database /root/.local/share/applications/
 
 # Configure Nemo to make it a bit more intuitive
 gsettings set org.nemo.preferences quick-renames-with-pause-in-between true
@@ -151,8 +153,12 @@ sudo sed -i -e 's@Pluma@Text Editor@g' '/usr/share/applications/pluma.desktop'
 sudo sed -i -e 's@Icon=accessories-text-editor@Icon=org.gnome.gedit@g' '/usr/share/applications/pluma.desktop'
 # Associate Pluma as the default text editor
 sudo sed -i -e 's@libreoffice-writer.desktop;pluma.desktop;@pluma.desktop;libreoffice-writer.desktop;@g' /usr/share/applications/mimeinfo.cache
-xdg-mime default pluma.desktop text/plain 
+# For current user
+xdg-mime default pluma.desktop text/plain
 update-desktop-database ~/.local/share/applications/
+# For root
+sudo xdg-mime default pluma.desktop text/plain
+sudo update-desktop-database /root/.local/share/applications/
 
 #Configuration of Pluma for user
 gsettings set org.mate.pluma highlight-current-line true
@@ -187,9 +193,10 @@ sudo sed -i -e 's@image/webp=org.kde.showfoto.desktop;@image/webp=org.gnome.gThu
 sudo sed -i -e 's@tiff=org.gnome.Evince.desktop;org.gnome.gThumb.desktop;org.kde.showfoto.desktop;pinta.desktop;@tiff=org.gnome.gThumb.desktop;org.gnome.Evince.desktop;org.kde.showfoto.desktop;pinta.desktop;@g' /usr/share/applications/mimeinfo.cache
 # Associate Nemo as default filemanager
 xdg-mime default nemo.desktop inode/directory
+sudo xdg-mime default nemo.desktop inode/directory
 # Associate Pluma as default text editor
 xdg-mime default pluma.desktop text/plain
-
+sudo xdg-mime default pluma.desktop text/plain
 # For some reason, Office and image files are still associated with LibreOffice and Gimp, even if you reinstall OnlyOffice and Gthumb. 
 # Discussed in this topic: 
 # Manual changes made to /usr/share/applications/mimeinfo.cache will not survive a system or related application update. 
@@ -570,6 +577,22 @@ sudo sed -i -e 's+$HOME/Videos+$HOME/Media+g' $HOME/.config/user-dirs.dirs
 echo "_________________________________________________________________________"
 echo "                         OPTIONAL APPLICATIONS                           "
 echo "_________________________________________________________________________"
+echo "_________________________________________________________________________"
+echo "               Configure BTRFS swap and enable hibernation               "
+echo "_________________________________________________________________________"
+echo "Highly recommended if this is a laptop. It will allow hybrid sleep and hibernation."
+echo "Select 'n' if this is your server: You don't need hibernate but zswap instead."
+read -p "Configure swapfile for BTRFS and enable hibernation y/n ?" answer
+case ${answer:0:1} in
+    y|Y )
+wget -O $HOME/Downloads/swapforbtrfs.sh https://raw.githubusercontent.com/zilexa/manjaro-gnome-post-install/main/swap-for-btrfs
+sudo su -c "bash -x $HOME/Downloads/swapforbtrfs.sh"
+    ;;
+    * )
+        echo "Not configuring BTRFS swapfile and hibernation. It is recommended you configure zswap." 
+    ;;
+esac
+
 # Install ALL Win10/Office365 fonts
 echo "---------------------------------------"
 echo "Install all MS Office365 fonts, for full compatibility with MS Office files?"
@@ -594,6 +617,38 @@ case ${answer:0:1} in
         echo "Not installing all win10/office365 fonts..."
     ;;
 esac
+
+
+# Install Nextcloud Desktop Client for webDAV syncing with FileRun 
+echo "---------------------------------------"
+read -p "Install Nextcloud Desktop Client for Nemo/Budgie? Recommended if you run a FileRun or WebDAV server (y / n)?" answer
+case ${answer:0:1} in
+    y|Y )
+        sudo pamac install --no-confirm nextcloud-client
+    ;;
+    * )
+        echo "Skipping Nextcloud Desktop Client..."
+    ;;
+esac
+
+
+# Use your custom Firefox Sync Server by default
+echo "---------------------------------------"
+read -p "Would you like to use your own Firefox Sync Server? (y/n)" answer
+case ${answer:0:1} in
+    y|Y )
+    echo "Please type your Firefox Sync domain address, for example: firefox.mydomain.com"
+    read -p 'Firefox Sync domain address: ' ffsyncdomain
+    sudo tee -a /usr/lib/firefox/firefox.cfg &>/dev/null << EOF
+defaultPref("identity.sync.tokenserver.uri","https://$ffsyncdomain/token/1.0/sync/1.5");
+EOF
+    echo "Done. New firefox profile will use your Firefox sync server by default."
+    ;;
+    * )
+        echo "default Mozilla public sync server is used."
+    ;;
+esac
+
 
 # Configure RDP credentials, Manjaro Gnome has built-in RDP support for screen sharing. However no UI is available yet to set the credentials.
 # After credentials have been created, you can simply enable/disable RDP by toggling "Screen Sharing" via Settings > Sharing. 
@@ -637,39 +692,9 @@ case ${answer:0:1} in
 esac
 
 
-# Use your custom Firefox Sync Server by default
-echo "---------------------------------------"
-read -p "Would you like to use your own Firefox Sync Server? (y/n)" answer
-case ${answer:0:1} in
-    y|Y )
-    echo "Please type your Firefox Sync domain address, for example: firefox.mydomain.com"
-    read -p 'Firefox Sync domain address: ' ffsyncdomain
-    sudo tee -a /usr/lib/firefox/firefox.cfg &>/dev/null << EOF
-defaultPref("identity.sync.tokenserver.uri","https://$ffsyncdomain/token/1.0/sync/1.5");
-EOF
-    echo "Done. New firefox profile will use your Firefox sync server by default."
-    ;;
-    * )
-        echo "default Mozilla public sync server is used."
-    ;;
-esac
-
-
-# Install Nextcloud Desktop Client for webDAV syncing with FileRun 
-echo "---------------------------------------"
-read -p "Install Nextcloud Desktop Client for Nemo/Budgie? Recommended if you run a FileRun or WebDAV server (y / n)?" answer
-case ${answer:0:1} in
-    y|Y )
-        sudo pamac install --no-confirm nextcloud-client
-    ;;
-    * )
-        echo "Skipping Nextcloud Desktop Client..."
-    ;;
-esac
-
 # Install DarkTable
 echo "---------------------------------------"
-read -p "Install DarkTable? A Photoshop alternative focused on editing RAW photo files (y/n)?" answer
+read -p "Install DarkTable? A Photoshop alternative focused on editing RAW photo files? recommended: no. (y/n)?" answer
 case ${answer:0:1} in
     y|Y )
         sudo pamac install --no-confirm darktable
@@ -683,7 +708,9 @@ esac
 # Install FreeOffice
 echo "---------------------------------------"
 echo "OnlyOffice, a simple and light Office alternative with MS Office interface is installed. LibreOffice, a full MS Office alternative is also installed." 
-read -p "Would you like to replace OnlyOffice for FreeOffice? This is a touchscreen friendly light Office alternative. OnlyOffice is recommended if touch is not important." answer
+echo "Would you like to replace OnlyOffice for FreeOffice? This is a touchscreen friendly light Office alternative. OnlyOffice is recommended if touch is not important."
+read -p "Recommended: no. (y/n + ENTER)?" answer
+
 case ${answer:0:1} in
     y|Y )
         sudo pamac install --no-confirm freeoffice
@@ -717,22 +744,5 @@ case ${answer:0:1} in
     ;;
     * )
         echo "Keeping the Firefox shortcut as is..."
-    ;;
-esac
-
-
-echo "_________________________________________________________________________"
-echo "               Configure BTRFS swap and enable hibernation               "
-echo "_________________________________________________________________________"
-echo "Highly recommended if this is a laptop. It will allow hybrid sleep and hibernation."
-echo "Select 'n' if this is your server: You don't need hibernate but zswap instead."
-read -p "Configure swapfile for BTRFS and enable hibernation y/n ?" answer
-case ${answer:0:1} in
-    y|Y )
-wget -O $HOME/Downloads/swapforbtrfs.sh https://raw.githubusercontent.com/zilexa/manjaro-gnome-post-install/main/swap-for-btrfs
-sudo su -c "bash -x $HOME/Downloads/swapforbtrfs.sh"
-    ;;
-    * )
-        echo "Not configuring BTRFS swapfile and hibernation. It is recommended you configure zswap." 
     ;;
 esac
