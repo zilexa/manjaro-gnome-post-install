@@ -96,23 +96,45 @@ sudo pamac install --no-confirm gnome-shell-extension-custom-hot-corners-extende
 #Enable extensions (Workspace indicator, thumb drive menu, Gesture Improvements)
 gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu', 'places-menu@gnome-shell-extensions.gcampax.github.com']"
 gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'custom-hot-corners-extended@G-dH.github.com', 'gestureImprovements@gestures']"
-# Configure Hot Corners
-gsettings set org.gnome.desktop.interface.enable-hot-corners true
-gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-top-left-0 action 'toggle-arcmenu'
-gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-right-0 action 'show-desktop-mon'
-gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-left-0 action 'toggle-overview'
 
-touch /tmp/set-hotcorners.sh
-tee -a /tmp/set-hotcorners.sh &>/dev/null << EOF
+# The extensions won't be active until reboot (Wayland shell cannot be rebooted without killing all apps). 
+# To configure the hotcorners, run a service at boot that will execute a script. 
+# The service and the script will be deleted after first execution. 
+# First, create the script:
+sudo tee -a $HOME/Downloads/set-hotcorners.sh &>/dev/null << EOF
 #!/bin/bash
-#
-# Configure Hot Corners
-gsettings set org.gnome.desktop.interface.enable-hot-corners true
-gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-top-left-0 action 'toggle-arcmenu'
-gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-right-0 action 'show-desktop-mon'
-gsettings set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-left-0 action 'toggle-overview'
+## Configure Hot Corners
+gsettings set org.gnome.desktop.interface enable-hot-corners true
+gsettings --schemadir /usr/share/gnome-shell/extensions/custom-hot-corners-extended@G-dH.github.com/schemas/ set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-top-left-0 action 'toggle-arcmenu'
+gsettings --schemadir /usr/share/gnome-shell/extensions/custom-hot-corners-extended@G-dH.github.com/schemas/ set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-right-0 action 'show-desktop-mon'
+gsettings --schemadir /usr/share/gnome-shell/extensions/custom-hot-corners-extended@G-dH.github.com/schemas/ set org.gnome.shell.extensions.custom-hot-corners-extended.monitor-0-bottom-left-0 action 'toggle-overview'
+## Disable the service
+systemctl --user disable set-hotcorners.service
+## Remove the service file
+sudo rm -rf /etc/systemd/user/set-hotcorners.service
+## Remove the script
+rm -r $HOME/Downloads/set-hotcorners.sh
 EOF
-chmod +x /tmp/set-hotcorners.sh
+
+# Second, make the script executable
+sudo chmod +x $HOME/Downloads/set-hotcorners.sh
+
+# Third, create the service file
+sudo tee -a /etc/systemd/user/set-hotcorners.service &>/dev/null << EOF
+[Unit]
+Description=set-hotcorners
+After=display-manager.service
+
+[Service]
+Type=forking 
+ExecStartPre=/usr/bin/sleep 1
+ExecStart=/bin/bash -c 'exec $HOME/Downloads/set-hotcorners.sh'
+
+[Install]
+WantedBy=default.target
+EOF
+# Fourth, enable the service to start at boot
+systemctl --user enable set-hotcorners.service
 
 
 echo "___________________________________________________________________________________"
