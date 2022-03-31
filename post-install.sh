@@ -115,10 +115,8 @@ sudo rm -rf /etc/systemd/user/set-hotcorners.service
 ## Remove the script
 rm -r $HOME/Downloads/set-hotcorners.sh
 EOF
-
 # Second, make the script executable
 sudo chmod +x $HOME/Downloads/set-hotcorners.sh
-
 # Third, create the service file
 sudo tee -a /etc/systemd/user/set-hotcorners.service &>/dev/null << EOF
 [Unit]
