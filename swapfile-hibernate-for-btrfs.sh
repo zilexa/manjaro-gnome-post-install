@@ -61,6 +61,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 mkinitcpio -P
 
 # GOAL: system should always use Hybrid Sleep when it automatically suspends and Suspend-Then-Hibernate
+#
 # follow https://wiki.archlinux.org/title/Power_management#Hybrid-sleep_on_suspend_or_hibernation_request
 # follow https://man.archlinux.org/man/sleep.conf.d.5
 # 
