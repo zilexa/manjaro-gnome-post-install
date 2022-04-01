@@ -591,8 +591,8 @@ echo "Select 'n' if this is your server: You don't need hibernate but zswap inst
 read -p "Configure swapfile for BTRFS and enable hibernation y/n ?" answer
 case ${answer:0:1} in
     y|Y )
-wget -O $HOME/Downloads/swapforbtrfs.sh https://raw.githubusercontent.com/zilexa/manjaro-gnome-post-install/main/swap-for-btrfs
-sudo su -c "bash -x $HOME/Downloads/swapforbtrfs.sh"
+wget -O $HOME/Downloads/swapforbtrfs.sh https://raw.githubusercontent.com/zilexa/manjaro-gnome-post-install/main/swapfile-hibernate-for-btrfs.sh
+sudo su -c "bash -x $HOME/Downloads/swapfile-hibernate-for-btrfs.sh"
     ;;
     * )
         echo "Not configuring BTRFS swapfile and hibernation. It is recommended you configure zswap." 
