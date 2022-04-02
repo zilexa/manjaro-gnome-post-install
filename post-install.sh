@@ -543,8 +543,8 @@ sudo mkdir /mnt/userdata
 fs_uuid=$(findmnt / -o UUID -n)
 # Add @userdata subvolume to fstab to mount at boot
 sudo tee -a /etc/fstab &>/dev/null << EOF
-# Mount the BTRFS root subvolume @userdata
-UUID=${fs_uuid} /mnt/userdata  btrfs   defaults,noatime,subvol=@userdata,compress-force=zstd:2  0  0
+# Mount @userdata subvolume
+UUID=${fs_uuid} /mnt/userdata  btrfs   subvol=@userdata,defaults,noatime,compress-force=zstd:2  0  0
 EOF
 # execute fstab, mounting userdata
 sudo mount -a
