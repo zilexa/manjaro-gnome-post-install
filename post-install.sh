@@ -375,6 +375,11 @@ defaultPref("widget.use-xdg-desktop-portal.file-picker",1);
 defaultPref("widget.widget.use-xdg-desktop-portal.mime-handler",1);
 EOF
 
+# OnlyOffice DesktopEditors configuration
+# Enable dark mode, use separate windows instead of tabs
+{ echo "UITheme=theme-dark"; echo "editorWindowMode=true"; } >>$HOME/.config/onlyoffice/DesktopEditors.conf
+# Cannot enable 125% scaling (default is 150 or more, too high) since it is calculated per display/resolution. Set this yourself
+
 
 echo "___________________________________________________________________________________"
 echo "                                                                                   " 
@@ -549,19 +554,19 @@ rmdir $HOME/Public
 ## Move Templates folder into Documents because it does not make sense to be outside it. 
 mv $HOME/Templates $HOME/Documents/
 ## Move personal user folders to the subvolume, rename Videos to Media while doing that
-sudo mv /home/${USER}/Documents /mnt/userdata/
-sudo mv /home/${USER}/Desktop /mnt/userdata/
-sudo mv /home/${USER}/Downloads /mnt/userdata/
-sudo mv /home/${USER}/Videos /mnt/userdata/Media
-sudo mv /home/${USER}/Music /mnt/userdata/
-sudo mv /home/${USER}/Pictures /mnt/userdata/
+sudo mv /home/${USER}/Documents /mnt/userdata/${USER}/
+sudo mv /home/${USER}/Desktop /mnt/userdata/${USER}/
+sudo mv /home/${USER}/Downloads /mnt/userdata/${USER}/
+sudo mv /home/${USER}/Videos /mnt/userdata/${USER}/Media
+sudo mv /home/${USER}/Music /mnt/userdata/${USER}/
+sudo mv /home/${USER}/Pictures /mnt/userdata/${USER}/
 ## Link personal folders inside subvolume back into home subvolume
-ln -s /mnt/userdata/Documents $HOME/Documents
-ln -s /mnt/userdata/Desktop $HOME/Desktop
-ln -s /mnt/userdata/Downloads $HOME/Downloads
-ln -s /mnt/userdata/Media $HOME/Media
-ln -s /mnt/userdata/Music $HOME/Music
-ln -s /mnt/userdata/Pictures $HOME/Pictures
+ln -s /mnt/userdata/${USER}/Documents $HOME/Documents
+ln -s /mnt/userdata/${USER}/Desktop $HOME/Desktop
+ln -s /mnt/userdata/${USER}/Downloads $HOME/Downloads
+ln -s /mnt/userdata/${USER}/Media $HOME/Media
+ln -s /mnt/userdata/${USER}/Music $HOME/Music
+ln -s /mnt/userdata/${USER}/Pictures $HOME/Pictures
 
 #Current Downloads folder has been moved, enter the moved Downloads folder to prevent errors while continuing this script
 cd /
@@ -591,7 +596,7 @@ echo "Select 'n' if this is your server: You don't need hibernate but zswap inst
 read -p "Configure swapfile for BTRFS and enable hibernation y/n ?" answer
 case ${answer:0:1} in
     y|Y )
-wget -O $HOME/Downloads/swapfile-hibernate-for-btrfs.sh https://raw.githubusercontent.com/zilexa/manjaro-gnome-post-install/main/swapfile-hibernate-for-btrfs.sh
+wget https://raw.githubusercontent.com/zilexa/manjaro-gnome-post-install/main/swapfile-hibernate-for-btrfs.sh
 sudo su -c "bash -x $HOME/Downloads/swapfile-hibernate-for-btrfs.sh"
     ;;
     * )
