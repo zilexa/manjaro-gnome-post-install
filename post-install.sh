@@ -556,22 +556,15 @@ mv $HOME/Templates $HOME/Documents/
 ## Move personal user folders to the subvolume, rename Videos to Media while doing that
 sudo mv /home/${USER}/Documents /mnt/userdata/${USER}/
 sudo mv /home/${USER}/Desktop /mnt/userdata/${USER}/
-sudo mv /home/${USER}/Downloads /mnt/userdata/${USER}/
 sudo mv /home/${USER}/Videos /mnt/userdata/${USER}/Media
 sudo mv /home/${USER}/Music /mnt/userdata/${USER}/
 sudo mv /home/${USER}/Pictures /mnt/userdata/${USER}/
 ## Link personal folders inside subvolume back into home subvolume
 ln -s /mnt/userdata/${USER}/Documents $HOME/Documents
 ln -s /mnt/userdata/${USER}/Desktop $HOME/Desktop
-ln -s /mnt/userdata/${USER}/Downloads $HOME/Downloads
 ln -s /mnt/userdata/${USER}/Media $HOME/Media
 ln -s /mnt/userdata/${USER}/Music $HOME/Music
 ln -s /mnt/userdata/${USER}/Pictures $HOME/Pictures
-
-#Current Downloads folder has been moved, enter the moved Downloads folder to prevent errors while continuing this script
-cd /
-cd $HOME
-cd $HOME/Downloads
 
 # Create folders for storing photo albums and for Digikam database
 mkdir $HOME/Pictures/Albums
@@ -611,8 +604,24 @@ echo "Only choose 'y' if you believe you have the license and approval of MS to 
 read -p "Your browser will open and you need to download the fonts package. Continue? (Y/n)" answer
 case ${answer:0:1} in
     y|Y )
+       echo "---------------------------------------" 
+       echo "                                       " 
+       echo " NOTE: this is the first time Firefox will open (to download Office365 fonts)"
+       echo " give it a moment to load its youtube adblocking and paywall bypass addons" 
+       echo "                                       " 
+       echo "For you to do after it has opened a few tabs automatically:" 
+       echo "                                       " 
+       echo "1. SponsorBlock tab: Just close it (the default settings work for most people)" 
+       echo "2a. Bypass Paywall tab: Click OPT-IN button. Overview of permissions will load: enable all, give permissions, click OPTIONS"   
+       echo "2b. Bypass Paywall tab: click GO TO SAVE, uncheck the 'SHOW OPTIONS ON UPDATE', hit SAVE, close tab" 
+       echo "3. MEGA download tab. hit download." 
+       echo "                                       " 
+       echo "When the download of Office fonts is finished, CLOSE FIREFOX." 
+       echo "                                       " 
+       read -p "Ready to do the above steps? Click enter, Firefox will open to download the file. You can do the above. "
        xdg-open 'https://mega.nz/file/u4p02JCC#HnJOVyK8TYDqEyVXLkwghDLKlKfIq0kOlX6SPxH53u0'
-       read -p "PLEASE CLICK ENTER when the download has finished.... (ignore error that appears after you close Firefox)"
+       echo "                                       " 
+       read -p "Ignore the error that appeared after you closed Firefox. PLEASE CLICK ENTER"
        echo "please wait while extracting fonts to the system fonts folder (/usr/share/fonts), the downloaded file will be deleted afterwards." 
        # Extract the manually downloaded file to a subfolder in the systems font folder
        sudo tar -xvf $HOME/Downloads/fonts-office365.tar.xz -C /usr/share/fonts
