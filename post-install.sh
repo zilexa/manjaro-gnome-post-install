@@ -308,7 +308,8 @@ echo "                                                                          
 echo "                                   APPLICATIONS                                    "    
 echo "                       SET DEFAULT CONFIGURATION FOR APPS                          "
 echo "___________________________________________________________________________________"
-# Timeshift default configuration
+echo "Timeshift default configuration" 
+echo "---------------------------------------" 
 # For some reason, changing the default.json did not do the trick in disabling qgroups by default at first launch.
 # Changing timeshift.json helps. Probably, that is the only thing required. 
 sudo truncate -s 0 /etc/timeshift/timeshift.json
@@ -340,8 +341,9 @@ sudo tee -a /etc/timeshift/timeshift.json &>/dev/null << EOF
 }
 EOF
 
-
-# Firefox default settings - for current and future system users and profiles
+echo "---------------------------------------" 
+echo "Firefox default settings and addons"
+# For current and future system users and profiles
 # Create default policies (install minimal set of extensions and theme, enable syncing of your toolbar layout, disable default Mozilla bookmarks)
 # first delete existing profiles
 rm -r $HOME/.mozilla/firefox/*.default-release
@@ -375,7 +377,8 @@ defaultPref("widget.use-xdg-desktop-portal.file-picker",1);
 defaultPref("widget.widget.use-xdg-desktop-portal.mime-handler",1);
 EOF
 
-# OnlyOffice DesktopEditors configuration
+echo "---------------------------------------" 
+echo "OnlyOffice DesktopEditors configuration"
 # Enable dark mode, use separate windows instead of tabs
 mkdir -p $HOME/.config/onlyoffice
 tee -a $HOME/.config/onlyoffice/DesktopEditors.conf &>/dev/null << EOF
@@ -533,9 +536,11 @@ EOF
 
 
 echo "_________________________________________________________________________"
-echo "                         ISOLATE PERSONAL FOLDERS                        "
-echo "                         SIMPLIFY PERSONAL FOLDERS                       "
+echo "                   ISOLATE & SIMPLIFY PERSONAL FOLDERS                   "
+echo "                                                                         "
 echo "_________________________________________________________________________"
+echo "Create subvolume for personal documents folders" 
+echo "-----------------------------------------------"
 # Temporarily mount filesystem root to create a new root subvolume
 sudo mount /mnt/disks/systemdrive
 # create a root subvolume for user personal folders in the root filesystem
@@ -555,16 +560,19 @@ EOF
 # execute fstab, mounting userdata
 sudo mount -a
 
+echo "------------------------------------------------------------------------------------"
+echo "Move documents folders to subvolume/username/ and link them back to $HOME except for /Downloads" 
+echo "Also simplify folder structure" 
 ## Move Templates folder into Documents because it does not make sense to be outside it. 
 mv $HOME/Templates $HOME/Documents/
 ## Now register default location of personal folder Templates as subfolder of Documents
 sed -i -e 's+$HOME/Templates+$HOME/Documents/Templates+g' $HOME/.config/user-dirs.dirs
 
 ## Move personal user folders to the subvolume, rename Videos to Media while doing that
-mv /home/${USER}/Documents/ /mnt/userdata/${USER}/
-mv /home/${USER}/Music/ /mnt/userdata/${USER}/
-mv /home/${USER}/Pictures/ /mnt/userdata/${USER}/
-mv /home/${USER}/Videos /mnt/userdata/${USER}/Media
+sudo mv /home/${USER}/Documents/ /mnt/userdata/${USER}/
+sudo mv /home/${USER}/Music/ /mnt/userdata/${USER}/
+sudo mv /home/${USER}/Pictures/ /mnt/userdata/${USER}/
+sudo mv /home/${USER}/Videos /mnt/userdata/${USER}/Media
 
 ## Link personal folders inside subvolume back into home subvolume
 ln -s /mnt/userdata/${USER}/Documents $HOME/Documents
@@ -575,7 +583,7 @@ ln -s /mnt/userdata/${USER}/Media $HOME/Media
 sudo sed -i -e 's+$HOME/Videos+$HOME/Media+g' $HOME/.config/user-dirs.dirs
 
 # Do the same for Desktop, but this folder wil be auto-created immediately in $HOME. This needs to be disabled for a moment. 
-mv /home/${USER}/Desktop/ /mnt/userdata/${USER}
+sudo mv /home/${USER}/Desktop/ /mnt/userdata/${USER}
 # temporarily change system folder Desktop
 sed -i -e "s+$HOME/Desktop+/mnt/userdata/${USER}/Desktop+g" $HOME/.config/user-dirs.dirs
 # remove automatically created Desktop folder
@@ -585,14 +593,16 @@ ln -s /mnt/userdata/${USER}/Desktop $HOME/Desktop
 ## Now register default location of personal folder Desktop back in its original location
 sed -i -e "s+/mnt/userdata/${USER}/Desktop+$HOME/Desktop+g" $HOME/.config/user-dirs.dirs
 
-# Create folders for storing photo albums and for Digikam database
-mkdir $HOME/Pictures/Albums
-mkdir $HOME/Pictures/digikam-db && chattr +C $HOME/Pictures/digikam-db
-
 ## Register default location of personal to Downloads folder.
 sed -i -e 's+$HOME/Public+$HOME/Downloads+g' $HOME/.config/user-dirs.dirs
 ## Remove Public folder, nobody uses it. Will be registered to Downloads instead. 
 rmdir $HOME/Public
+
+echo "-------------------------------------------------------------"
+echo "Create folders for storing photo albums and for Digikam database"
+mkdir $HOME/Pictures/Albums
+mkdir $HOME/Pictures/digikam-db
+chattr +C $HOME/Pictures/digikam-db
 
 echo "_________________________________________________________________________"
 echo "                         OPTIONAL APPLICATIONS                           "
