@@ -456,6 +456,8 @@ gsettings set org.gnome.desktop.wm.preferences num-workspaces 2
 # Desktop
 gsettings set org.gnome.shell.extensions.ding show-home false
 gsettings set org.gnome.shell.extensions.ding start-corner 'bottom-left'
+gsettings set org.gnome.shell.extensions.ding sort-special-folders true
+gsettings set org.gnome.shell.extensions.ding keep-arranged true
 # Theme
 gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-maia-compact-dark'
 gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark-Maia'
