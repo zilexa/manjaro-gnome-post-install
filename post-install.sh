@@ -565,7 +565,7 @@ echo "Move documents folders to subvolume/username/ and link them back to $HOME 
 echo "Also simplify folder structure" 
 # Create Documents folder in subvolume because moving the folder does not seem to work
 sudo mkdir -p /mnt/userdata/${USER}
-sudo chown ${USER}:${USER} /mnt/userdata/${USER}/Documents
+#sudo chown ${USER}:${USER} /mnt/userdata/${USER}
 ## Move personal user folders to the subvolume, rename Videos to Media while doing that
 sudo mv --verbose /home/${USER}/Documents /mnt/userdata/${USER}/
 sudo mv --verbose /home/${USER}/Music/ /mnt/userdata/${USER}/
