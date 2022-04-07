@@ -377,7 +377,11 @@ EOF
 
 # OnlyOffice DesktopEditors configuration
 # Enable dark mode, use separate windows instead of tabs
-{ echo "UITheme=theme-dark"; echo "editorWindowMode=true"; } >>$HOME/.config/onlyoffice/DesktopEditors.conf
+mkdir -p $HOME/.config/onlyoffice
+tee -a $HOME/.config/onlyoffice/DesktopEditors.conf &>/dev/null << EOF
+UITheme=theme-dark
+editorWindowMode=true
+EOF
 # Cannot enable 125% scaling (default is 150 or more, too high) since it is calculated per display/resolution. Set this yourself
 
 
@@ -538,7 +542,7 @@ sudo btrfs subvolume create /mnt/disks/systemdrive/@userdata
 sudo umount /mnt/disks/systemdrive
 
 # Create mountpoint for @userdata
-sudo mkdir /mnt/userdata
+sudo mkdir -p /mnt/userdata/${USER}
 # Get system fs UUID
 fs_uuid=$(findmnt / -o UUID -n)
 # Add @userdata subvolume to fstab to mount at boot
@@ -551,16 +555,20 @@ sudo mount -a
 
 ## Remove Public folder, nobody uses it. Will be registered to Downloads instead. 
 rmdir $HOME/Public
+read -p
 ## Move Templates folder into Documents because it does not make sense to be outside it. 
 mv $HOME/Templates $HOME/Documents/
+read -p
 ## Move personal user folders to the subvolume, rename Videos to Media while doing that
 sudo mv /home/${USER}/Documents /mnt/userdata/${USER}/
+read -p
 sudo mv /home/${USER}/Desktop /mnt/userdata/${USER}/
 sudo mv /home/${USER}/Videos /mnt/userdata/${USER}/Media
 sudo mv /home/${USER}/Music /mnt/userdata/${USER}/
 sudo mv /home/${USER}/Pictures /mnt/userdata/${USER}/
 ## Link personal folders inside subvolume back into home subvolume
 ln -s /mnt/userdata/${USER}/Documents $HOME/Documents
+read -p
 ln -s /mnt/userdata/${USER}/Desktop $HOME/Desktop
 ln -s /mnt/userdata/${USER}/Media $HOME/Media
 ln -s /mnt/userdata/${USER}/Music $HOME/Music
@@ -576,7 +584,7 @@ sudo sed -i -e 's+$HOME/Public+$HOME/Downloads+g' $HOME/.config/user-dirs.dirs
 sudo sed -i -e 's+$HOME/Templates+$HOME/Documents/Templates+g' $HOME/.config/user-dirs.dirs
 ## Register Videos as Media making it the folder for tvshows/movies downloads or anything else that is not suppose to be in Photos. 
 sudo sed -i -e 's+$HOME/Videos+$HOME/Media+g' $HOME/.config/user-dirs.dirs
-
+read -p
 
 echo "_________________________________________________________________________"
 echo "                         OPTIONAL APPLICATIONS                           "
