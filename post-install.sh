@@ -567,13 +567,13 @@ echo "Also simplify folder structure"
 #sudo mkdir -p /mnt/userdata/${USER}/Documents
 #sudo chown ${USER}:${USER} /mnt/userdata/${USER}/Documents
 ## Move personal user folders to the subvolume, rename Videos to Media while doing that
-sudo mv -v /home/${USER}/Documents /mnt/userdata/${USER}/
-sudo mv -v /home/${USER}/Music/ /mnt/userdata/${USER}/
-sudo mv -v /home/${USER}/Pictures/ /mnt/userdata/${USER}/
-sudo mv -v /home/${USER}/Videos /mnt/userdata/${USER}/Media
+sudo mv --verbose /home/${USER}/Documents /mnt/userdata/${USER}/
+sudo mv --verbose /home/${USER}/Music/ /mnt/userdata/${USER}/
+sudo mv --verbose /home/${USER}/Pictures/ /mnt/userdata/${USER}/
+sudo mv --verbose /home/${USER}/Videos /mnt/userdata/${USER}/Media
 
 ## Move Templates folder into Documents because it does not make sense to be outside it. 
-mv -v $HOME/Templates /mnt/userdata/${USER}/Documents/
+mv --verbose $HOME/Templates /mnt/userdata/${USER}/Documents/
 ## Now register default location of personal folder Templates as subfolder of Documents
 sed -i -e 's+$HOME/Templates+$HOME/Documents/Templates+g' $HOME/.config/user-dirs.dirs
 
