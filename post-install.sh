@@ -561,9 +561,9 @@ mv $HOME/Templates $HOME/Documents/
 sed -i -e 's+$HOME/Templates+$HOME/Documents/Templates+g' $HOME/.config/user-dirs.dirs
 
 ## Move personal user folders to the subvolume, rename Videos to Media while doing that
-mv /home/${USER}/Documents/ /mnt/userdata/${USER}
-mv /home/${USER}/Music/ /mnt/userdata/${USER}
-mv /home/${USER}/Pictures/ /mnt/userdata/${USER}
+mv /home/${USER}/Documents/ /mnt/userdata/${USER}/
+mv /home/${USER}/Music/ /mnt/userdata/${USER}/
+mv /home/${USER}/Pictures/ /mnt/userdata/${USER}/
 mv /home/${USER}/Videos /mnt/userdata/${USER}/Media
 
 ## Link personal folders inside subvolume back into home subvolume
