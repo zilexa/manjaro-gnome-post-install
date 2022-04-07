@@ -549,7 +549,7 @@ sudo btrfs subvolume create /mnt/disks/systemdrive/@userdata
 sudo umount /mnt/disks/systemdrive
 
 # Create mountpoint for @userdata
-sudo mkdir -p /mnt/userdata/${USER}
+sudo mkdir -p /mnt/userdata
 # Get system fs UUID
 fs_uuid=$(findmnt / -o UUID -n)
 # Add @userdata subvolume to fstab to mount at boot
@@ -563,16 +563,19 @@ sudo mount -a
 echo "------------------------------------------------------------------------------------"
 echo "Move documents folders to subvolume/username/ and link them back to $HOME except for /Downloads" 
 echo "Also simplify folder structure" 
-## Move Templates folder into Documents because it does not make sense to be outside it. 
-mv $HOME/Templates $HOME/Documents/
-## Now register default location of personal folder Templates as subfolder of Documents
-sed -i -e 's+$HOME/Templates+$HOME/Documents/Templates+g' $HOME/.config/user-dirs.dirs
-
+# Create Documents folder in subvolume because moving the folder does not seem to work
+#sudo mkdir -p /mnt/userdata/${USER}/Documents
+#sudo chown ${USER}:${USER} /mnt/userdata/${USER}/Documents
 ## Move personal user folders to the subvolume, rename Videos to Media while doing that
 sudo mv /home/${USER}/Documents /mnt/userdata/${USER}/
 sudo mv /home/${USER}/Music/ /mnt/userdata/${USER}/
 sudo mv /home/${USER}/Pictures/ /mnt/userdata/${USER}/
 sudo mv /home/${USER}/Videos /mnt/userdata/${USER}/Media
+
+## Move Templates folder into Documents because it does not make sense to be outside it. 
+mv $HOME/Templates /mnt/userdata/${USER}/Documents/
+## Now register default location of personal folder Templates as subfolder of Documents
+sed -i -e 's+$HOME/Templates+$HOME/Documents/Templates+g' $HOME/.config/user-dirs.dirs
 
 ## Link personal folders inside subvolume back into home subvolume
 ln -s /mnt/userdata/${USER}/Documents $HOME/Documents
