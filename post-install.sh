@@ -554,23 +554,18 @@ UUID=${fs_uuid} /mnt/userdata  btrfs   subvol=@userdata,defaults,noatime,compres
 EOF
 # execute fstab, mounting userdata
 sudo mount -a
-read
 ## Remove Public folder, nobody uses it. Will be registered to Downloads instead. 
 rmdir $HOME/Public
-read
 ## Move Templates folder into Documents because it does not make sense to be outside it. 
 mv $HOME/Templates $HOME/Documents/
-read
 ## Move personal user folders to the subvolume, rename Videos to Media while doing that
-sudo mv /home/${USER}/Documents /mnt/userdata/${USER}/
-read
+sudo mv /home/${USER}/Documents/ /mnt/userdata/${USER}
 sudo mv /home/${USER}/Desktop /mnt/userdata/${USER}/
 sudo mv /home/${USER}/Videos /mnt/userdata/${USER}/Media
 sudo mv /home/${USER}/Music /mnt/userdata/${USER}/
 sudo mv /home/${USER}/Pictures /mnt/userdata/${USER}/
 ## Link personal folders inside subvolume back into home subvolume
 ln -s /mnt/userdata/${USER}/Documents $HOME/Documents
-read
 ln -s /mnt/userdata/${USER}/Desktop $HOME/Desktop
 ln -s /mnt/userdata/${USER}/Media $HOME/Media
 ln -s /mnt/userdata/${USER}/Music $HOME/Music
@@ -586,7 +581,6 @@ sudo sed -i -e 's+$HOME/Public+$HOME/Downloads+g' $HOME/.config/user-dirs.dirs
 sudo sed -i -e 's+$HOME/Templates+$HOME/Documents/Templates+g' $HOME/.config/user-dirs.dirs
 ## Register Videos as Media making it the folder for tvshows/movies downloads or anything else that is not suppose to be in Photos. 
 sudo sed -i -e 's+$HOME/Videos+$HOME/Media+g' $HOME/.config/user-dirs.dirs
-read 
 
 
 echo "_________________________________________________________________________"
