@@ -554,23 +554,23 @@ UUID=${fs_uuid} /mnt/userdata  btrfs   subvol=@userdata,defaults,noatime,compres
 EOF
 # execute fstab, mounting userdata
 sudo mount -a
-
+read
 ## Remove Public folder, nobody uses it. Will be registered to Downloads instead. 
 rmdir $HOME/Public
-read -p
+read
 ## Move Templates folder into Documents because it does not make sense to be outside it. 
 mv $HOME/Templates $HOME/Documents/
-read -p
+read
 ## Move personal user folders to the subvolume, rename Videos to Media while doing that
 sudo mv /home/${USER}/Documents /mnt/userdata/${USER}/
-read -p
+read
 sudo mv /home/${USER}/Desktop /mnt/userdata/${USER}/
 sudo mv /home/${USER}/Videos /mnt/userdata/${USER}/Media
 sudo mv /home/${USER}/Music /mnt/userdata/${USER}/
 sudo mv /home/${USER}/Pictures /mnt/userdata/${USER}/
 ## Link personal folders inside subvolume back into home subvolume
 ln -s /mnt/userdata/${USER}/Documents $HOME/Documents
-read -p
+read
 ln -s /mnt/userdata/${USER}/Desktop $HOME/Desktop
 ln -s /mnt/userdata/${USER}/Media $HOME/Media
 ln -s /mnt/userdata/${USER}/Music $HOME/Music
