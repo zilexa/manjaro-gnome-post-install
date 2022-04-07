@@ -554,34 +554,45 @@ UUID=${fs_uuid} /mnt/userdata  btrfs   subvol=@userdata,defaults,noatime,compres
 EOF
 # execute fstab, mounting userdata
 sudo mount -a
-## Remove Public folder, nobody uses it. Will be registered to Downloads instead. 
-rmdir $HOME/Public
+
 ## Move Templates folder into Documents because it does not make sense to be outside it. 
 mv $HOME/Templates $HOME/Documents/
+## Now register default location of personal folder Templates as subfolder of Documents
+sed -i -e 's+$HOME/Templates+$HOME/Documents/Templates+g' $HOME/.config/user-dirs.dirs
+
 ## Move personal user folders to the subvolume, rename Videos to Media while doing that
-sudo mv /home/${USER}/Documents/ /mnt/userdata/${USER}
-sudo mv /home/${USER}/Desktop /mnt/userdata/${USER}/
-sudo mv /home/${USER}/Videos /mnt/userdata/${USER}/Media
-sudo mv /home/${USER}/Music /mnt/userdata/${USER}/
-sudo mv /home/${USER}/Pictures /mnt/userdata/${USER}/
+mv /home/${USER}/Documents/ /mnt/userdata/${USER}
+mv /home/${USER}/Music/ /mnt/userdata/${USER}
+mv /home/${USER}/Pictures/ /mnt/userdata/${USER}
+mv /home/${USER}/Videos /mnt/userdata/${USER}/Media
+
 ## Link personal folders inside subvolume back into home subvolume
 ln -s /mnt/userdata/${USER}/Documents $HOME/Documents
-ln -s /mnt/userdata/${USER}/Desktop $HOME/Desktop
-ln -s /mnt/userdata/${USER}/Media $HOME/Media
 ln -s /mnt/userdata/${USER}/Music $HOME/Music
 ln -s /mnt/userdata/${USER}/Pictures $HOME/Pictures
+ln -s /mnt/userdata/${USER}/Media $HOME/Media
+## Rename default location of personal folder Videos to Media
+sudo sed -i -e 's+$HOME/Videos+$HOME/Media+g' $HOME/.config/user-dirs.dirs
+
+# Do the same for Desktop, but this folder wil be auto-created immediately in $HOME. This needs to be disabled for a moment. 
+mv /home/${USER}/Desktop/ /mnt/userdata/${USER}
+# temporarily change system folder Desktop
+sed -i -e "s+$HOME/Desktop+/mnt/userdata/${USER}/Desktop+g" $HOME/.config/user-dirs.dirs
+# remove automatically created Desktop folder
+rm -r $HOME/Desktop
+# Link Desktop from subvolume to $HOME
+ln -s /mnt/userdata/${USER}/Desktop $HOME/Desktop
+## Now register default location of personal folder Desktop back in its original location
+sed -i -e "s+/mnt/userdata/${USER}/Desktop+$HOME/Desktop+g" $HOME/.config/user-dirs.dirs
 
 # Create folders for storing photo albums and for Digikam database
 mkdir $HOME/Pictures/Albums
 mkdir $HOME/Pictures/digikam-db && chattr +C $HOME/Pictures/digikam-db
 
-## Register removed Public folder to Downloads folder.
-sudo sed -i -e 's+$HOME/Public+$HOME/Downloads+g' $HOME/.config/user-dirs.dirs
-## Move /Templates into /Documents. 
-sudo sed -i -e 's+$HOME/Templates+$HOME/Documents/Templates+g' $HOME/.config/user-dirs.dirs
-## Register Videos as Media making it the folder for tvshows/movies downloads or anything else that is not suppose to be in Photos. 
-sudo sed -i -e 's+$HOME/Videos+$HOME/Media+g' $HOME/.config/user-dirs.dirs
-
+## Register default location of personal to Downloads folder.
+sed -i -e 's+$HOME/Public+$HOME/Downloads+g' $HOME/.config/user-dirs.dirs
+## Remove Public folder, nobody uses it. Will be registered to Downloads instead. 
+rmdir $HOME/Public
 
 echo "_________________________________________________________________________"
 echo "                         OPTIONAL APPLICATIONS                           "
