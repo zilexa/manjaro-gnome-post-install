@@ -582,20 +582,19 @@ ln -s /mnt/userdata/${USER}/Media $HOME/Media
 ## Rename default location of personal folder Videos to Media
 sudo sed -i -e 's+$HOME/Videos+$HOME/Media+g' $HOME/.config/user-dirs.dirs
 
-# Do the same for Desktop, but this folder wil be auto-created immediately in $HOME. This needs to be disabled for a moment. 
-sudo mv /home/${USER}/Desktop/ /mnt/userdata/${USER}
-# temporarily change system folder Desktop
-sed -i -e "s+$HOME/Desktop+/mnt/userdata/${USER}/Desktop+g" $HOME/.config/user-dirs.dirs
-# remove automatically created Desktop folder
-rm -r $HOME/Desktop
+# Do the same for Desktop, but this folder wil be auto-created immediately in $HOME so we need to...
+# temporarily change path of system folder Desktop, then $HOME/Desktop can be moved
+sed -i -e 's+$HOME/Desktop+/mnt/userdata/'${USER}'/Desktop+g' $HOME/.config/user-dirs.dirs 
+# Move Desktop folder
+sudo mv /home/${USER}/Desktop /mnt/userdata/${USER}/Desktop
 # Link Desktop from subvolume to $HOME
 ln -s /mnt/userdata/${USER}/Desktop $HOME/Desktop
 ## Now register default location of personal folder Desktop back in its original location
-sed -i -e "s+/mnt/userdata/${USER}/Desktop+$HOME/Desktop+g" $HOME/.config/user-dirs.dirs
+sed -i -e 's+/mnt/userdata/'${USER}'/Desktop+$HOME/Desktop+g' $HOME/.config/user-dirs.dirs
 
-## Register default location of personal to Downloads folder.
+## Register default location of personal folder Public to Downloads.
 sed -i -e 's+$HOME/Public+$HOME/Downloads+g' $HOME/.config/user-dirs.dirs
-## Remove Public folder, nobody uses it. Will be registered to Downloads instead. 
+## Remove Public folder
 rmdir $HOME/Public
 
 echo "-------------------------------------------------------------"
