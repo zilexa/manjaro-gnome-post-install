@@ -573,7 +573,7 @@ sudo mv /home/${USER}/Pictures/ /mnt/userdata/${USER}/
 sudo mv /home/${USER}/Videos /mnt/userdata/${USER}/Media
 
 ## Move Templates folder into Documents because it does not make sense to be outside it. 
-mv $HOME/Templates /mnt/userdata/${USER}/Documents/
+mv $HOME/Templates /mnt/userdata/${USER}/Documents
 ## Now register default location of personal folder Templates as subfolder of Documents
 sed -i -e 's+$HOME/Templates+$HOME/Documents/Templates+g' $HOME/.config/user-dirs.dirs
 
