@@ -96,6 +96,7 @@ gsettings --schemadir /usr/share/gnome-shell/extensions/gestureImprovements@gest
 gsettings --schemadir /usr/share/gnome-shell/extensions/gestureImprovements@gestures/schemas set org.gnome.shell.extensions.gestureImprovements pinch-4-finger-gesture 'SHOW_DESKTOP'
 
 ## Configure Bing Wallpaper
+gsettings --schemadir /usr/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org.gnome.shell.extensions.bingwallpaper icon-name 'low-frame-symbolic'
 gsettings --schemadir /usr/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org.gnome.shell.extensions.bingwallpaper download-folder '~/Pictures/Wallpapers/BingWallpaper'
 gsettings --schemadir /usr/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org.gnome.shell.extensions.bingwallpaper random-interval 86400
 #gsettings --schemadir /usr/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org.gnome.shell.extensions.bingwallpaper delete-previous true
