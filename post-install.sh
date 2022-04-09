@@ -598,7 +598,7 @@ rmdir $HOME/Public
 echo "-------------------------------------------------------------"
 echo "Create folders for storing photo albums and for Digikam database"
 mkdir $HOME/Pictures/Albums
-mkdir $HOME/Pictures/Wallpapers/BingWallpaper
+mkdir -p $HOME/Pictures/Wallpapers/BingWallpaper
 mkdir $HOME/Pictures/digikam-db
 chattr +C $HOME/Pictures/digikam-db
 
