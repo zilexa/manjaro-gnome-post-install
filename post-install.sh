@@ -71,31 +71,20 @@ echo "__________________________________________________________________________
 echo "                      APPLICATIONS - Gnome Extensions                              "    
 echo " 1) Touchpad Gestures: 4 instead of 3 fingers, frees up 3-finger gestures for apps "
 echo " 2) Hot Corners Extended: allow config of screen hot corners                       " 
+echo " 3) Bing Wallpaper: Get a pretty wallpaper                                         "
 echo "___________________________________________________________________________________"
-# Download the gnome extension "Gesture Improvements"
-#wget -O $HOME/Downloads/gestures.zip https://extensions.gnome.org/extension-data/gestureImprovementsgestures.v17.shell-extension.zip
-# Get the UUID of the extension
-#EXTUUID1=$(unzip -c $HOME/Downloads/gestures.zip metadata.json | grep uuid | cut -d \" -f4)
-# Create a subfolder in the Extensions folder with the UUID as name
-#mkdir -p $HOME/.local/share/gnome-shell/extensions/$EXTUUID1
-# Unzip the files there
-#unzip $HOME/Downloads/gestures.zip -d $HOME/.local/share/gnome-shell/extensions/$EXTUUID1/
-
-# Do the same for extension "Custom Hot Corners Extended" 
-#wget -O $HOME/Downloads/hotcorners.zip https://extensions.gnome.org/extension-data/custom-hot-corners-extendedG-dH.github.com.v10.shell-extension.zip
-#EXTUUID2=$(unzip -c $HOME/Downloads/hotcorners.zip metadata.json | grep uuid | cut -d \" -f4)
-#mkdir -p $HOME/.local/share/gnome-shell/extensions/$EXTUUID2
-#unzip $HOME/Downloads/hotcorners.zip -d $HOME/.local/share/gnome-shell/extensions/$EXTUUID2/
-## FIX FOR ARCMENU - can be deleted after fix is released via updates
-#sudo wget -O /usr/share/gnome-shell/extensions/arcmenu@arcmenu.com/controller.js https://gitlab.com/arcmenu/ArcMenu/-/raw/master/controller.js 
-
-# Install via Pamac, to enable auto-update
+# Install better Extension Manager
+sudo pamac install --no-confirm extension-manager
+# Install Gesture Improvements
 sudo pamac install --no-confirm gnome-gesture-improvements
+# Install Custom Hot Corners Extended
 sudo pamac install --no-confirm gnome-shell-extension-custom-hot-corners-extended
+# Install Bing Wallpaper
+sudo pamac install --no-confirm gnome-shell-extension-bing-wallpaper
 
 #Enable extensions (Workspace indicator, thumb drive menu, Gesture Improvements)
 gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu', 'places-menu@gnome-shell-extensions.gcampax.github.com']"
-gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'custom-hot-corners-extended@G-dH.github.com', 'gestureImprovements@gestures']"
+gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'custom-hot-corners-extended@G-dH.github.com', 'gestureImprovements@gestures', 'BingWallpaper@ineffable-gmail.com']"
 
 ## Configure Hot Corners
 gsettings --schemadir /usr/share/glib-2.0/schemas set org.gnome.shell.extensions.custom-hot-corners-extended.corner:/org/gnome/shell/extensions/custom-hot-corners-extended/monitor-0-top-left-0/ action 'toggle-arcmenu'
@@ -105,6 +94,11 @@ gsettings --schemadir /usr/share/glib-2.0/schemas set org.gnome.shell.extensions
 ## Configure gestureImprovements
 gsettings --schemadir /usr/share/gnome-shell/extensions/gestureImprovements@gestures/schemas set org.gnome.shell.extensions.gestureImprovements pinch-3-finger-gesture 'NONE'
 gsettings --schemadir /usr/share/gnome-shell/extensions/gestureImprovements@gestures/schemas set org.gnome.shell.extensions.gestureImprovements pinch-4-finger-gesture 'SHOW_DESKTOP'
+
+## Configure Bing Wallpaper
+gsettings --schemadir /usr/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org org.gnome.shell.extensions.bingwallpaper download-folder '~/Pictures/Wallpapers/BingWallpaper'
+gsettings --schemadir /usr/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org org.gnome.shell.extensions.bingwallpaper random-interval 86400
+#gsettings --schemadir /usr/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org org.gnome.shell.extensions.bingwallpaper delete-previous true
 
 
 echo "___________________________________________________________________________________"
@@ -603,6 +597,7 @@ rmdir $HOME/Public
 echo "-------------------------------------------------------------"
 echo "Create folders for storing photo albums and for Digikam database"
 mkdir $HOME/Pictures/Albums
+mkdir $HOME/Pictures/Wallpapers/BingWallpaper
 mkdir $HOME/Pictures/digikam-db
 chattr +C $HOME/Pictures/digikam-db
 
