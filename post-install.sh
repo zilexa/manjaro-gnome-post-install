@@ -24,7 +24,10 @@ sudo sed -Ei '/DownloadUpdates/s/^#//' /etc/pamac.conf
 sudo sed -Ei '/EnableAUR/s/^#//' /etc/pamac.conf
 sudo sed -Ei '/CheckAURUpdates/s/^#//' /etc/pamac.conf
 # Mirrors
-sudo pacman-mirrors -g --continent -P https --api
+# Mirrorshopping is bad practice an can lead to unwanted results (wrong continent if there are no updates)
+# The system will take care of this. sudo pacman-mirrors -g --continent -P https --api
+
+# Update the system
 pamac update -a --no-confirm
 
 
