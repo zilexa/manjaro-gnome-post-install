@@ -88,7 +88,7 @@ sudo pamac install --no-confirm gnome-shell-extension-custom-hot-corners-extende
 cd $HOME/Downloads
 wget -O gnome-shell-extension-installer.sh "https://github.com/brunelli/gnome-shell-extension-installer/raw/master/gnome-shell-extension-installer"
 # Install Bing Wallpaper
-bash gnome-shell-extension-installer.sh 1262 --yes
+bash gnome-shell-extension-installer.sh 1262
 # Install Walkpaper allowing seperate wallpapers per Workspace
 # bash gnome-shell-extension-installer.sh 1262 --yes
 # Remove gnome-shell-extension-installer script, user will be able to use better Extension Manager to find/install/remove/configure extensions
