@@ -527,19 +527,19 @@ echo "__________________________________________________________________________
 echo "                                                                                   " 
 echo "                          Create systemdrive mountpoint                            "
 echo "___________________________________________________________________________________"
-# Add an ON-DEMAND mountpoint in FSTAB for the systemdrive, to easily do a manual mount when needed (via "sudo mount /mnt/disks/systemdrive")
+# Add an ON-DEMAND mountpoint in FSTAB for the systemdrive, to easily do a manual mount when needed (via "sudo mount /mnt/drives/system")
 # create mountpoint
-sudo mkdir -p /mnt/disks/systemdrive
+sudo mkdir -p /mnt/drives/system
 # Get the systemdrive UUID
 fs_uuid=$(findmnt / -o UUID -n)
 # Add mountpoint to FSTAB
 sudo tee -a /etc/fstab &>/dev/null << EOF
 
 # Allow easy manual mounting of btrfs root subvolume                         
-UUID=${fs_uuid} /mnt/disks/systemdrive  btrfs   subvolid=5,defaults,noatime,noauto  0  0
+UUID=${fs_uuid} /mnt/drives/system  btrfs   subvolid=5,defaults,noatime,noauto  0  0
 
 EOF
-#Get device path of systemdrive, for example "/dev/nvme0n1p2" via #SYSTEMDRIVE=$(df / | grep / | cut -d" " -f1)
+#Get device path of systemdrive, for example "/dev/nvme0n1p2" via #SYSTEM=$(df / | grep / | cut -d" " -f1)
 
 
 echo "_________________________________________________________________________"
@@ -549,11 +549,11 @@ echo "_________________________________________________________________________"
 echo "Create subvolume for personal documents folders" 
 echo "-----------------------------------------------"
 # Temporarily mount filesystem root to create a new root subvolume
-sudo mount /mnt/disks/systemdrive
+sudo mount /mnt/drives/system
 # create a root subvolume for user personal folders in the root filesystem
-sudo btrfs subvolume create /mnt/disks/systemdrive/@userdata
+sudo btrfs subvolume create /mnt/drives/system/@userdata
 ## unmount root filesystem
-sudo umount /mnt/disks/systemdrive
+sudo umount /mnt/drives/system
 
 # Create mountpoint for @userdata
 sudo mkdir -p /mnt/userdata
