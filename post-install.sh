@@ -91,6 +91,8 @@ wget -O gnome-shell-extension-installer.sh "https://github.com/brunelli/gnome-sh
 bash gnome-shell-extension-installer.sh 1262 --yes
 # Install Walkpaper allowing seperate wallpapers per Workspace
 # bash gnome-shell-extension-installer.sh 1262 --yes
+# Remove gnome-shell-extension-installer script, user will be able to use better Extension Manager to find/install/remove/configure extensions
+rm $HOME/Downloads/gnome-shell-extension-installer.sh
 
 #Enable extensions (Workspace indicator, thumb drive menu, Gesture Improvements)
 gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu', 'places-menu@gnome-shell-extensions.gcampax.github.com']"
@@ -625,6 +627,7 @@ case ${answer:0:1} in
     y|Y )
 wget https://raw.githubusercontent.com/zilexa/manjaro-gnome-post-install/main/swapfile-hibernate-for-btrfs.sh
 sudo su -c "bash -x $HOME/Downloads/swapfile-hibernate-for-btrfs.sh"
+rm $HOME/Downloads/swapfile-hibernate-for-btrfs.sh
     ;;
     * )
         echo "Not configuring BTRFS swapfile and hibernation. It is recommended you configure zswap." 
