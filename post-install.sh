@@ -76,14 +76,21 @@ echo " 1) Touchpad Gestures: 4 instead of 3 fingers, frees up 3-finger gestures 
 echo " 2) Hot Corners Extended: allow config of screen hot corners                       " 
 echo " 3) Bing Wallpaper: Get a pretty wallpaper                                         "
 echo "___________________________________________________________________________________"
+# Install system-wide extensions. Will be kept up-to-date by system package manager.
 # Install better Extension Manager
 sudo pamac install --no-confirm extension-manager
 # Install Gesture Improvements
 sudo pamac install --no-confirm gnome-gesture-improvements
 # Install Custom Hot Corners Extended
 sudo pamac install --no-confirm gnome-shell-extension-custom-hot-corners-extended
+
+# Install local extensions to be updated automatically by the better Extension Manager that was just installed
+cd $HOME/Downloads
+wget -O gnome-shell-extension-installer.sh "https://github.com/brunelli/gnome-shell-extension-installer/raw/master/gnome-shell-extension-installer"
 # Install Bing Wallpaper
-sudo pamac install --no-confirm gnome-shell-extension-bing-wallpaper
+bash gnome-shell-extension-installer.sh 1262 --yes
+# Install Walkpaper allowing seperate wallpapers per Workspace
+# bash gnome-shell-extension-installer.sh 1262 --yes
 
 #Enable extensions (Workspace indicator, thumb drive menu, Gesture Improvements)
 gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu', 'places-menu@gnome-shell-extensions.gcampax.github.com']"
