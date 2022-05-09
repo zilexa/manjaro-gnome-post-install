@@ -718,7 +718,7 @@ case ${answer:0:1} in
     sudo pacman -S --no-confirm gnome-remote-desktop
     echo "Please create credentials to allow access by others:"
     read -p 'Remote Desktop access username: ' rdpuser
-    read -p 'Remote Desktop access password: ' rdppw
+    read -p 'Remote Desktop access password (only letters and/or numbers!): ' rdppw
     echo "Your username/password will be $rdpuser/$rdppw."
     read -p "A self-signed certificate is required and will be created. Hit [ENTER] to start and prepare to answer questions for the certificate." 
     # Download the code snippet that generates RDP credentials
