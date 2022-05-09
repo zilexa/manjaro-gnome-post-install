@@ -317,36 +317,38 @@ echo "                       SET DEFAULT CONFIGURATION FOR APPS                 
 echo "___________________________________________________________________________________"
 echo "Timeshift default configuration" 
 echo "---------------------------------------" 
-# For some reason, changing the default.json did not do the trick in disabling qgroups by default at first launch.
-# Changing timeshift.json helps. Probably, that is the only thing required. 
-sudo truncate -s 0 /etc/timeshift/timeshift.json
-sudo tee -a /etc/timeshift/timeshift.json &>/dev/null << EOF
-{
-  "backup_device_uuid" : "",
-  "parent_device_uuid" : "",
-  "do_first_run" : "true",
-  "btrfs_mode" : "true",
-  "include_btrfs_home" : "true",
-  "stop_cron_emails" : "true",
-  "btrfs_use_qgroup" : "false",
-  "schedule_monthly" : "true",
-  "schedule_weekly" : "true",
-  "schedule_daily" : "true",
-  "schedule_hourly" : "false",
-  "schedule_boot" : "false",
-  "count_monthly" : "1",
-  "count_weekly" : "2",
-  "count_daily" : "3",
-  "count_hourly" : "6",
-  "count_boot" : "5",
-  "snapshot_size" : "0",
-  "snapshot_count" : "0",
-  "exclude" : [
-  ],
-  "exclude-apps" : [
-  ]
-}
-EOF
+# Disable BTRFS Quotas by default and enable 'include @home'
+## THIS LEADS TO AN ISSUE: the UI will show Quotas disabled, however Timeshift will keep trying to use quotas, leading to error messages and trouble deleting snapshots.
+## You should disable quotas and enable @home inclusion during the first start wizard of Timeshift. 
+#
+#sudo truncate -s 0 /etc/timeshift/timeshift.json
+#sudo tee -a /etc/timeshift/timeshift.json &>/dev/null << EOF
+#{
+#  "backup_device_uuid" : "",
+#  "parent_device_uuid" : "",
+#  "do_first_run" : "true",
+#  "btrfs_mode" : "true",
+#  "include_btrfs_home" : "true",
+#  "stop_cron_emails" : "true",
+#  "btrfs_use_qgroup" : "false",
+#  "schedule_monthly" : "true",
+#  "schedule_weekly" : "true",
+#  "schedule_daily" : "true",
+#  "schedule_hourly" : "false",
+#  "schedule_boot" : "false",
+#  "count_monthly" : "1",
+#  "count_weekly" : "2",
+#  "count_daily" : "3",
+#  "count_hourly" : "6",
+#  "count_boot" : "5",
+#  "snapshot_size" : "0",
+#  "snapshot_count" : "0",
+#  "exclude" : [
+#  ],
+#  "exclude-apps" : [
+#  ]
+#}
+#EOF
 
 echo "---------------------------------------" 
 echo "Firefox default settings and addons"
