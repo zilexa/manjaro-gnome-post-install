@@ -738,6 +738,7 @@ case ${answer:0:1} in
     # Set the location of the two files
     dconf write /org/gnome/desktop/remote-desktop/rdp/tls-key "'$HOME/.config/remote-desktop/tls.key'" 
     dconf write /org/gnome/desktop/remote-desktop/rdp/tls-cert "'$HOME/.config/remote-desktop/tls.crt'"
+    gsettings set org.gnome.desktop.remote-desktop.rdp view-only false
     # Cleanup
     rm $HOME/Downloads/tls.csr
     rm $HOME/Downloads/a.out
