@@ -323,7 +323,7 @@ echo "---------------------------------------"
 #
 #sudo truncate -s 0 /etc/timeshift/timeshift.json
 #sudo tee -a /etc/timeshift/timeshift.json &>/dev/null << EOF
-#{
+# {
 #  "backup_device_uuid" : "",
 #  "parent_device_uuid" : "",
 #  "do_first_run" : "true",
@@ -347,7 +347,7 @@ echo "---------------------------------------"
 #  ],
 #  "exclude-apps" : [
 #  ]
-#}
+# }
 #EOF
 
 echo "---------------------------------------" 
