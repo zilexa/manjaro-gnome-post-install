@@ -124,6 +124,8 @@ sudo pamac install --no-confirm nemo
 # Associate Nemo as the default filemanager
 # For current user
 xdg-mime default nemo.desktop inode/directory
+xdg-mime default nemo.desktop x-directory/normal
+xdg-mime default nemo-autorun-software.desktop x-content/unix-software
 update-desktop-database ~/.local/share/applications/
 # For root
 sudo xdg-mime default nemo.desktop inode/directory
@@ -201,12 +203,7 @@ sudo sed -i -e 's@image/heic=org.kde.showfoto.desktop;@image/heic=org.gnome.gThu
 sudo sed -i -e 's@image/heif=org.kde.showfoto.desktop;@image/heif=org.gnome.gThumb.desktop;org.kde.showfoto.desktop;@g' /usr/share/applications/mimeinfo.cache
 sudo sed -i -e 's@image/webp=org.kde.showfoto.desktop;@image/webp=org.gnome.gThumb.desktop;org.kde.showfoto.desktop;@g' /usr/share/applications/mimeinfo.cache
 sudo sed -i -e 's@tiff=org.gnome.Evince.desktop;org.gnome.gThumb.desktop;org.kde.showfoto.desktop;pinta.desktop;@tiff=org.gnome.gThumb.desktop;org.gnome.Evince.desktop;org.kde.showfoto.desktop;pinta.desktop;@g' /usr/share/applications/mimeinfo.cache
-# Associate Nemo as default filemanager
-xdg-mime default nemo.desktop inode/directory
-sudo xdg-mime default nemo.desktop inode/directory
-# Associate Pluma as default text editor
-xdg-mime default pluma.desktop text/plain
-sudo xdg-mime default pluma.desktop text/plain
+
 # For some reason, Office and image files are still associated with LibreOffice and Gimp, even if you reinstall OnlyOffice and Gthumb. 
 # Discussed in this topic: 
 # Manual changes made to /usr/share/applications/mimeinfo.cache will not survive a system or related application update. 
@@ -379,11 +376,11 @@ EOF
 # Create default config
 sudo tee -a /usr/lib/firefox/firefox.cfg &>/dev/null << EOF
 // IMPORTANT: Start your code on the 2nd line
+defaultPref("widget.use-xdg-desktop-portal.file-picker",1);
+defaultPref("widget.use-xdg-desktop-portal.mime-handler",1);
 defaultPref("services.sync.prefs.sync.browser.uiCustomization.state",true);
 defaultPref("browser.toolbars.bookmarks.visibility", "always");
 defaultPref("browser.uiCustomization.state", "{\"placements\":{\"widget-overflow-fixed-list\":[\"screenshot-button\",\"print-button\",\"save-to-pocket-button\",\"bookmarks-menu-button\",\"library-button\",\"preferences-button\",\"panic-button\"],\"nav-bar\":[\"back-button\",\"forward-button\",\"stop-reload-button\",\"customizableui-special-spring1\",\"downloads-button\",\"ublock0_raymondhill_net-browser-action\",\"urlbar-container\",\"customizableui-special-spring2\"],\"toolbar-menubar\":[\"menubar-items\"],\"TabsToolbar\":[\"tabbrowser-tabs\",\"new-tab-button\",\"alltabs-button\"],\"PersonalToolbar\":[\"fxa-toolbar-menu-button\",\"history-panelmenu\",\"personal-bookmarks\"]},\"seen\":[\"save-to-pocket-button\",\"_d133e097-46d9-4ecc-9903-fa6a722a6e0e_-browser-action\",\"_contain-facebook-browser-action\",\"sponsorblocker_ajay_app-browser-action\",\"ublock0_raymondhill_net-browser-action\",\"developer-button\"],\"dirtyAreaCache\":[\"nav-bar\",\"widget-overflow-fixed-list\",\"PersonalToolbar\"],\"currentVersion\":17,\"newElementCount\":3}");
-defaultPref("widget.use-xdg-desktop-portal.file-picker",1);
-defaultPref("widget.widget.use-xdg-desktop-portal.mime-handler",1);
 EOF
 
 echo "---------------------------------------" 
