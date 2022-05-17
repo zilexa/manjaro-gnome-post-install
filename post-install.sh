@@ -193,6 +193,94 @@ sudo -u root dbus-launch gsettings set org.mate.pluma color-scheme 'cobalt'
 
 
 echo "___________________________________________________________________________________"
+echo "                                                                                   "
+echo "                             APPLICATIONS - configure apps                         "
+echo "___________________________________________________________________________________"
+echo "---------------------------------------" 
+echo "OnlyOffice DesktopEditors configuration"
+# Enable dark mode, use separate windows instead of tabs
+mkdir -p $HOME/.config/onlyoffice
+tee -a $HOME/.config/onlyoffice/DesktopEditors.conf &>/dev/null << EOF
+UITheme=theme-dark
+editorWindowMode=true
+EOF
+# Cannot enable 125% scaling (default is 150 or more, too high) since it is calculated per display/resolution. Set this yourself
+
+echo "---------------------------------------" 
+echo "Firefox default settings and addons"
+# For current and future system users and profiles
+# Create default policies (install minimal set of extensions and theme, enable syncing of your toolbar layout, disable default Mozilla bookmarks)
+# first delete existing profiles
+rm -r $HOME/.mozilla/firefox/*.default-release
+rm -r $HOME/.mozilla/firefox/*.default
+rm $HOME/.mozilla/firefox/profiles.ini
+
+# Enable default Firefox config file
+sudo tee -a /usr/lib/firefox/defaults/pref/autoconfig.js &>/dev/null << EOF
+pref("general.config.filename", "firefox.cfg");
+pref("general.config.obscure_value", 0);
+EOF
+# Create default Firefox config file
+# -Use system default file manager - include toolbar layout in Sync - Enable bookmarks bar - set toolbar layout
+sudo tee -a /usr/lib/firefox/firefox.cfg &>/dev/null << EOF
+// IMPORTANT: Start your code on the 2nd line
+defaultPref("widget.use-xdg-desktop-portal.file-picker",1);
+defaultPref("widget.use-xdg-desktop-portal.mime-handler",1);
+defaultPref("services.sync.prefs.sync.browser.uiCustomization.state",true);
+defaultPref("browser.toolbars.bookmarks.visibility", "always");
+defaultPref("browser.uiCustomization.state", "{\"placements\":{\"widget-overflow-fixed-list\":[\"screenshot-button\",\"print-button\",\"save-to-pocket-button\",\"bookmarks-menu-button\",\"library-button\",\"preferences-button\",\"panic-button\"],\"nav-bar\":[\"back-button\",\"forward-button\",\"stop-reload-button\",\"customizableui-special-spring1\",\"downloads-button\",\"ublock0_raymondhill_net-browser-action\",\"urlbar-container\",\"customizableui-special-spring2\"],\"toolbar-menubar\":[\"menubar-items\"],\"TabsToolbar\":[\"tabbrowser-tabs\",\"new-tab-button\",\"alltabs-button\"],\"PersonalToolbar\":[\"fxa-toolbar-menu-button\",\"history-panelmenu\",\"personal-bookmarks\"]},\"seen\":[\"save-to-pocket-button\",\"_d133e097-46d9-4ecc-9903-fa6a722a6e0e_-browser-action\",\"_contain-facebook-browser-action\",\"sponsorblocker_ajay_app-browser-action\",\"ublock0_raymondhill_net-browser-action\",\"developer-button\"],\"dirtyAreaCache\":[\"nav-bar\",\"widget-overflow-fixed-list\",\"PersonalToolbar\"],\"currentVersion\":17,\"newElementCount\":3}");
+EOF
+# Create default firefox policies
+# -Cleanup bookmarks toolbar by disabling default Mozilla bookmarks - install bare minimum extensions
+sudo tee -a /usr/lib/firefox/distribution/policies.json &>/dev/null << EOF
+{
+  "policies": {
+    "DisableProfileImport": true,
+    "NoDefaultBookmarks": true,
+    "Extensions": {
+      "Install": ["https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/bypass-paywalls-clean/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/sponsorblock/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/facebook-container/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/google-container/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/nord-polar-night-theme/latest.xpi"]
+    }
+  }
+}
+EOF
+
+#echo "Timeshift default configuration - DISABLED because changing its config file only changes UI values, it does not actually change its behaviour."
+#echo "---------------------------------------" 
+# Disable BTRFS Quotas by default and enable 'include @home'
+## THIS LEADS TO AN ISSUE: the UI will show Quotas disabled, however Timeshift will keep trying to use quotas, leading to error messages and trouble deleting snapshots.
+## You should disable quotas and enable @home inclusion during the first start wizard of Timeshift. 
+#
+#sudo truncate -s 0 /etc/timeshift/timeshift.json
+#sudo tee -a /etc/timeshift/timeshift.json &>/dev/null << EOF
+# {
+#  "backup_device_uuid" : "",
+#  "parent_device_uuid" : "",
+#  "do_first_run" : "true",
+#  "btrfs_mode" : "true",
+#  "include_btrfs_home" : "true",
+#  "stop_cron_emails" : "true",
+#  "btrfs_use_qgroup" : "false",
+#  "schedule_monthly" : "true",
+#  "schedule_weekly" : "true",
+#  "schedule_daily" : "true",
+#  "schedule_hourly" : "false",
+#  "schedule_boot" : "false",
+#  "count_monthly" : "1",
+#  "count_weekly" : "2",
+#  "count_daily" : "3",
+#  "count_hourly" : "6",
+#  "count_boot" : "5",
+#  "snapshot_size" : "0",
+#  "snapshot_count" : "0",
+#  "exclude" : [
+#  ],
+#  "exclude-apps" : [
+#  ]
+# }
+#EOF
+
+
+echo "___________________________________________________________________________________"
 echo "                                                                                   " 
 echo "                                   APPLICATIONS                                    "    
 echo "                               Set file associations                               "
@@ -305,93 +393,6 @@ xdg-mime default org.onlyoffice.desktopeditors.desktop application/vnd.openxmlfo
 
 # run this command to apply the changes to the mimeapps.list file
 update-desktop-database ~/.local/share/applications/
-
-
-echo "___________________________________________________________________________________"
-echo "                                                                                   " 
-echo "                                   APPLICATIONS                                    "    
-echo "                       SET DEFAULT CONFIGURATION FOR APPS                          "
-echo "___________________________________________________________________________________"
-echo "Timeshift default configuration" 
-echo "---------------------------------------" 
-# Disable BTRFS Quotas by default and enable 'include @home'
-## THIS LEADS TO AN ISSUE: the UI will show Quotas disabled, however Timeshift will keep trying to use quotas, leading to error messages and trouble deleting snapshots.
-## You should disable quotas and enable @home inclusion during the first start wizard of Timeshift. 
-#
-#sudo truncate -s 0 /etc/timeshift/timeshift.json
-#sudo tee -a /etc/timeshift/timeshift.json &>/dev/null << EOF
-# {
-#  "backup_device_uuid" : "",
-#  "parent_device_uuid" : "",
-#  "do_first_run" : "true",
-#  "btrfs_mode" : "true",
-#  "include_btrfs_home" : "true",
-#  "stop_cron_emails" : "true",
-#  "btrfs_use_qgroup" : "false",
-#  "schedule_monthly" : "true",
-#  "schedule_weekly" : "true",
-#  "schedule_daily" : "true",
-#  "schedule_hourly" : "false",
-#  "schedule_boot" : "false",
-#  "count_monthly" : "1",
-#  "count_weekly" : "2",
-#  "count_daily" : "3",
-#  "count_hourly" : "6",
-#  "count_boot" : "5",
-#  "snapshot_size" : "0",
-#  "snapshot_count" : "0",
-#  "exclude" : [
-#  ],
-#  "exclude-apps" : [
-#  ]
-# }
-#EOF
-
-echo "---------------------------------------" 
-echo "Firefox default settings and addons"
-# For current and future system users and profiles
-# Create default policies (install minimal set of extensions and theme, enable syncing of your toolbar layout, disable default Mozilla bookmarks)
-# first delete existing profiles
-rm -r $HOME/.mozilla/firefox/*.default-release
-rm -r $HOME/.mozilla/firefox/*.default
-rm $HOME/.mozilla/firefox/profiles.ini
-
-# Then enable default config
-sudo tee -a /usr/lib/firefox/defaults/pref/autoconfig.js &>/dev/null << EOF
-pref("general.config.filename", "firefox.cfg");
-pref("general.config.obscure_value", 0);
-EOF
-# Now create default policies (install extensions and theme, enable syncing of your toolbar layout, disable default Mozilla bookmarks, enable OS default filemanager)
-sudo tee -a /usr/lib/firefox/distribution/policies.json &>/dev/null << EOF
-{
-  "policies": {
-    "DisableProfileImport": true,
-    "NoDefaultBookmarks": true,
-    "Extensions": {
-      "Install": ["https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/bypass-paywalls-clean/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/sponsorblock/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/facebook-container/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/google-container/latest.xpi", "https://addons.mozilla.org/firefox/downloads/latest/nord-polar-night-theme/latest.xpi"]
-    }
-  }
-}
-EOF
-# Create default config
-sudo tee -a /usr/lib/firefox/firefox.cfg &>/dev/null << EOF
-// IMPORTANT: Start your code on the 2nd line
-defaultPref("widget.use-xdg-desktop-portal.file-picker",1);
-defaultPref("widget.use-xdg-desktop-portal.mime-handler",1);
-defaultPref("services.sync.prefs.sync.browser.uiCustomization.state",true);
-defaultPref("browser.toolbars.bookmarks.visibility", "always");
-defaultPref("browser.uiCustomization.state", "{\"placements\":{\"widget-overflow-fixed-list\":[\"screenshot-button\",\"print-button\",\"save-to-pocket-button\",\"bookmarks-menu-button\",\"library-button\",\"preferences-button\",\"panic-button\"],\"nav-bar\":[\"back-button\",\"forward-button\",\"stop-reload-button\",\"customizableui-special-spring1\",\"downloads-button\",\"ublock0_raymondhill_net-browser-action\",\"urlbar-container\",\"customizableui-special-spring2\"],\"toolbar-menubar\":[\"menubar-items\"],\"TabsToolbar\":[\"tabbrowser-tabs\",\"new-tab-button\",\"alltabs-button\"],\"PersonalToolbar\":[\"fxa-toolbar-menu-button\",\"history-panelmenu\",\"personal-bookmarks\"]},\"seen\":[\"save-to-pocket-button\",\"_d133e097-46d9-4ecc-9903-fa6a722a6e0e_-browser-action\",\"_contain-facebook-browser-action\",\"sponsorblocker_ajay_app-browser-action\",\"ublock0_raymondhill_net-browser-action\",\"developer-button\"],\"dirtyAreaCache\":[\"nav-bar\",\"widget-overflow-fixed-list\",\"PersonalToolbar\"],\"currentVersion\":17,\"newElementCount\":3}");
-EOF
-
-echo "---------------------------------------" 
-echo "OnlyOffice DesktopEditors configuration"
-# Enable dark mode, use separate windows instead of tabs
-mkdir -p $HOME/.config/onlyoffice
-tee -a $HOME/.config/onlyoffice/DesktopEditors.conf &>/dev/null << EOF
-UITheme=theme-dark
-editorWindowMode=true
-EOF
-# Cannot enable 125% scaling (default is 150 or more, too high) since it is calculated per display/resolution. Set this yourself
 
 
 echo "___________________________________________________________________________________"
