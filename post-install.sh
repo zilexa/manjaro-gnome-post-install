@@ -124,14 +124,14 @@ echo "__________________________________________________________________________
 # Change default filemanager Nautilus for Nemo 
 sudo pamac install --no-confirm nemo
 # Associate Nemo as the default filemanager
+# For root
+sudo xdg-mime default nemo.desktop inode/directory
+sudo update-desktop-database /root/.local/share/applications/
 # For current user
 xdg-mime default nemo.desktop inode/directory
 xdg-mime default nemo.desktop x-directory/normal
 xdg-mime default nemo-autorun-software.desktop x-content/unix-software
 update-desktop-database ~/.local/share/applications/
-# For root
-sudo xdg-mime default nemo.desktop inode/directory
-sudo update-desktop-database /root/.local/share/applications/
 
 # Configure Nemo to make it a bit more intuitive
 gsettings set org.nemo.preferences quick-renames-with-pause-in-between true
@@ -715,7 +715,7 @@ echo "---------------------------------------"
 read -p "Configure Remote Desktop to share your screen securely, if you need support from family/friends? (y/n)" answer
 case ${answer:0:1} in
     y|Y )
-    sudo pacman -S --no-confirm gnome-remote-desktop
+    sudo pamac install --no-confirm gnome-remote-desktop
     echo "Please create credentials to allow access by others:"
     read -p 'Remote Desktop access username: ' rdpuser
     read -p 'Remote Desktop access password (only letters and/or numbers!): ' rdppw
