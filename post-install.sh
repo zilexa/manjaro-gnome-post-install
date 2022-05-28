@@ -27,6 +27,8 @@ sudo sed -Ei '/CheckAURUpdates/s/^#//' /etc/pamac.conf
 # Mirrorshopping is bad practice an can lead to unwanted results (wrong continent if there are no updates)
 # The system will take care of this. sudo pacman-mirrors -g --continent -P https --api
 
+# Update mirrors
+pacman-mirrors --fasttrack
 # Update the system
 pamac update -a --no-confirm
 
