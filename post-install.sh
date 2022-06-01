@@ -552,6 +552,8 @@ echo "Create subvolume for personal documents folders"
 echo "-----------------------------------------------"
 # Temporarily mount filesystem root to create a new root subvolume
 sudo mount /mnt/drives/system
+# create a root subvolume for the Downloads folder, to exclude it from snapshots and backups
+sudo btrfs subvolume create /mnt/drives/system/@downloads
 # create a root subvolume for user personal folders in the root filesystem
 sudo btrfs subvolume create /mnt/drives/system/@userdata
 ## unmount root filesystem
@@ -563,8 +565,10 @@ sudo mkdir -p /mnt/userdata
 fs_uuid=$(findmnt / -o UUID -n)
 # Add @userdata subvolume to fstab to mount at boot
 sudo tee -a /etc/fstab &>/dev/null << EOF
+# Mount @downloads subvolume
+UUID=${fs_uuid} /home/${USER}/Downloads  btrfs   subvol=@downloads,defaults,noatime,compress-force=zstd:1  0  0
 # Mount @userdata subvolume
-UUID=${fs_uuid} /mnt/userdata  btrfs   subvol=@userdata,defaults,noatime,compress-force=zstd:2  0  0
+UUID=${fs_uuid} /mnt/userdata  btrfs   subvol=@userdata,defaults,noatime,compress-force=zstd:1  0  0
 EOF
 # execute fstab, mounting userdata
 sudo mount -a
@@ -612,7 +616,7 @@ rmdir $HOME/Public
 echo "-------------------------------------------------------------"
 echo "Create folders for storing photo albums and for Digikam database"
 mkdir $HOME/Pictures/Albums
-mkdir -p $HOME/Pictures/Wallpapers/BingWallpaper
+mkdir -p $HOME/Pictures/Wallpapers/Wallpapers
 mkdir $HOME/Pictures/digikam-db
 chattr +C $HOME/Pictures/digikam-db
 
@@ -715,6 +719,7 @@ echo "---------------------------------------"
 read -p "Configure Remote Desktop to share your screen securely, if you need support from family/friends? (y/n)" answer
 case ${answer:0:1} in
     y|Y )
+    sudo pamac install --no-confirm gnome-connections
     sudo pamac install --no-confirm gnome-remote-desktop
     echo "Please create credentials to allow access by others:"
     read -p 'Remote Desktop access username: ' rdpuser
