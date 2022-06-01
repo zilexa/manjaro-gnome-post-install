@@ -6,7 +6,7 @@ This script will make it more intuitive, practical and easy to use by selecting 
 - [Features](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
 - [Quick Guide how to install Manjaro Gnome and run this script](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
 
-## Features
+# Features
 
 ### Desktop layout: minimal, easy, maximizing available screen
 - Dock disabled, Vertical Panel enabled with Favourite apps and an Arc Menu with "Eleven" layout
@@ -79,7 +79,7 @@ This script will make it more intuitive, practical and easy to use by selecting 
 - Configure swap and hibernation support for BTRFS, highly recommended on laptops.
 
 
-## Quick Guide
+# Quick Guide
 _1. Download Manjaro, Gnome edition:_
 https://manjaro.org/download/
 
@@ -106,9 +106,9 @@ After the boot from live USB process has finished, you can use Manjaro already a
 _When installation is finished, close the "Welcome" window and launch Terminal_ \
 The Terminal icon ![Terminal-icon](https://user-images.githubusercontent.com/3430004/141796815-32347b36-f890-4e43-ba18-33a221c5bf70.png)  is shown on the dock at the bottom. 
 
-_Copy paste the following, this will change path to your Downloads folder and download the post-install script:_
+_Copy paste the following, the script should not be run from the Downloads folder, so we use /tmp instead:_
 ```
-cd Downloads && wget https://raw.githubusercontent.com/zilexa/manjaro-gnome-post-install/main/post-install.sh
+cd /tmp && wget https://raw.githubusercontent.com/zilexa/manjaro-gnome-post-install/main/post-install.sh
 ```
 
 Optionally, read the script and adjust to your needs.
