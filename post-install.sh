@@ -462,7 +462,7 @@ gsettings set org.gnome.shell.extensions.dash-to-panel trans-use-dynamic-opacity
 gsettings set org.gnome.shell.extensions.dash-to-panel tray-padding -1
 gsettings set org.gnome.shell.extensions.dash-to-panel window-preview-title-position 'TOP'
 #gsettings set org.gnome.shell.extensions.dash-to-panel panel-element-positions 
-# Worspaces
+# Workspaces
 gsettings set org.gnome.mutter dynamic-workspaces false
 gsettings set org.gnome.desktop.wm.preferences num-workspaces 2
 # Desktop
@@ -569,7 +569,7 @@ fs_uuid=$(findmnt / -o UUID -n)
 # Add subvolumed to fstab to mount at boot
 sudo tee -a /etc/fstab &>/dev/null << EOF
 # Mount @downloads subvolume
-UUID=${fs_uuid} /home/${USER}/Downloads  btrfs   subvol=@downloads,defaults,noatime,compress-force=zstd:1  0  0
+UUID=${fs_uuid} /home/${USER}/Downloads  btrfs   subvol=@downloads,defaults,noatime,x-gvfs-hide,compress-force=zstd:1  0  0
 # Mount @users subvolume
 UUID=${fs_uuid} /mnt/users  btrfs   subvol=@users,defaults,noatime,compress-force=zstd:1  0  0
 EOF
