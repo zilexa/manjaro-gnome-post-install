@@ -560,20 +560,20 @@ sudo mount /mnt/drives/system
 # create a root subvolume for the Downloads folder, to exclude it from snapshots and backups
 sudo btrfs subvolume create /mnt/drives/system/@downloads
 # create a root subvolume for user personal folders in the root filesystem
-sudo btrfs subvolume create /mnt/drives/system/@userdata
+sudo btrfs subvolume create /mnt/drives/system/users
 ## unmount root filesystem
 sudo umount /mnt/drives/system
 
-# Create mountpoint for @userdata
-sudo mkdir -p /mnt/userdata
+# Create mountpoint for @users
+sudo mkdir -p /mnt/users
 # Get system fs UUID
 fs_uuid=$(findmnt / -o UUID -n)
 # Add subvolumed to fstab to mount at boot
 sudo tee -a /etc/fstab &>/dev/null << EOF
 # Mount @downloads subvolume
 UUID=${fs_uuid} /home/${USER}/Downloads  btrfs   subvol=@downloads,defaults,noatime,compress-force=zstd:1  0  0
-# Mount @userdata subvolume
-UUID=${fs_uuid} /mnt/userdata  btrfs   subvol=@userdata,defaults,noatime,compress-force=zstd:1  0  0
+# Mount @users subvolume
+UUID=${fs_uuid} /mnt/users  btrfs   subvol=@users,defaults,noatime,compress-force=zstd:1  0  0
 EOF
 sudo systemctl daemon-reload
 
@@ -591,36 +591,36 @@ echo "--------------------------------------------------------------------------
 echo "Move documents folders to subvolume/username/ and link them back to $HOME except for /Downloads" 
 echo "Also simplify folder structure" 
 # Create Documents folder in subvolume because moving the folder does not seem to work
-sudo mkdir -p /mnt/userdata/${USER}
-#sudo chown ${USER}:${USER} /mnt/userdata/${USER}
+sudo mkdir -p /mnt/users/${USER}
+#sudo chown ${USER}:${USER} /mnt/users/${USER}
 ## Move personal user folders to the subvolume, rename Videos to Media while doing that
-sudo mv --verbose /home/${USER}/Documents /mnt/userdata/${USER}/
-sudo mv --verbose /home/${USER}/Music/ /mnt/userdata/${USER}/
-sudo mv --verbose /home/${USER}/Pictures/ /mnt/userdata/${USER}/
-sudo mv --verbose /home/${USER}/Videos /mnt/userdata/${USER}/Media
+sudo mv --verbose /home/${USER}/Documents /mnt/users/${USER}/
+sudo mv --verbose /home/${USER}/Music/ /mnt/users/${USER}/
+sudo mv --verbose /home/${USER}/Pictures/ /mnt/users/${USER}/
+sudo mv --verbose /home/${USER}/Videos /mnt/users/${USER}/Media
 
 ## Move Templates folder into Documents because it does not make sense to be outside it. 
-mv --verbose $HOME/Templates /mnt/userdata/${USER}/Documents/
+mv --verbose $HOME/Templates /mnt/users/${USER}/Documents/
 ## Now register default location of personal folder Templates as subfolder of Documents
 sed -i -e 's+$HOME/Templates+$HOME/Documents/Templates+g' $HOME/.config/user-dirs.dirs
 
 ## Link personal folders inside subvolume back into home subvolume
-ln -s /mnt/userdata/${USER}/Documents $HOME/Documents
-ln -s /mnt/userdata/${USER}/Music $HOME/Music
-ln -s /mnt/userdata/${USER}/Pictures $HOME/Pictures
-ln -s /mnt/userdata/${USER}/Media $HOME/Media
+ln -s /mnt/users/${USER}/Documents $HOME/Documents
+ln -s /mnt/users/${USER}/Music $HOME/Music
+ln -s /mnt/users/${USER}/Pictures $HOME/Pictures
+ln -s /mnt/users/${USER}/Media $HOME/Media
 ## Rename default location of personal folder Videos to Media
 sudo sed -i -e 's+$HOME/Videos+$HOME/Media+g' $HOME/.config/user-dirs.dirs
 
 # Do the same for Desktop, but this folder wil be auto-created immediately in $HOME so we need to...
 # temporarily change path of system folder Desktop, then $HOME/Desktop can be moved
-sed -i -e 's+$HOME/Desktop+/mnt/userdata/'${USER}'/Desktop+g' $HOME/.config/user-dirs.dirs 
+sed -i -e 's+$HOME/Desktop+/mnt/users/'${USER}'/Desktop+g' $HOME/.config/user-dirs.dirs 
 # Move Desktop folder
-sudo mv /home/${USER}/Desktop /mnt/userdata/${USER}/Desktop
+sudo mv /home/${USER}/Desktop /mnt/users/${USER}/Desktop
 # Link Desktop from subvolume to $HOME
-ln -s /mnt/userdata/${USER}/Desktop $HOME/Desktop
+ln -s /mnt/users/${USER}/Desktop $HOME/Desktop
 ## Now register default location of personal folder Desktop back in its original location
-sed -i -e 's+/mnt/userdata/'${USER}'/Desktop+$HOME/Desktop+g' $HOME/.config/user-dirs.dirs
+sed -i -e 's+/mnt/users/'${USER}'/Desktop+$HOME/Desktop+g' $HOME/.config/user-dirs.dirs
 
 ## Register default location of personal folder Public to Downloads.
 sed -i -e 's+$HOME/Public+$HOME/Downloads+g' $HOME/.config/user-dirs.dirs
