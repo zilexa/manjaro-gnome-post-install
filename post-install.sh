@@ -28,7 +28,7 @@ sudo sed -Ei '/CheckAURUpdates/s/^#//' /etc/pamac.conf
 # The system will take care of this. sudo pacman-mirrors -g --continent -P https --api
 
 # Update mirrors
-pacman-mirrors --fasttrack
+sudo pacman-mirrors --fasttrack
 # Update the system
 pamac update -a --no-confirm
 
