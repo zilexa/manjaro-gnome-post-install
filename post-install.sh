@@ -575,17 +575,17 @@ UUID=${fs_uuid} /home/${USER}/Downloads  btrfs   subvol=@downloads,defaults,noat
 # Mount @userdata subvolume
 UUID=${fs_uuid} /mnt/userdata  btrfs   subvol=@userdata,defaults,noatime,compress-force=zstd:1  0  0
 EOF
+sudo systemctl daemon-reload
+
+# Set permissions for Downloads folder
+sudo chown -R ${USER}:${USER} /mnt/drives/system/@downloads
+sudo chmod -R 755 /mnt/drives/system/@downloads
 
 # Move files from Downloads folder to root subvolume
 mv $HOME/Downloads/* /mnt/drives/system/@downloads
 
 # Mount the new fstab, this will also mount the @downloads root subvolume to #HOME/Downloads
 sudo mount -a
-
-# Set permissions for Downloads folder
-sudo chown -R ${USER:${USER} $HOME/Downloads
-sudo chmod -R 755 $HOME/Downloads
-
 
 echo "------------------------------------------------------------------------------------"
 echo "Move documents folders to subvolume/username/ and link them back to $HOME except for /Downloads" 
@@ -633,6 +633,7 @@ mkdir $HOME/Pictures/Albums
 mkdir -p $HOME/Pictures/Wallpapers/Wallpapers
 mkdir $HOME/Pictures/digikam-db
 chattr +C $HOME/Pictures/digikam-db
+
 
 echo "_________________________________________________________________________"
 echo "                         OPTIONAL APPLICATIONS                           "
