@@ -741,6 +741,7 @@ case ${answer:0:1} in
     read -p "A self-signed certificate is required and will be created. Hit [ENTER] to start and prepare to answer questions for the certificate." 
     # Download the code snippet that generates RDP credentials
     wget -O $HOME/Downloads/grd_rdp_credentials.c https://gitlab.gnome.org/-/snippets/1778/raw/master/grd_rdp_credentials.c
+    cd $HOME/Downloads
     # Compile the file
     gcc grd_rdp_credentials.c `pkg-config --libs --cflags libsecret-1`
     # Use the program to store the credentials via libsecret
