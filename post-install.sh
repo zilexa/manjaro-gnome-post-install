@@ -560,9 +560,7 @@ sudo mount /mnt/drives/system
 # create a root subvolume for the Downloads folder, to exclude it from snapshots and backups
 sudo btrfs subvolume create /mnt/drives/system/@downloads
 # create a root subvolume for user personal folders in the root filesystem
-sudo btrfs subvolume create /mnt/drives/system/users
-## unmount root filesystem
-sudo umount /mnt/drives/system
+sudo btrfs subvolume create /mnt/drives/system/@users
 
 # Create mountpoint for @users
 sudo mkdir -p /mnt/users
