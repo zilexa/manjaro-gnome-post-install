@@ -111,8 +111,8 @@ gsettings --schemadir /usr/share/gnome-shell/extensions/gestureImprovements@gest
 
 ## Configure Bing Wallpaper
 gsettings --schemadir /usr/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org.gnome.shell.extensions.bingwallpaper icon-name 'low-frame-symbolic'
-gsettings --schemadir /usr/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org.gnome.shell.extensions.bingwallpaper download-folder "/home/${USER}/Pictures/Wallpapers/BingWallpaper/"
-gsettings --schemadir /usr/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org.gnome.shell.extensions.bingwallpaper random-interval 86400
+gsettings --schemadir /usr/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org.gnome.shell.extensions.bingwallpaper download-folder "/home/${USER}/Pictures/Wallpapers/"
+gsettings --schemadir /usr/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org.gnome.shell.extensions.bingwallpaper random-interval 18000
 #gsettings --schemadir /usr/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org.gnome.shell.extensions.bingwallpaper delete-previous true
 
 
