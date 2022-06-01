@@ -506,8 +506,8 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys window-screenshot-cli
 gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot-clip "@as []"
 # Remove Gnome 42> (Screenshots tool) default screenshot shortcuts, they use the new tool that requires too much user interaction
 gsettings set org.gnome.shell.keybindings screenshot "@as []"
-gsettings set org.gnome.shell.keybindings screenshot show-screenshot-ui "@as []"
-gsettings set org.gnome.shell.keybindings screenshot screenshot-window "@as []"
+gsettings set org.gnome.shell.keybindings show-screenshot-ui "@as []"
+gsettings set org.gnome.shell.keybindings screenshot-window "@as []"
 # Create Screenshots folder
 mkdir $HOME/Pictures/Screenshots
 gsettings set org.gnome.gnome-screenshot auto-save-directory "file:///home/${USER}/Pictures/Screenshots/"
