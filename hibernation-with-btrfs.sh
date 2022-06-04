@@ -4,7 +4,7 @@ exec >2&
 # Get the UUID of the system drive
 export fs_uuid=$(findmnt / -o UUID -n) && echo ${fs_uuid}
 
-# temporarily mount the system drive root via the on-demand line in fstab.
+# temporarily mount the system drive root via the on-demand line in fstab. if doesn't exist, create a temp mountpoint and mount
 if sudo grep -Fq "/mnt/drives/system" /etc/fstab; then sudo mount /mnt/drives/system; 
 else 
 # Create a mountpoint
