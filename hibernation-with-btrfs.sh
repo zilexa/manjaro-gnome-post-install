@@ -80,4 +80,5 @@ sed -i -e 's@#HibernateDelaySec=180min@HibernateDelaySec=60min@g' /etc/systemd/s
 sed -i -e 's@#HandlePowerKey=poweroff@HandlePowerKey=hibernate@g' /etc/systemd/logind.conf
 # Use suspend-then-hibernate when lid is closed, even when on external power since you could disconnect from power during suspend
 sed -i -e 's@HandleLidSwitch=ignore@HandleLidSwitch=suspend-then-hibernate@g' /etc/systemd/logind.conf
+sed -i -e 's@HandleLidSwitch=suspend@HandleLidSwitch=suspend-then-hibernate@g' /etc/systemd/logind.conf
 sed -i -e 's@#HandleLidSwitchExternalPower=suspend@HandleLidSwitchExternalPower=suspend-then-hibernate@g' /etc/systemd/logind.conf
