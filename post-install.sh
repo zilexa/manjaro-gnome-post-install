@@ -122,7 +122,7 @@ echo "                        APPLICATIONS - replace default app                
 echo "             replace Nautilus filemanager with more friendly/usable Nemo           "
 echo "___________________________________________________________________________________"
 # Change default filemanager Nautilus for Nemo 
-sudo pamac install --no-confirm nemo
+sudo pamac install --no-confirm nemo nemo-fileroller
 # Associate Nemo as the default filemanager
 # For root
 sudo xdg-mime default nemo.desktop inode/directory
