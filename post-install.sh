@@ -39,7 +39,13 @@ echo "                                   APPLICATIONS                           
 echo "             Install must-have applications for various common tasks               "
 echo "___________________________________________________________________________________"
 # Install system cleanup tool
-sudo pamac install --no-confirm bleachbit
+sudo pamac install --no-confirm bleachbit 
+
+# Install ability to connect to Wireguard VPN with automatic network configuration
+sudo pamac install --no-confirm wireguard-tools
+
+# Install support for sharing your desktop via RDP and install an RDP client to connect to other devices
+sudo pamac install --no-confirm gnome-remote-desktop gnome-connections
 
 # Install MS Office alternative. LibreOffice is the most complete Microsoft Office alternative. 
 sudo pamac install --no-confirm libreoffice-fresh
@@ -739,7 +745,6 @@ echo "---------------------------------------"
 read -p "Configure Remote Desktop to share your screen securely, if you need support from family/friends? (y/n)" answer
 case ${answer:0:1} in
     y|Y )
-    sudo pamac install --no-confirm gnome-remote-desktop gnome-connections
     echo "Please create credentials to allow access by others:"
     read -p 'Remote Desktop access username: ' rdpuser
     read -p 'Remote Desktop access password (only letters and/or numbers!): ' rdppw
@@ -777,46 +782,21 @@ case ${answer:0:1} in
 esac
 
 
-# Install DarkTable
+# Install LibreOffice languagepack
 echo "---------------------------------------"
-read -p "Install DarkTable? A Photoshop alternative focused on editing RAW photo files? recommended: no. (y/n)?" answer
-case ${answer:0:1} in
-    y|Y )
-        sudo pamac install --no-confirm darktable
-    ;;
-    * )
-        echo "Skipping Spotify..." 
-    ;;
-esac
-
-
-# Install FreeOffice
-echo "---------------------------------------"
-echo "OnlyOffice, a simple and light Office alternative with MS Office interface is installed. LibreOffice, a full MS Office alternative is also installed." 
-echo "Would you like to replace OnlyOffice for FreeOffice? This is a touchscreen friendly light Office alternative. OnlyOffice is recommended if touch is not important."
-read -p "Recommended: no. (y/n + ENTER)?" answer
+echo "Install languagepack for LibreOffice?" answer
 
 case ${answer:0:1} in
     y|Y )
-        sudo pamac install --no-confirm freeoffice
+        echo "Please type the 2-letter countrycode for the language you would like to install, for example "de" for German language (no caps):"
+        read -p 'countrycode for example "nl" and hit ENTER: ' lang
+        sudo pamac install --no-confirm libreoffice-fresh-$lang
     ;;
     * )
-        echo "Not replacing OnlyOffice for FreeOffice..." 
+        echo "Not installing a languagepack for LibreOffice..." 
     ;;
 esac
 
-
-# Install Spotify
-echo "---------------------------------------"
-read -p "Install Spotify (y/n)?" answer
-case ${answer:0:1} in
-    y|Y )
-        sudo pamac install --no-confirm spotifyd
-    ;;
-    * )
-        echo "Skipping Spotify..." 
-    ;;
-esac
 
 # Get a Firefox shortcut for 2 profiles
 echo "---------------------------------------"
