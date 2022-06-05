@@ -9,7 +9,7 @@ echo "                                 remove unused apps                       
 echo "___________________________________________________________________________________"
 # Remove unused apps
 # temporarily remove OnlyOffice and install after LibreOffice. This way, OnlyOffice will be the default for Office files, LibreOfice will be the alternative choice.
-sudo pamac remove --no-confirm geary firefox-gnome-theme-maia gnome-shell-extension-x11gestures
+sudo pamac remove --no-confirm geary firefox-gnome-theme-maia gnome-shell-extension-x11gestures touchegg
 
 
 echo "___________________________________________________________________________________"
