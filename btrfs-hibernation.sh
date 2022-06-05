@@ -70,4 +70,9 @@ sed -i -e 's@#HandlePowerKey=poweroff@HandlePowerKey=hibernate@g' /etc/systemd/l
 sed -i -e 's@HandleLidSwitch=ignore@HandleLidSwitch=suspend@g' /etc/systemd/logind.conf
 sed -i -e 's@#HandleLidSwitchExternalPower=suspend@HandleLidSwitchExternalPower=suspend@g' /etc/systemd/logind.conf
 
+# Gnome specific: 
+# Power
+gsettings set org.gnome.settings-daemon.plugins.power power-button-action 'hibernate'
+gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 3600
+
 echo "Please reboot before using standby or hibernate. Hit a key to continue the post-install script."
