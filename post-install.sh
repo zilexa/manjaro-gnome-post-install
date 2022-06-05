@@ -87,14 +87,14 @@ sudo pamac install --no-confirm gnome-gesture-improvements
 sudo pamac install --no-confirm gnome-shell-extension-custom-hot-corners-extended
 
 # Install local extensions to be updated automatically by the better Extension Manager that was just installed
-cd $HOME/Downloads
+cd /tmp
 wget -O gnome-shell-extension-installer.sh "https://github.com/brunelli/gnome-shell-extension-installer/raw/master/gnome-shell-extension-installer"
 # Install Bing Wallpaper
 bash gnome-shell-extension-installer.sh 1262
 # Install Walkpaper allowing seperate wallpapers per Workspace
 # bash gnome-shell-extension-installer.sh 1262 --yes
 # Remove gnome-shell-extension-installer script, user will be able to use better Extension Manager to find/install/remove/configure extensions
-rm $HOME/Downloads/gnome-shell-extension-installer.sh
+rm /tmp/gnome-shell-extension-installer.sh
 
 #Enable extensions (Workspace indicator, thumb drive menu, Gesture Improvements)
 gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu', 'places-menu@gnome-shell-extensions.gcampax.github.com']"
@@ -207,6 +207,13 @@ UITheme=theme-dark
 editorWindowMode=true
 EOF
 # Cannot enable 125% scaling (default is 150 or more, too high) since it is calculated per display/resolution. Set this yourself
+
+echo "---------------------------------------" 
+echo "LibreOffice profile enabling tabbed view, MS Office-like icons, Calibri and Office365 filetype by default and uto-save every 2min"
+cd /tmp
+wget -O libreoffice-profile.tar.xz "https://github.com/zilexa/manjaro-gnome-post-install/raw/main/files/libreoffice-profile.tar.xz"
+tar -xvf /tmp/libreoffice-profile.tar.xz -C $HOME/.config
+rm /tmp/libreoffice-profile.tar.xz
 
 echo "---------------------------------------" 
 echo "Firefox default settings and addons"
@@ -644,9 +651,9 @@ echo "Select 'n' if this is your server: You don't need hibernate but zswap inst
 read -p "Configure swapfile for BTRFS and enable hibernation y/n ?" answer
 case ${answer:0:1} in
     y|Y )
-wget https://raw.githubusercontent.com/zilexa/manjaro-gnome-post-install/main/swapfile-hibernate-for-btrfs.sh
-sudo su -c "bash -x $HOME/Downloads/swapfile-hibernate-for-btrfs.sh"
-rm $HOME/Downloads/swapfile-hibernate-for-btrfs.sh
+cd /tmp
+wget -O /tmp/btrfs-hibernation.sh "https://raw.githubusercontent.com/zilexa/manjaro-gnome-post-install/main/btrfs-hibernation.sh"
+sudo su -c "bash -x /tmp/btrfs-hibernation.sh"
     ;;
     * )
         echo "Not configuring BTRFS swapfile and hibernation. It is recommended you configure zswap." 
@@ -732,16 +739,15 @@ echo "---------------------------------------"
 read -p "Configure Remote Desktop to share your screen securely, if you need support from family/friends? (y/n)" answer
 case ${answer:0:1} in
     y|Y )
-    sudo pamac install --no-confirm gnome-connections
-    sudo pamac install --no-confirm gnome-remote-desktop
+    sudo pamac install --no-confirm gnome-remote-desktop gnome-connections
     echo "Please create credentials to allow access by others:"
     read -p 'Remote Desktop access username: ' rdpuser
     read -p 'Remote Desktop access password (only letters and/or numbers!): ' rdppw
     echo "Your username/password will be $rdpuser/$rdppw."
     read -p "A self-signed certificate is required and will be created. Hit [ENTER] to start and prepare to answer questions for the certificate." 
     # Download the code snippet that generates RDP credentials
-    wget -O $HOME/Downloads/grd_rdp_credentials.c https://gitlab.gnome.org/-/snippets/1778/raw/master/grd_rdp_credentials.c
-    cd $HOME/Downloads
+    cd /tmp
+    wget -O /tmp/grd_rdp_credentials.c "https://gitlab.gnome.org/-/snippets/1778/raw/master/grd_rdp_credentials.c"
     # Compile the file
     gcc grd_rdp_credentials.c `pkg-config --libs --cflags libsecret-1`
     # Use the program to store the credentials via libsecret
@@ -752,16 +758,16 @@ case ${answer:0:1} in
     openssl x509 -req -days 730 -signkey tls.key -in tls.csr -out tls.crt
     # Move the certificate and keyfile to a better location
     mkdir $HOME/.config/remote-desktop
-    mv $HOME/Downloads/tls.key $HOME/.config/remote-desktop/tls.key
-    mv $HOME/Downloads/tls.crt $HOME/.config/remote-desktop/tls.crt
+    mv tls.key $HOME/.config/remote-desktop/tls.key
+    mv tls.crt $HOME/.config/remote-desktop/tls.crt
     # Set the location of the two files
     dconf write /org/gnome/desktop/remote-desktop/rdp/tls-key "'$HOME/.config/remote-desktop/tls.key'" 
     dconf write /org/gnome/desktop/remote-desktop/rdp/tls-cert "'$HOME/.config/remote-desktop/tls.crt'"
     gsettings set org.gnome.desktop.remote-desktop.rdp view-only false
     # Cleanup
-    rm $HOME/Downloads/tls.csr
-    rm $HOME/Downloads/a.out
-    rm $HOME/Downloads/grd_rdp_credentials.c
+    rm /tmp/tls.csr
+    rm /tmp/a.out
+    rm /tmp/grd_rdp_credentials.c
 
     echo "RDP credentials configured. Note RDP is still disabled! You can enable/disable RDP easily via Settings > Sharing > Share Screen."
     ;;
