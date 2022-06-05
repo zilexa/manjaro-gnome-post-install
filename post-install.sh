@@ -504,12 +504,12 @@ gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
 # Locale
 gsettings set org.gnome.system.location enabled true
 gsettings set org.gnome.desktop.datetime automatic-timezone true
+gsettings set org.gnome.desktop.calendar show-weekdate true
 # Keyboard shortcut: Ctrl+Alt+T opens Terminal
 gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"                  
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Terminal'         
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'gnome-terminal'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Ctrl><Alt>T' 
-
 # Remove Gnome <41 (gnome-screenshots tool) default screenshot shortcuts, they are not logical and do not store screenshots in Pictures/Screenshots
 gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot "@as []"
 gsettings set org.gnome.settings-daemon.plugins.media-keys window-screenshot "@as []"
