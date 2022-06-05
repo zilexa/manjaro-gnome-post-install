@@ -2,23 +2,18 @@
 exec >2&
 
 # Get the UUID of the system drive
-export fs_uuid=$(findmnt / -o UUID -n) && echo ${fs_uuid}
+fs_uuid=$(findmnt / -o UUID -n) && echo ${fs_uuid}
 
 # temporarily mount the system drive root via the on-demand line in fstab. if doesn't exist, create a temp mountpoint and mount
 if sudo grep -Fq "/mnt/drives/system" /etc/fstab; then sudo mount /mnt/drives/system; 
 else 
-# Create a mountpoint
 sudo mkdir -p /mnt/drives/system
-# Get the systemdrive UUID
-fs_uuid=$(findmnt / -o UUID -n)
-# Mount the system drive 
 sudo mount /mnt/drives/system
 fi
 
 # Create swap subvolume, then remove temp mountpoint
 sudo btrfs subvolume create /mnt/drives/system/@swap
 sudo umount /mnt/drives/system
-sudo rm -r /mnt/drives/system
 
 # Temporarily mount the subvolume
 sudo mkdir /swap
@@ -58,7 +53,6 @@ echo -e "[Service]\nEnvironment=SYSTEMD_BYPASS_HIBERNATION_MEMORY_CHECK=1" | sud
 echo -e "[Service]\nEnvironment=SYSTEMD_BYPASS_HIBERNATION_MEMORY_CHECK=1" | sudo tee /etc/systemd/system/systemd-hibernate.service.d/override.conf
 # update initcpio and grub
 sudo mkinitcpio -P && sudo grub-mkconfig -o /boot/grub/grub.cfg 
-echo "Please reboot before using standby or hibernate."
 
 # Use the modern way of standby: suspend-then-hibernate
 # Contrary to what is written here: 
@@ -75,3 +69,5 @@ sed -i -e 's@#HandlePowerKey=poweroff@HandlePowerKey=hibernate@g' /etc/systemd/l
 # Use suspend-then-hibernate when lid is closed, even when on external power since you could disconnect from power during suspend
 sed -i -e 's@HandleLidSwitch=ignore@HandleLidSwitch=suspend@g' /etc/systemd/logind.conf
 sed -i -e 's@#HandleLidSwitchExternalPower=suspend@HandleLidSwitchExternalPower=suspend@g' /etc/systemd/logind.conf
+
+echo "Please reboot before using standby or hibernate. Hit a key to continue the post-install script."
