@@ -427,6 +427,7 @@ gsettings set org.gnome.shell.extensions.arcmenu available-placement "[false, tr
 gsettings set org.gnome.shell.extensions.dash-to-panel panel-positions '{"0":"LEFT"}'
 gsettings set org.gnome.desktop.interface show-battery-percentage true
 gsettings set org.gnome.shell.extensions.arcmenu reload-theme true
+gsettings set org.gnome.shell.extensions.arcmenu power-options "[(0, true), (1, true), (2, true), (3, true), (4, true), (5, false), (6, true)]"
 # Arc Menu Hot corner (top left) 
 gsettings set org.gnome.shell.extensions.arcmenu override-hot-corners false
 gsettings set org.gnome.shell.extensions.arcmenu hot-corners 'Default'
