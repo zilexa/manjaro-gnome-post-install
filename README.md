@@ -58,12 +58,12 @@ This script will make it more intuitive, practical and easy to use by selecting 
 
 ## _Replaced apps_ - for more intuitive, easier to use, more functional apps: 
 - Text Editor - Pluma instead of gedit, while maintaining the beautiful icon and name. 
-  - More readable colors
-  - Display numbers, closing brackets, file overview 
+  - More readable colors, also for root user. 
+  - Display numbers, closing brackets, file overview, also for root user. 
 - File Manager - Nemo instead of Nautilus. 
-  - list view instead of large icon view, also for root user
-  - Easy rename of files, also for root user
-  - Reload button
+  - list view instead of large icon view, also for root user.
+  - Easy rename of files, also for root user.
+  - Reload button, also for root user. 
 
 ## _User Experience configuration_ - clean, easy, maximum screen space
 - A nice vertical panel with your systray, favourite apps and "start" menu with more pinned apps, maximizing your screen space for actual applications and desktop use (compared to a horizontal panel or doc
@@ -83,6 +83,7 @@ This script will make it more intuitive, practical and easy to use by selecting 
 - Automatic timezone
 - Instant screenshots of an area (`PrintScr`button) or fullscreen (`Shift+PrintScr`) instead of Gnome 42 new interactive screenshot tool that cannot take instant screenshots. You can still trigger the tool via `Ctrl+Shift+PrintScr`. 
 - Keyboard shortcut for Terminal (`Shift+Alt+T`)
+- Fix file associations for images and documents - it is very difficult for the end-user to restore the file associations of default apps for image viewing (gThumb) and documents (OnlyOffice) after installing an image editor or other office suite, (even reinstalling gThumb or OnlyOffice has no effect!). The script re-associates gThumb and OnlyOffice for each filetype they support. 
 
 ## Simplify folder structure - easy for cloud backup/syncing or local backups
 - move Templates to Documents folder, remove Public folder and rename Videos to Media
