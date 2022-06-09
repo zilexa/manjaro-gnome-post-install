@@ -7,7 +7,8 @@ This script will make it more intuitive, practical and easy to use by selecting 
 - [Full Guide how to install Manjaro Gnome](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
 - [How to run the script](https://github.com/zilexa/manjaro-gnome-post-install#how-to-get-and-run-the-script)
 
-*** &nbsp;
+*** 
+&nbsp;
 
 # What does the script do? 
 
