@@ -1,4 +1,4 @@
-# Manjaro Gnome - The Out of The Box Experience _further improved_
+# Manjaro Gnome - The Out of The Box Experience _further improved_ zero post install configuration needed!
 
 Manjaro Gnome already has a very good Out-Of-The-Box Experience. 
 This script will make it more intuitive, practical and easy to use by selecting sane preferences, replacing a few common applications and enabling features that one might expect to be enabled and configured by default. 
