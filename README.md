@@ -90,10 +90,14 @@ This script will make it more intuitive, practical and easy to use by selecting 
 - Replace /Downloads and /.cache with root subvolumes, this way, snapshots/backups of your /home folder stay clean, without temporary files. 
 -  Create a root subvolume @users mounted to `/mnt/users/` and move Desktop/Documents/Pictures/Media into a subfolder (`/mnt/users/username`), symlink the personal folders into /home/username/ - this way, you can simply sync 1 folder with your favourite cloud provider and easily create seperate, isolated snapshots/backups of your system, your configuration and your personal data.
 
-## _Optional tasks_ the script will ask you
-- Installation of all MS Office 365 fonts for max compatibility.
-- Install NextCloud Desktop Client to have a 2-way sync to your webDAV server.
+## _Optional tasks_ - the script will ask if you want this
 - Automatically configure swap and hibernation support _properly_ for BTRFS, highly recommended on laptops. It will then also switch suspend for the better suspend-then-hibernate method.
+- Installation of all MS Office 365 fonts for max compatibility.
+- Install NextCloud Desktop Client to have a 2-way sync to your webDAV server. I highly recommend to use FileRun instead of NextCloud on your server. 
+- Set your own Firefox Sync Server
+- Configure RDP credentials to access the desktop of this device, can also easily be done via Settings > Sharing later. 
+- Install LibrOffice Language pack.
+- Swap the Firefox shortcut for one that allows you to easily start 2 different firefox profiles, for example if 2 users use the same device with 1 OS user account. You can open the file in Text Editor (/home/username/.local/share/applications/firefox.desktop), use CTRL+H to replace "Profile1" for the Firefox profile name of user 1 and do the same action for "Profile2". Logout/login or reboot, then right-click the Firefox shortcut on the Panel or Apps Menu.  
 
 *** 
 &nbsp;
