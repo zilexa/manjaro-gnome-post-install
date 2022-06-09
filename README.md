@@ -93,7 +93,7 @@ This script will make it more intuitive, practical and easy to use by selecting 
 ## _Optional tasks_ the script will ask you
 - Installation of all MS Office 365 fonts for max compatibility.
 - Install NextCloud Desktop Client to have a 2-way sync to your webDAV server.
-- Configure swap and hibernation support for BTRFS, highly recommended on laptops.
+- Automatically configure swap and hibernation support _properly_ for BTRFS, highly recommended on laptops. It will then also switch suspend for the better suspend-then-hibernate method.
 
 *** 
 &nbsp;
