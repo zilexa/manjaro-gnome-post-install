@@ -6,7 +6,7 @@ This script will make it more intuitive, practical and easy to use by selecting 
 - [Features](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
 - [Quick Guide how to install Manjaro Gnome and run this script](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
 
-***
+*** &nbsp;
 
 # What does the script do? 
 
