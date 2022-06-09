@@ -97,7 +97,10 @@ This script will make it more intuitive, practical and easy to use by selecting 
 - Set your own Firefox Sync Server
 - Configure RDP credentials to access the desktop of this device, can also easily be done via Settings > Sharing later. 
 - Install LibrOffice Language pack.
-- Swap the Firefox shortcut for one that allows you to easily start 2 different firefox profiles, for example if 2 users use the same device with 1 OS user account. You can open the file in Text Editor (/home/username/.local/share/applications/firefox.desktop), use CTRL+H to replace "Profile1" for the Firefox profile name of user 1 and do the same action for "Profile2". Logout/login or reboot, then right-click the Firefox shortcut on the Panel or Apps Menu.  
+- Create a Firefox shortcut (overriding the default one) that adds 2 profiles when right-clicking the shortcut. This way you can easily start 2 different firefox profiles, for example if 2 users use the same device with 1 OS user account. 
+  - Later, In Firefox go to about:profiles to create profiles and choose the default profile.  
+  - Open the shortcut file in Text Editor (/home/username/.local/share/applications/firefox.desktop), use CTRL+H to replace "Profile1" for the Firefox profile name of user 1 and do the same action for "Profile2". 
+  - Logout and login or reboot, then right-click the Firefox shortcut on the Panel or Apps Menu to see the result. 
 
 *** 
 &nbsp;
