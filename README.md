@@ -12,8 +12,8 @@ This script will make it more intuitive, practical and easy to use by selecting 
 
 # What does the script do? 
 
-## Remove unnecessary apps
-- Geary, Gnome Theme for Firefox, X11-only gnome extensions that throw errors in log because Wayland (instead of X11) is the Manjaro default display manager. (If you really need to switch to X11, for example due to nVidia GPU, you can install the X11 Gestures extension easily.) 
+## _Remove apps_ unnecessary stuff
+- Geary (install Thunderbird if you need local email/calendar), Gnome Theme for Firefox, X11-only gnome extensions that throw errors in log because Wayland (instead of X11) is the Manjaro default display manager. (If you really need to switch to X11, for example due to nVidia GPU, you can install the X11 Gestures extension easily.) 
 
 ## Configure updates - for system, applications, extensions
 - Check biweekly for updates instead of every 6hrs.
@@ -85,12 +85,12 @@ This script will make it more intuitive, practical and easy to use by selecting 
 - Keyboard shortcut for Terminal (`Shift+Alt+T`)
 - Fix file associations for images and documents - it is very difficult for the end-user to restore the file associations of default apps for image viewing (gThumb) and documents (OnlyOffice) after installing an image editor or other office suite, (even reinstalling gThumb or OnlyOffice has no effect!). The script re-associates gThumb and OnlyOffice for each filetype they support. 
 
-## Simplify folder structure - easy for cloud backup/syncing or local backups
+## _Simplify folder structure_ - easy for cloud backup/syncing or local backups
 - move Templates to Documents folder, remove Public folder and rename Videos to Media
 - Replace /Downloads and /.cache with root subvolumes, this way, snapshots/backups of your /home folder stay clean, without temporary files. 
 -  Create a root subvolume @users mounted to `/mnt/users/` and move Desktop/Documents/Pictures/Media into a subfolder (`/mnt/users/username`), symlink the personal folders into /home/username/ - this way, you can simply sync 1 folder with your favourite cloud provider and easily create seperate, isolated snapshots/backups of your system, your configuration and your personal data.
 
-###Optional tasks (the script will ask you)
+## _Optional tasks_ the script will ask you
 - Installation of all MS Office 365 fonts for max compatibility.
 - Install NextCloud Desktop Client to have a 2-way sync to your webDAV server.
 - Configure swap and hibernation support for BTRFS, highly recommended on laptops.
