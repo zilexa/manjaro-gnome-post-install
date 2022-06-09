@@ -74,5 +74,8 @@ sed -i -e 's@#HandleLidSwitchExternalPower=suspend@HandleLidSwitchExternalPower=
 # Power
 gsettings set org.gnome.settings-daemon.plugins.power power-button-action 'hibernate'
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 3600
+gsettings set org.gnome.settings-daemon.plugins.power power-button-action 'hibernate'
+gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 3600
+gsettings set org.gnome.shell.extensions.arcmenu power-options "[(0, true), (1, true), (2, true), (3, true), (4, true), (5, false), (6, true)]"
 
 echo "Please reboot before using standby or hibernate. Hit a key to continue the post-install script."
