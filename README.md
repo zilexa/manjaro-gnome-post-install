@@ -33,9 +33,9 @@ This script will make it more intuitive, practical and easy to use by selecting 
   - Script allows you to configure credentials for Desktop Sharing.
 - Gnome Connections - to connect to other systems via RDP.
 - LibreOffice Fresh - additional office suite, next to default OnlyOffice <- is more simplistic but has better compatibility with MS Office documents. 
-  - Allows you to easily install a language pack.
+  - Allows you to easily install a LibreOffice language pack.
   - Allows you to easily install *ALL* Office365 fonts.
-  - Script will configure LibreOffice to use MS Office365-like icons, Interface. Enable autosave every 2min. 
+  - Script will configure LibreOffice to use MS Office365-like icons and interface and sets autosave to 2min. 
 - OnlyOffice - set dark theme and open each document in its own window.
 - BingWallpaper extension - periodically changes background with images of flora and fauna or landscapes via Bing.
   - Configured to refresh wallpaper every 5 days and store in $HOME/Pictures/Wallpapers  .
