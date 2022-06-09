@@ -99,17 +99,17 @@ This script will make it more intuitive, practical and easy to use by selecting 
 &nbsp;
 
 # Quick Guide
-### _1. Download Manjaro, Gnome edition:_
+### _1. Download_ Manjaro, Gnome edition image:
 https://manjaro.org/download/
 
-### _2. Create a USB stick with the image._ 
+### _2. _Create Live USB stick_ by writing image to usb: 
 If on Gnome, go to Disks, select the usb stick, go to the 3-dot menu and select "restore from image". \
-If not on Linux, use [Rufus](https://rufus.ie/en/) for Windows or [UNetbootin](https://unetbootin.github.io/) for Linux/MacOS/Windows.  
+Otherwise use [UNetbootin](https://unetbootin.github.io/) for Linux/MacOS/Windows. Windows users prefer [Rufus(https://rufus.ie/en/)
 
-### _3. Configure BIOS to not use legacy BIOS, enable boot from USB_
+### _3. _Configure BIOS_ to not use legacy BIOS and allow boot from USB
 UEFI Bios still supports booting from legacy bios. This is the moment to disable legacy bios to ensure EFI boot is used. Changing this after installing an OS will prevent you from booting. 
 
-### _4. Boot into Live via USB_
+### _4. _Boot_ from usb stick
 - Google your motherboard, miniPC or laptop brand + Boot Menu Key to find out which key will allow you to select the boot device.
 - Turn your system off, insert USB. Turn on the system and tap the correct F-key until you get a menu that allows you to select your USB stick (usually brand name). 
 - When booted and not connected via ethernet: go to the top-right system icons, click, select "WiFi not connected > Select network and connect to WiFi. 
