@@ -497,6 +497,7 @@ gsettings set org.gnome.desktop.session idle-delay 'uint32 480'
 # Power
 gsettings set org.gnome.settings-daemon.plugins.power power-button-action 'hibernate'
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 3600
+gsettings set org.gnome.shell.extensions.arcmenu power-options "[(0, true), (1, true), (2, true), (3, true), (4, true), (5, false), (6, true)]"
 # cleanup
 gsettings set org.gnome.desktop.privacy remove-old-temp-files true
 gsettings set org.gnome.desktop.privacy remove-old-trash-files true
