@@ -11,7 +11,7 @@ The 3 sinlge actions:
   3. _login to my private cloud ([FileRun](https://filerun.com/), via Nextcloud desktop app) or any public cloud (like Google, OneDrive, or Dropbox via Settings) to restore my personal files (desktop/documents/pictures/media)._  
 &nbsp;
 
-- [FEATURES](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
+- [FEATURES - What does it do for you?](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
 - [FULL GUIDE - how to install Manjaro Gnome (usb stick creation -> install options)](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
 - [HOW TO - run the script](https://github.com/zilexa/manjaro-gnome-post-install#how-to-get-and-run-the-script)
 
