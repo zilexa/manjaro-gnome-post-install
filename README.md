@@ -119,7 +119,7 @@ After the boot from live USB process has finished, you can use Manjaro already a
 
 ***
 
-# _Run the post-install script_ - Instructions
+## How to get and run the script
 _When installation is finished, close the "Welcome" window and launch Terminal_ \
 The Terminal icon ![Terminal-icon](https://user-images.githubusercontent.com/3430004/141796815-32347b36-f890-4e43-ba18-33a221c5bf70.png)  is shown on the dock at the bottom. 
 
