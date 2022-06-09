@@ -114,22 +114,22 @@ The 3 sinlge actions:
 &nbsp;
 
 # Quick Guide
-### _1. Download_ Manjaro, Gnome edition image:
+### _1. Download_ - Manjaro Gnome edition image:
 https://manjaro.org/download/
 
-### _2. Create Live USB stick_ by writing image to usb: 
+### _2. Create Live USB stick_ - by writing image to usb: 
 If on Gnome, go to Disks, select the usb stick, go to the 3-dot menu and select "restore from image". \
 Otherwise use [UNetbootin](https://unetbootin.github.io/) for Linux/MacOS/Windows. Windows users prefer [Rufus](https://rufus.ie/en/).
 
-### _3. Configure BIOS_ to not use legacy BIOS and allow boot from USB
+### _3. Configure BIOS_ - to not use legacy BIOS and allow boot from USB
 UEFI Bios still supports booting from legacy bios. This is the moment to disable legacy bios to ensure EFI boot is used. You cannot change this afterwards. Usually tapping F1 or F2 right after power-on allows you to enter bios. 
 
-### _4. Boot_ from usb stick
+### _4. Boot_ - from usb stick
 - Find the name of your motherboard, miniPC or laptop brand and Google for "Boot Menu Key" to find out which key will allow you to select the boot device, usually one of the last F keys, F9, F10 or F12.
 - Turn your system off, insert USB. Turn on the system and immediately tap the correct F-key until you get a menu that allows you to select your USB stick (usually brand name). 
 - - Make sure you have internet connection, the top right icons allow you to find your WiFi and connect if you are not linked via ethernet. Select *"WiFi not connected"* > Select network and connect to WiFi. 
 
-### _5. Launch installer_
+### _5. Launch installer_ - select correct drive and options
 After the boot from live USB process has finished, you can use Manjaro already and see how it works or continue installing it permanently.
 - During installation:
   - select your preffered language (like British English en_GB) and locale (like nl_NL) 
