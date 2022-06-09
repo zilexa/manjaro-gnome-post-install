@@ -11,6 +11,8 @@ The 3 sinlge actions:
   3. _login to my private cloud ([FileRun](https://filerun.com/), via Nextcloud desktop app) or any public cloud (like Google, OneDrive, or Dropbox via Settings) to restore my personal files (desktop/documents/pictures/media)._  
 &nbsp;
 
+This script is intended to provide you with an easy, time-saving solution to quickly install laptops and PCs of yourself, family and friends or to tailor the script to your needs and of course to evangalise Manjaro as a distribution because after years of experience with Ubuntu, I believe it is the best choice for most users. 
+
 - [FEATURES - What does it do for you?](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
 - [FULL GUIDE - how to install Manjaro Gnome (usb stick creation -> install options)](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
 - [HOW TO - run the script](https://github.com/zilexa/manjaro-gnome-post-install#how-to-get-and-run-the-script)
