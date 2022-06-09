@@ -94,7 +94,8 @@ This script will make it more intuitive, practical and easy to use by selecting 
 - Install NextCloud Desktop Client to have a 2-way sync to your webDAV server.
 - Configure swap and hibernation support for BTRFS, highly recommended on laptops.
 
-*** &nbsp;
+*** 
+&nbsp;
 
 # Quick Guide
 ### _1. Download Manjaro, Gnome edition:_
@@ -119,7 +120,8 @@ After the boot from live USB process has finished, you can use Manjaro already a
 - Make sure you select the correct drive to install on. You want to install on an NVME SSD.  
 - Select **_"Erase disk"_** and **_"BTRFS"_** as file system. Also make sure to select **_no swap_**.
 
-*** &nbsp;
+*** 
+&nbsp;
 
 ## How to get and run the script
 _When installation is finished, close the "Welcome" window and launch Terminal_ \
