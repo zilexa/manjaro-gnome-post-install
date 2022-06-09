@@ -9,13 +9,14 @@ The 3 sinlge actions:
   1. _run this script._
   2. _login to my Firefox Sync account to restore my browser toolbars layout (enabled by this script) and profile._ 
   3. _login to my private cloud ([FileRun](https://filerun.com/), via Nextcloud desktop app) or any public cloud (like Google, OneDrive, or Dropbox via Settings) to restore my personal files (desktop/documents/pictures/media)._  
+&nbsp;
 
-- [Features](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
-- [Full Guide how to install Manjaro Gnome (usb stick creation -> install options)](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
-- [How to run the script](https://github.com/zilexa/manjaro-gnome-post-install#how-to-get-and-run-the-script)
+- [FEATURES](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
+- [FULL GUIDE - how to install Manjaro Gnome (usb stick creation -> install options)](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
+- [HOW TO - run the script](https://github.com/zilexa/manjaro-gnome-post-install#how-to-get-and-run-the-script)
 
 *** 
-&nbsp;
+
 
 # What does the script do? 
 
