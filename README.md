@@ -4,7 +4,8 @@ Manjaro Gnome already has a very good Out-Of-The-Box Experience.
 This script will make it more intuitive, practical and easy to use by selecting sane preferences, replacing a few common applications and enabling features that one might expect to be enabled and configured by default. 
 
 - [Features](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
-- [Quick Guide how to install Manjaro Gnome and run this script](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
+- [Full Guide how to install Manjaro Gnome](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
+- [How to run the script](https://github.com/zilexa/manjaro-gnome-post-install#how-to-get-and-run-the-script)
 
 *** &nbsp;
 
@@ -92,7 +93,7 @@ This script will make it more intuitive, practical and easy to use by selecting 
 - Install NextCloud Desktop Client to have a 2-way sync to your webDAV server.
 - Configure swap and hibernation support for BTRFS, highly recommended on laptops.
 
-***
+*** &nbsp;
 
 # Quick Guide
 ### _1. Download Manjaro, Gnome edition:_
@@ -117,7 +118,7 @@ After the boot from live USB process has finished, you can use Manjaro already a
 - Make sure you select the correct drive to install on. You want to install on an NVME SSD.  
 - Select **_"Erase disk"_** and **_"BTRFS"_** as file system. Also make sure to select **_no swap_**.
 
-***
+*** &nbsp;
 
 ## How to get and run the script
 _When installation is finished, close the "Welcome" window and launch Terminal_ \
