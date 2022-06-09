@@ -4,7 +4,7 @@ _zero post install configuration needed!_
 Manjaro Gnome already has a very good Out-Of-The-Box Experience. 
 This script will make it more intuitive, practical and easy to use by selecting sane preferences, replacing a few common applications and enabling features that one might expect to be enabled and configured by default. 
 
-_For me personally, I can do a clean install, run this script, login to my Firefox Sync account and my private cloud to sync my personal data back and work on my laptop or PC like it was yesterday and not notice a clean install has been done: every personalisation (as generic as possible) and configuration has been taken care of!_
+_For me personally, I can do a clean install wiping the disk, run this script, login to my Firefox Sync account and my private cloud to sync my browser profile and toolbar layout and my personal files (desktop/documents/pictures/media) back and work on my laptop or PC like it was yesterday and not notice a clean install has been done: every personalisation (as generic as possible) and configuration has been taken care of!_
 
 - [Features](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
 - [Full Guide how to install Manjaro Gnome (usb stick creation -> install options)](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
