@@ -13,7 +13,7 @@ This script will make it more intuitive, practical and easy to use by selecting 
 # What does the script do? 
 
 ## Remove unnecessary apps
-- Geary, Gnome Theme for Firefox, X11-only gnome extensions that throw errors in log because Wayland is the Manjaro default display manager. 
+- Geary, Gnome Theme for Firefox, X11-only gnome extensions that throw errors in log because Wayland (instead of X11) is the Manjaro default display manager. (If you really need to switch to X11, for example due to nVidia GPU, you can install the X11 Gestures extension easily.) 
 
 ## Configure updates - for system, applications, extensions
 - Check biweekly for updates instead of every 6hrs.
