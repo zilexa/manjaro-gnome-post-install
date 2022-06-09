@@ -5,9 +5,10 @@ Manjaro Gnome already has a very good Out-Of-The-Box Experience.
 This script will make it more intuitive, practical and easy to use by selecting sane preferences, replacing a few common applications and enabling features that one might expect to be enabled and configured by default. 
 
 _For me personally, I can do a clean install wiping the disk, then perform 3 simple actions to restore the system and not even notice a clean backup has been done. Because every personalisation (as generic as possible) and configuration has been taken care of! And since I do not use a system backup or /home folder restoration, there are no incompatibility issues!_
-  - _run this script_
-  - _login to my Firefox Sync account to restore my browser toolbars layout (enabled by this script) and profile._ 
-  - _login to my private cloud ([FileRun](https://filerun.com/), via Nextcloud desktop app) or any public cloud (like Google, OneDrive, or Dropbox via Settings) to restore my personal files (desktop/documents/pictures/media)._  
+- The 3 sinlge actions:
+  1. _run this script_
+  2. _login to my Firefox Sync account to restore my browser toolbars layout (enabled by this script) and profile._ 
+  3. _login to my private cloud ([FileRun](https://filerun.com/), via Nextcloud desktop app) or any public cloud (like Google, OneDrive, or Dropbox via Settings) to restore my personal files (desktop/documents/pictures/media)._  
 
 - [Features](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
 - [Full Guide how to install Manjaro Gnome (usb stick creation -> install options)](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
