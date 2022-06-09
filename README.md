@@ -4,7 +4,7 @@ _zero post install configuration needed!_
 Manjaro Gnome already has a very good Out-Of-The-Box Experience. 
 This script will make it more intuitive, practical and easy to use by selecting sane preferences, replacing a few common applications and enabling features that one might expect to be enabled and configured by default. 
 
-_For me personally, I can do a clean install wiping the disk, then perform 3 simple actions to restore the system and not even notice a clean backup has been done. Because every personalisation (as generic as possible) and configuration has been taken care of! And since I do not use a system backup or /home folder restoration, there are no incompatibility issues!_
+_For me personally, I can do a clean install wiping the disk, then perform 3 simple actions to restore the system and not even notice the drive was wiped. Because every personalisation (as generic as possible) and configuration has been taken care of! And since I do not use a system backup or /home folder restoration, there are no incompatibility issues!_
 The 3 sinlge actions:
   1. _run this script._
   2. _login to my Firefox Sync account to restore my browser toolbars layout (enabled by this script) and profile._ 
