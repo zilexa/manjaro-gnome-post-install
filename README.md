@@ -6,52 +6,55 @@ This script will make it more intuitive, practical and easy to use by selecting 
 - [Features](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
 - [Quick Guide how to install Manjaro Gnome and run this script](https://github.com/zilexa/manjaro-gnome-post-install#quick-guide)
 
+***
+
 # What does the script do? 
 
-### Remove unnecessary apps
+## Remove unnecessary apps
 - Geary, Gnome Theme for Firefox, X11-only gnome extensions that throw errors in log.
 
-### Configure updates - for system, applications, extensions
-- Check biweekly for updates instead of every 6hrs
-- No permanent update icon in systray, only when there are icons
+## Configure updates - for system, applications, extensions
+- Check biweekly for updates instead of every 6hrs.
+- No permanent update icon in systray, only when there are icons.
 - Download updates in background. Do not perform updates without user confirmation.
 - Enable Arch User Repository, allowing for much more apps and tools in the App Store.
-- Include AUR updates
+- Include AUR when updating. 
 - Rate the latency of all available mirrors and select the fastest to download updates.
-- Update the system 
-- Cleanup old packages
+- Update the system now. 
+- Cleanup old packages. 
 
-#### Install best-in-class applications for everyday use and configure them for instant-readiness 
+## _Install best-in-class applications_ - for everyday use and configure them for instant-readiness 
 - New Gnome Extensions Manager - allowing you to browse through extensions, enable/disable them and auto-update user-installed extensions!
-- Bleachbit - to cleanup the system)
-- Wireguard tools - easily connect to VPN networks with automatic network configation
-- RDP instead of VNC - for builtin (Gnome) Desktop Sharing
-  - Script allows you to configure credentials for desktop sharing
-- Gnome Connections - to connect to other systems via RDP
-- LibreOffice Fresh - as additional office suite, next to the default OnlyOffice
-  - Allows you to easily install a language pack
-  - Allows you to easily install *ALL* Office365 fonts
+- Bleachbit - to cleanup the system.
+- Wireguard tools - easily connect to VPN networks with automatic network configation.
+- Gnome RDP instead of VNC - for builtin (Gnome) Desktop Sharing.
+  - Script allows you to configure credentials for Desktop Sharing.
+- Gnome Connections - to connect to other systems via RDP.
+- LibreOffice Fresh - additional office suite, next to default OnlyOffice <- is more simplistic but has better compatibility with MS Office documents. 
+  - Allows you to easily install a language pack.
+  - Allows you to easily install *ALL* Office365 fonts.
   - Script will configure LibreOffice to use MS Office365-like icons, Interface. Enable autosave every 2min. 
-  - OnlyOffice: set dark theme and open each document in its own window
-- BingWallpaper extension (periodically changes background with images of nature via Bing)
-  - Configured to refresh wallpaper every 5 days and store in $HOME/Pictures/Wallpapers  
-- Strawberry (audioplayer with folder-view support)
-- Audacity (to edit audio files or record audio)
-- LosslessCut (to cut/trim video files without quality loss)
-- Handbrake (to convert videos to more common/shareable format)
-- Pinta (Paint like simple image editor)
-- DigiKam (Photo Library manager)
+- OnlyOffice - set dark theme and open each document in its own window.
+- BingWallpaper extension - periodically changes background with images of flora and fauna or landscapes via Bing.
+  - Configured to refresh wallpaper every 5 days and store in $HOME/Pictures/Wallpapers  .
+- Strawberry - audioplayer with folder-view support.
+- Audacity - to edit audio files or record audio.
+- LosslessCut - to cut/trim video files without quality loss and without having to re-encode or transcode. 
+- Handbrake - to convert videos to more common/shareable format.
+- Pinta - MS Paint-like simple image editor.
+- GiMP - more complex image editor, like photoshop or Paint.NET (for RAW photos install DarkTable or RawTherapee). 
+- DigiKam - Photo management or photo library manager. 
   - Prepares a folder for its database by disabling BTRFS features for $HOME/Pictures/digikam-db
-- Firefox settings applied to all current and future firefox user profiles: 
-  - set your own, self-hosted Firefox Sync server 
+- Firefox - system-wide defaults configured: 
+  - set your own, self-hosted Firefox Sync server (optional) 
   - remove Mozilla bookmarks, enable a clean bookmark bar. 
   - add Sync button too bookmark bar to easily sent tabs to your other devices or open history of all devices)
   - Add history button to bookmark bar to quickly restore closed tabs or sessions
   - Include the toolbar layout when syncing via Firefox Sync.
-  - Use Nemo File Manager (fixing a bug).
   - Enable uBlock Origin, CastBlock and Bypass Paywalls extensions. Enable Nord Dark theme.
+  - Use the system default file manager (Nemo) when opening folders of downloads, instead of Nautilus (fixing a bug). 
 
-### Replaced apps for more intuitive, easier to use and more functional apps: 
+## _Replaced apps_ - for more intuitive, easier to use, more functional apps: 
 - Text Editor - Pluma instead of gedit, while maintaining the beautiful icon and name. 
   - More readable colors
   - Display numbers, closing brackets, file overview 
@@ -60,7 +63,7 @@ This script will make it more intuitive, practical and easy to use by selecting 
   - Easy rename of files, also for root user
   - Reload button
 
-# User Experience configuration - clean, easy, maximum screen space
+## _User Experience configuration_ - clean, easy, maximum screen space
 - A nice vertical panel with your systray, favourite apps and "start" menu with more pinned apps, maximizing your screen space for actual applications and desktop use (compared to a horizontal panel or doc
 - Touchpad gestures extended: 4 finger system gestures (instead of default 3) to allow applications to bind 2 and 3 finger gestures. See Extensions Manager > Touchpad gestures extended for more options. 
 - Touchpad scroll direction set to mouse scroll direction (= disable natural scrolling)
@@ -79,41 +82,44 @@ This script will make it more intuitive, practical and easy to use by selecting 
 - Instant screenshots of an area (`PrintScr`button) or fullscreen (`Shift+PrintScr`) instead of Gnome 42 new interactive screenshot tool that cannot take instant screenshots. You can still trigger the tool via `Ctrl+Shift+PrintScr`. 
 - Keyboard shortcut for Terminal (`Shift+Alt+T`)
 
-### Simplify folder structure - easy for cloud backup/syncing or local backups
+## Simplify folder structure - easy for cloud backup/syncing or local backups
 - move Templates to Documents folder, remove Public folder and rename Videos to Media
 - Replace /Downloads and /.cache with root subvolumes, this way, snapshots/backups of your /home folder stay clean, without temporary files. 
 -  Create a root subvolume @users mounted to `/mnt/users/` and move Desktop/Documents/Pictures/Media into a subfolder (`/mnt/users/username`), symlink the personal folders into /home/username/ - this way, you can simply sync 1 folder with your favourite cloud provider and easily create seperate, isolated snapshots/backups of your system, your configuration and your personal data.
 
-### Optional tasks (the script will ask you)
+###Optional tasks (the script will ask you)
 - Installation of all MS Office 365 fonts for max compatibility.
 - Install NextCloud Desktop Client to have a 2-way sync to your webDAV server.
 - Configure swap and hibernation support for BTRFS, highly recommended on laptops.
+
+***
 
 # Quick Guide
 ### _1. Download Manjaro, Gnome edition:_
 https://manjaro.org/download/
 
-### _2. Create a USB stick with the image._ 
+## _2. Create a USB stick with the image._ 
 If on Gnome, go to Disks, select the usb stick, go to the 3-dot menu and select "restore from image". \
 If not on Linux, use [Rufus](https://rufus.ie/en/) for Windows or [UNetbootin](https://unetbootin.github.io/) for Linux/MacOS/Windows.  
 
-### _3. Configure BIOS to not use legacy BIOS, enable boot from USB_
+## _3. Configure BIOS to not use legacy BIOS, enable boot from USB_
 UEFI Bios still supports booting from legacy bios. This is the moment to disable legacy bios to ensure EFI boot is used. Changing this after installing an OS will prevent you from booting. 
 
-### _4. Boot into Live via USB_
+## _4. Boot into Live via USB_
 - Google your motherboard, miniPC or laptop brand + Boot Menu Key to find out which key will allow you to select the boot device.
 - Turn your system off, insert USB. Turn on the system and tap the correct F-key until you get a menu that allows you to select your USB stick (usually brand name). 
 - When booted and not connected via ethernet: go to the top-right system icons, click, select "WiFi not connected > Select network and connect to WiFi. 
 
-### _5. Launch installer_
+## _5. Launch installer_
 After the boot from live USB process has finished, you can use Manjaro already and see how it works or continue installing it permanently.
 - First, make sure you have internet connection, the top right icons allow you to find your WiFi and connect if you are not linked via ethernet.
 - During installation, select your preffered language (like British English en_GB) and locale (like nl_NL) and keyboard (Note for EU users that prefer US International keyboard layout, there is a "_**US - Euro on 5**_").  
 - Make sure you select the correct drive to install on. You want to install on an NVME SSD.  
 - Select **_"Erase disk"_** and **_"BTRFS"_** as file system. Also make sure to select **_no swap_**.
 
+***
 
-### _6. Run the post install script after reboot
+# _Run the post-install script_ - Instructions
 _When installation is finished, close the "Welcome" window and launch Terminal_ \
 The Terminal icon ![Terminal-icon](https://user-images.githubusercontent.com/3430004/141796815-32347b36-f890-4e43-ba18-33a221c5bf70.png)  is shown on the dock at the bottom. 
 
