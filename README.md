@@ -1,4 +1,4 @@
-# Manjaro Gnome - The Out of The Box Experience _further improved_ 
+# Manjaro Gnome - One of the best Linux Desktop Out of The Box Experiences _further improved_ 
 _zero post install configuration needed!_
 
 Manjaro Gnome already has a very good Out-Of-The-Box Experience. 
