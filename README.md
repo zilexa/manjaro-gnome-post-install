@@ -23,7 +23,9 @@ This script is intended to provide you with an easy, time-saving solution to qui
 # What does the script do? 
 
 ## _Remove apps_ - unnecessary stuff
-- Geary (install Thunderbird if you need local email/calendar), Gnome Theme for Firefox, X11-only gnome extensions that throw errors in log because Wayland (instead of X11) is the Manjaro default display manager. (If you really need to switch to X11, for example due to nVidia GPU, you can install the X11 Gestures extension easily.) 
+- Geary (install Thunderbird if you need local email/calendar)
+- Gnome Theme for Firefox
+- X11-only gnome extensions that throw errors in log because Wayland (instead of X11) is the Manjaro default display manager. (If you really need to switch to X11, for example due to nVidia GPU, you can install the X11 Gestures extension easily.) 
 
 ## Configure updates - for system, applications, extensions
 - Check biweekly for updates instead of every 6hrs.
