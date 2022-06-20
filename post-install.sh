@@ -566,16 +566,18 @@ echo "Create subvolume for personal documents folders"
 echo "-----------------------------------------------"
 # Temporarily mount filesystem root to create a new root subvolume
 sudo mount /mnt/drives/system
-# create a root subvolume for the Downloads folder, to exclude it from snapshots and backups
-sudo btrfs subvolume create /mnt/drives/system/@downloads
-# create a root subvolume for user personal folders in the root filesystem
-sudo btrfs subvolume create /mnt/drives/system/@users
 
 # Create mountpoint for @users
 sudo mkdir -p /mnt/users
+# create a root subvolume for user personal folders in the root filesystem
+sudo btrfs subvolume create /mnt/drives/system/@users
+# create a root subvolume for the Downloads folder, to exclude it from snapshots and backups
+sudo btrfs subvolume create /mnt/drives/system/@downloads
+
 # Get system fs UUID
 fs_uuid=$(findmnt / -o UUID -n)
-# Add subvolumed to fstab to mount at boot
+
+# Add subvolumes to fstab to mount at boot
 sudo tee -a /etc/fstab &>/dev/null << EOF
 # Mount @downloads subvolume
 UUID=${fs_uuid} /home/${USER}/Downloads  btrfs   subvol=@downloads,defaults,noatime,x-gvfs-hide,compress-force=zstd:1  0  0
@@ -584,7 +586,10 @@ UUID=${fs_uuid} /mnt/users  btrfs   subvol=@users,defaults,noatime,compress-forc
 EOF
 sudo systemctl daemon-reload
 
-# Set permissions for Downloads folder
+# Set permissions for /mnt/users/${USER} folder
+sudo chown -R ${USER}:${USER} /mnt/users/${USER}
+sudo chmod -R 755 /mnt/users/${USER}
+# Set permissions for /mnt/drives/system/@downloads mountpoint
 sudo chown -R ${USER}:${USER} /mnt/drives/system/@downloads
 sudo chmod -R 755 /mnt/drives/system/@downloads
 
