@@ -116,11 +116,9 @@ gsettings --schemadir /usr/share/gnome-shell/extensions/gestureImprovements@gest
 gsettings --schemadir /usr/share/gnome-shell/extensions/gestureImprovements@gestures/schemas set org.gnome.shell.extensions.gestureImprovements pinch-4-finger-gesture 'SHOW_DESKTOP'
 
 ## Configure Bing Wallpaper
-gsettings --schemadir /usr/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org.gnome.shell.extensions.bingwallpaper icon-name 'low-frame-symbolic'
-gsettings --schemadir /usr/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org.gnome.shell.extensions.bingwallpaper download-folder "/home/${USER}/Pictures/Wallpapers/"
-gsettings --schemadir /usr/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org.gnome.shell.extensions.bingwallpaper random-interval 18000
-#gsettings --schemadir /usr/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org.gnome.shell.extensions.bingwallpaper delete-previous true
-
+gsettings --schemadir $HOME/.local/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org.gnome.shell.extensions.bingwallpaper icon-name 'low-frame-symbolic'
+gsettings --schemadir $HOME/.local/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org.gnome.shell.extensions.bingwallpaper download-folder "~/Pictures/Wallpapers/"
+gsettings --schemadir $HOME/.local/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org.gnome.shell.extensions.bingwallpaper random-interval 18000
 
 echo "___________________________________________________________________________________"
 echo "                                                                                   "
@@ -655,9 +653,10 @@ echo "Select 'n' if this is your server: You don't need hibernate but zswap inst
 read -p "Configure swapfile for BTRFS and enable hibernation y/n ?" answer
 case ${answer:0:1} in
     y|Y )
-cd /tmp
-wget -O /tmp/btrfs-hibernation.sh "https://raw.githubusercontent.com/zilexa/manjaro-gnome-post-install/main/btrfs-hibernation.sh"
-sudo su -c "bash -x /tmp/btrfs-hibernation.sh"
+       cd /tmp
+       wget -O /tmp/btrfs-hibernation.sh "https://raw.githubusercontent.com/zilexa/manjaro-gnome-post-install/main/btrfs-hibernation.sh"
+       #sudo su -c "bash -x /tmp/btrfs-hibernation.sh"
+       "bash -x /tmp/btrfs-hibernation.sh"
     ;;
     * )
         echo "Not configuring BTRFS swapfile and hibernation. It is recommended you configure zswap." 
