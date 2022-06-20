@@ -44,6 +44,10 @@ sudo pamac install --no-confirm bleachbit
 # Install ability to connect to Wireguard VPN with automatic network configuration
 sudo pamac install --no-confirm wireguard-tools
 
+# Install ability to take an instant screenshot (of user selected area, a window or fullscreen). 
+# The new screenshot utility built into Gnome 42 and higher does not allow you to do so and requires more user input. Install the regular one. 
+pamac install --no-confirm gnome-screenshot
+
 # Install support for sharing your desktop via RDP and install an RDP client to connect to other devices
 sudo pamac install --no-confirm gnome-remote-desktop gnome-connections
 
@@ -521,6 +525,7 @@ gsettings set org.gnome.shell.keybindings screenshot-window "@as []"
 mkdir $HOME/Pictures/Screenshots
 gsettings set org.gnome.gnome-screenshot auto-save-directory "file:///home/${USER}/Pictures/Screenshots/"
 # Create custom screenshot shortcuts using foold old gnome-screenshots, only custom shortcuts ARE stored to the auto-save-directory
+# Note gnome-screenshot package needs to be installed (already done by this script)
 gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/']"     
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ name 'Area screenshot to custom folder'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command 'gnome-screenshot -a'
