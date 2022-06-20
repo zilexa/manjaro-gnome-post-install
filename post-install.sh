@@ -653,10 +653,10 @@ echo "Select 'n' if this is your server: You don't need hibernate but zswap inst
 read -p "Configure swapfile for BTRFS and enable hibernation y/n ?" answer
 case ${answer:0:1} in
     y|Y )
-       cd /tmp
-       wget -O /tmp/btrfs-hibernation.sh "https://raw.githubusercontent.com/zilexa/manjaro-gnome-post-install/main/btrfs-hibernation.sh"
-       #sudo su -c "bash -x /tmp/btrfs-hibernation.sh"
-       "bash -x /tmp/btrfs-hibernation.sh"
+    cd /tmp
+    wget -O /tmp/btrfs-hibernation.sh "https://raw.githubusercontent.com/zilexa/manjaro-gnome-post-install/main/btrfs-hibernation.sh"
+    #sudo su -c "bash -x /tmp/btrfs-hibernation.sh"
+    "bash -x /tmp/btrfs-hibernation.sh"
     ;;
     * )
         echo "Not configuring BTRFS swapfile and hibernation. It is recommended you configure zswap." 
@@ -670,34 +670,34 @@ echo "Only choose 'y' if you believe you have the license and approval of MS to 
 read -p "Your browser will open and you need to download the fonts package. Continue? (Y/n)" answer
 case ${answer:0:1} in
     y|Y )
-       echo "---------------------------------------" 
-       echo "                                       " 
-       echo " NOTE: this is the first time Firefox will open (to download Office365 fonts)"
-       echo " give it a moment to load its youtube adblocking and paywall bypass addons" 
-       echo "                                       " 
-       echo "For you to do after it has opened a few tabs automatically:" 
-       echo "                                       " 
-       echo "1. SponsorBlock tab: Just close it (the default settings work for most people)" 
-       echo "2a. Bypass Paywall tab: Click OPT-IN button. Overview of permissions will load: enable all, give permissions, click OPTIONS"   
-       echo "2b. Bypass Paywall tab: click GO TO SAVE, uncheck the 'SHOW OPTIONS ON UPDATE', hit SAVE, close tab" 
-       echo "3. MEGA download tab. hit download." 
-       echo "                                       " 
-       echo "When the download of Office fonts is finished, CLOSE FIREFOX." 
-       echo "                                       " 
-       read -p "Ready to do the above steps? Click enter, Firefox will open to download the file. You can do the above. "
-       xdg-open 'https://mega.nz/file/u4p02JCC#HnJOVyK8TYDqEyVXLkwghDLKlKfIq0kOlX6SPxH53u0'
-       echo "                                       " 
-       read -p "Ignore the error that appeared after you closed Firefox. PLEASE CLICK ENTER"
-       echo "please wait while extracting fonts to the system fonts folder (/usr/share/fonts), the downloaded file will be deleted afterwards." 
-       # Extract the manually downloaded file to a subfolder in the systems font folder
-       sudo tar -xvf $HOME/Downloads/fonts-office365.tar.xz -C /usr/share/fonts
-       # Set permissions to allow non-root to use the fonts
-       sudo chown -R root:root /usr/share/fonts/office365
-       sudo chmod -R 755 /usr/share/fonts/office365
-       # Refresh the font cache (= register the fonts)
-       sudo fc-cache -f -v
-       # Remove the downloaded font file
-       rm $HOME/Downloads/fonts-office365.tar.xz
+    echo "---------------------------------------" 
+    echo "                                       " 
+    echo " NOTE: this is the first time Firefox will open (to download Office365 fonts)"
+    echo " give it a moment to load its youtube adblocking and paywall bypass addons" 
+    echo "                                       " 
+    echo "For you to do after it has opened a few tabs automatically:" 
+    echo "                                       " 
+    echo "1. SponsorBlock tab: Just close it (the default settings work for most people)" 
+    echo "2a. Bypass Paywall tab: Click OPT-IN button. Overview of permissions will load: enable all, give permissions, click OPTIONS"   
+    echo "2b. Bypass Paywall tab: click GO TO SAVE, uncheck the 'SHOW OPTIONS ON UPDATE', hit SAVE, close tab" 
+    echo "3. MEGA download tab. hit download." 
+    echo "                                       " 
+    echo "When the download of Office fonts is finished, CLOSE FIREFOX." 
+    echo "                                       " 
+    read -p "Ready to do the above steps? Click enter, Firefox will open to download the file. You can do the above. "
+    xdg-open 'https://mega.nz/file/u4p02JCC#HnJOVyK8TYDqEyVXLkwghDLKlKfIq0kOlX6SPxH53u0'
+    echo "                                       " 
+    read -p "Ignore the error that appeared after you closed Firefox. PLEASE CLICK ENTER"
+    echo "please wait while extracting fonts to the system fonts folder (/usr/share/fonts), the downloaded file will be deleted afterwards." 
+    # Extract the manually downloaded file to a subfolder in the systems font folder
+    sudo tar -xvf $HOME/Downloads/fonts-office365.tar.xz -C /usr/share/fonts
+    # Set permissions to allow non-root to use the fonts
+    sudo chown -R root:root /usr/share/fonts/office365
+    sudo chmod -R 755 /usr/share/fonts/office365
+    # Refresh the font cache (= register the fonts)
+    sudo fc-cache -f -v
+    # Remove the downloaded font file
+    rm $HOME/Downloads/fonts-office365.tar.xz
     ;;
     * )
         echo "Not installing all win10/office365 fonts..."
@@ -712,8 +712,8 @@ echo "Recommended if you run a FileRun/NextCloud/OwnCloud or other WebDAV server
 read -p "The NextCloud Desktop Client contains issues, Owncloud Desktop Client is the most stable 2-way sync webDAV app. Install (y / n)?" answer
 case ${answer:0:1} in
     y|Y )
-        sudo pamac install --no-confirm owncloud-client
-        sudo pamac install --as-deps --no-confirm nemo-python python-caja
+    sudo pamac install --no-confirm owncloud-client
+    sudo pamac install --as-deps --no-confirm nemo-python python-caja
     ;;
     * )
         echo "Skipping Nextcloud Desktop Client..."
@@ -788,9 +788,9 @@ echo "Install languagepack for LibreOffice?" answer
 
 case ${answer:0:1} in
     y|Y )
-        echo "Please type the 2-letter countrycode for the language you would like to install, for example "de" for German language (no caps):"
-        read -p 'countrycode for example "nl" and hit ENTER: ' lang
-        sudo pamac install --no-confirm libreoffice-fresh-$lang
+    echo "Please type the 2-letter countrycode for the language you would like to install, for example "de" for German language (no caps):"
+    read -p 'countrycode for example "nl" and hit ENTER: ' lang
+    sudo pamac install --no-confirm libreoffice-fresh-$lang
     ;;
     * )
         echo "Not installing a languagepack for LibreOffice..." 
@@ -804,8 +804,8 @@ echo "Firefox: would you like to be able to launch different profiles (2), by si
 read -p "Only useful if multiple users use this machine and each user has its own Firefox profile. (y/n)?" answer
 case ${answer:0:1} in
     y|Y )
-        echo adding profiles to right-click of Firefox shortcut... 
-        wget --no-check-certificate -P $HOME/.local/share/applications https://raw.githubusercontent.com/zilexa/Ubuntu-Budgie-Post-Install-Script/master/firefox/firefox.desktop
+    echo adding profiles to right-click of Firefox shortcut... 
+    wget --no-check-certificate -P $HOME/.local/share/applications https://raw.githubusercontent.com/zilexa/Ubuntu-Budgie-Post-Install-Script/master/firefox/firefox.desktop
     ;;
     * )
         echo "Keeping the Firefox shortcut as is..."
