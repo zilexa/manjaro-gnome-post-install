@@ -816,6 +816,15 @@ case ${answer:0:1} in
     y|Y )
     echo adding profiles to right-click of Firefox shortcut... 
     wget --no-check-certificate -P $HOME/.local/share/applications https://raw.githubusercontent.com/zilexa/Ubuntu-Budgie-Post-Install-Script/master/firefox/firefox.desktop
+    # The shortcut in ~/.local/share/application overrides the system shortcuts in /usr/share/applications. This also removes file associations. Fix those:
+    xdg-settings set default-web-browser firefox.desktop
+    xdg-mime default firefox.desktop x-scheme-handler/chrome
+    xdg-mime default firefox.desktop application/x-extension-htm
+    xdg-mime default firefox.desktop application/x-extension-html
+    xdg-mime default firefox.desktop application/x-extension-shtml
+    xdg-mime default firefox.desktop application/xhtml+xml
+    xdg-mime default firefox.desktop application/x-extension-xhtml
+    xdg-mime default firefox.desktop application/x-extension-xht
     ;;
     * )
         echo "Keeping the Firefox shortcut as is..."
