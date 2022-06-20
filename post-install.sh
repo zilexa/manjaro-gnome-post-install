@@ -483,7 +483,7 @@ gsettings set org.gnome.shell.extensions.ding start-corner 'bottom-left'
 gsettings set org.gnome.shell.extensions.ding sort-special-folders true
 gsettings set org.gnome.shell.extensions.ding keep-arranged true
 # Theme
-gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-maia-compact-dark'
+gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
 gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark-Maia'
 # Display
 gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic false
