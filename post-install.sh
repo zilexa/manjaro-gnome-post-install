@@ -655,8 +655,8 @@ case ${answer:0:1} in
     y|Y )
     cd /tmp
     wget -O /tmp/btrfs-hibernation.sh "https://raw.githubusercontent.com/zilexa/manjaro-gnome-post-install/main/btrfs-hibernation.sh"
-    #sudo su -c "bash -x /tmp/btrfs-hibernation.sh"
-    "bash -x /tmp/btrfs-hibernation.sh"
+    #sudo su -c "bash -x /tmp/btrfs-hibernation.sh" # Script should not be run as sudo, because it contains non-sudo commands at the end
+    bash "/tmp/btrfs-hibernation.sh"
     ;;
     * )
         echo "Not configuring BTRFS swapfile and hibernation. It is recommended you configure zswap." 
