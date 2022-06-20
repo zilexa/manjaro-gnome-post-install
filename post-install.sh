@@ -706,12 +706,15 @@ case ${answer:0:1} in
 esac
 
 
-# Install Nextcloud Desktop Client for webDAV syncing with FileRun 
+# Install Owncloud Desktop Client for webDAV syncing with FileRun 
 echo "---------------------------------------"
-read -p "Install Nextcloud Desktop Client for Nemo/Budgie? Recommended if you run a FileRun or WebDAV server (y / n)?" answer
+echo "If you have your own cloud/homeserver, install the best webDAV desktop client to sync this device?" 
+echo "Recommended if you run a FileRun/NextCloud/OwnCloud or other WebDAV server." 
+read -p "The NextCloud Desktop Client contains issues, Owncloud Desktop Client is the most stable 2-way sync webDAV app. Install (y / n)?" answer
 case ${answer:0:1} in
     y|Y )
-        sudo pamac install --no-confirm nextcloud-client
+        sudo pamac install --no-confirm owncloud-client
+        sudo pamac install --as-deps --no-confirm nemo-python python-caja
     ;;
     * )
         echo "Skipping Nextcloud Desktop Client..."
