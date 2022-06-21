@@ -101,14 +101,18 @@ cd /tmp
 wget -O gnome-shell-extension-installer.sh "https://github.com/brunelli/gnome-shell-extension-installer/raw/master/gnome-shell-extension-installer"
 # Install Bing Wallpaper
 bash gnome-shell-extension-installer.sh 1262
+# Install "Allow Locked Remote Desktop" 
+bash gnome-shell-extension-installer.sh 4338
+
 # Install Walkpaper allowing seperate wallpapers per Workspace
 # bash gnome-shell-extension-installer.sh 1262 --yes
+
 # Remove gnome-shell-extension-installer script, user will be able to use better Extension Manager to find/install/remove/configure extensions
 rm /tmp/gnome-shell-extension-installer.sh
 
 #Enable extensions (Workspace indicator, thumb drive menu, Gesture Improvements)
 gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu', 'places-menu@gnome-shell-extensions.gcampax.github.com']"
-gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'custom-hot-corners-extended@G-dH.github.com', 'gestureImprovements@gestures', 'BingWallpaper@ineffable-gmail.com']"
+gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'custom-hot-corners-extended@G-dH.github.com', 'gestureImprovements@gestures', 'BingWallpaper@ineffable-gmail.com', 'allowlockedremotedesktop@kamens.us']"
 
 ## Configure Hot Corners
 gsettings --schemadir /usr/share/glib-2.0/schemas set org.gnome.shell.extensions.custom-hot-corners-extended.corner:/org/gnome/shell/extensions/custom-hot-corners-extended/monitor-0-top-left-0/ action 'toggle-arcmenu'
