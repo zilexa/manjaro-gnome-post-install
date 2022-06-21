@@ -1,0 +1,21 @@
+/**/
+/* OPTIONAL: NOT INCLUDED IN THE POST-INSTALL.SH SCRIPT */
+/* Remove the horizontal tabbar and vertical titlebar to get a much more useful vertical tabbar. */
+/* Why? Because you have more space in width than height on a monitor. */
+/* And most websites are oriented vertically, creating lots of empty space on the sides, where your vertical tabbar will reside. */
+
+/**/
+/* HOW TO USE: */
+/* STEP 1. Install Sidebery addon for a vertical tab bar: https://addons.mozilla.org/nl/firefox/addon/sidebery/ */
+/* STEP 2. Go to about:config and find toolkit.legacyUserProfileCustomizations.stylesheets set it to TRUE by doubleclicking it. */
+/* STEP 3. Go to about:profiles and open the first folder of your profile. */
+/* STEP 4. Create a folder here called 'chrome'. */
+/* STEP 5. Copy this file into that folder (../chrome/userChrome.css) and restart Firefox. */
+
+/* Actual file starts here */
+/**/
+/* Remove tabs bar. Note: this removes the bar, instead of hiding its contents!*/
+#TabsToolbar { visibility: collapse ! important; }
+
+/* Remove header of sidebars (when a History/Bookmarks/Sidebery sidebar is enabled)*/
+#sidebar-header { visibility: collapse !important; }
