@@ -11,6 +11,9 @@
 /* STEP 3. Go to about:profiles and open the first folder of your profile. */
 /* STEP 4. Create a folder here called 'chrome'. */
 /* STEP 5. Copy this file into that folder (../chrome/userChrome.css) and restart Firefox. */
+/* STEP 6. Right click empty-space next to the address bar and either do A or B, see which one you find pretty. 
+           A: Select "enable Menubar".
+           B) select "Customize toolbar..", at the bottom left of this screen select "Enable Titlebar". */
 
 /* Actual file starts here */
 /**/
