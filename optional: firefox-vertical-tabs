@@ -6,14 +6,16 @@
 
 /**/
 /* HOW TO USE: */
-/* STEP 1. Install Sidebery addon for a vertical tab bar: https://addons.mozilla.org/nl/firefox/addon/sidebery/ */
-/* STEP 2. Go to about:config and find toolkit.legacyUserProfileCustomizations.stylesheets set it to TRUE by doubleclicking it. */
-/* STEP 3. Go to about:profiles and open the first folder of your profile. */
-/* STEP 4. Create a folder here called 'chrome'. */
-/* STEP 5. Copy this file into that folder (../chrome/userChrome.css) and restart Firefox. */
-/* STEP 6. Right click empty-space next to the address bar and either do A or B, see which one you find pretty. 
-           A: Select "enable Menubar".
-           B) select "Customize toolbar..", at the bottom left of this screen select "Enable Titlebar". */
+/* First get the vertical tabbar: Install Sidebery addon: https://addons.mozilla.org/nl/firefox/addon/sidebery/ */
+/* To remove the horizontal tabbar and the sidebar-title section, this file needs to be placed in your profile. */
+/*   STEP 1. Go to about:config and find toolkit.legacyUserProfileCustomizations.stylesheets set it to TRUE by doubleclicking it. */
+/*   STEP 2. Go to about:profiles, locate the current profile and open the root folder of your profile. */
+/*   STEP 3. Create a folder here called "chrome" */
+/*   STEP 4. Copy this file into that folder (../chrome/userChrome.css) and restart Firefox. */
+/*   STEP 5. Note now you are missing the window buttons (minimize, maximize, close window):
+/*           Right click empty-space next to the address bar and either do A or B, see which one you like. 
+             A: Select "enable Menubar".
+             B) select "Customize toolbar..", at the bottom left of this screen select "Enable Titlebar". */
 
 /* Actual file starts here */
 /**/
