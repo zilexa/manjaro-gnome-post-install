@@ -41,6 +41,9 @@ echo "__________________________________________________________________________
 # Install system cleanup tool
 sudo pamac install --no-confirm bleachbit 
 
+# Install required package to be able to install discovered network printers (Why it is not installed by default? I'm clueless)
+sudo pamac install --no-confirm system-config-printer
+
 # Install ability to connect to Wireguard VPN with automatic network configuration
 sudo pamac install --no-confirm wireguard-tools
 
