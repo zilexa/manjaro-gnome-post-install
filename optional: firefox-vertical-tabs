@@ -8,6 +8,7 @@
 /* HOW TO USE: */
 /* First get the vertical tabbar: Install Sidebery addon: https://addons.mozilla.org/nl/firefox/addon/sidebery/ */
 /* To remove the horizontal tabbar and the sidebar-title section, this file needs to be placed in your profile. */
+/*
 /*   STEP 1. Go to about:config and find toolkit.legacyUserProfileCustomizations.stylesheets set it to TRUE by doubleclicking it. */
 /*   STEP 2. Go to about:profiles, locate the current profile and open the root folder of your profile. */
 /*   STEP 3. Create a folder here called "chrome" */
