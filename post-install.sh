@@ -598,24 +598,24 @@ UUID=${fs_uuid} /home/${USER}/Downloads  btrfs   subvol=@downloads,defaults,noat
 UUID=${fs_uuid} /mnt/users  btrfs   subvol=@users,defaults,noatime,compress-force=zstd:1  0  0
 EOF
 
-# Set permissions for /mnt/users/${USER} folder
+# Set user permissions and ownership
 sudo chown -R ${USER}:${USER} /mnt/users/${USER}
 sudo chmod -R 755 /mnt/users/${USER}
-# Set permissions for /mnt/drives/system/@downloads mountpoint
 sudo chown -R ${USER}:${USER} /mnt/drives/system/@downloads
 sudo chmod -R 755 /mnt/drives/system/@downloads
+sudo chown -R ${USER}:${USER} /mnt/drives/system/@usercache
+sudo chmod -R 755 /mnt/drives/system/@usercache
 
-# Clear the mountpoints by moving their contents to the subvolume (@downloads) or to a temporary location (
+# Move contents of original folders to subvolumes.  
 mv $HOME/Downloads/* /mnt/drives/system/@downloads
 mv $HOME/.cache/* /mnt/drives/system/@usercache
-sudo rm -rf $HOME/.cache
+#Temporarily rename .cache and create new .cache folder to ensure it is an empty mountpoint. 
+mv $HOME/.cache $HOME/.cacheold
 mkdir $HOME/.cache
 
-# Mount the new fstab, this will also mount the @downloads root subvolume to #HOME/Downloads
+# Mount the new fstab, this will mount @downloads to $HOME/Downloads, @usercache to @HOME/.cache and @users to /mnt/users
 sudo systemctl daemon-reload
 sudo mount -a
-sudo chown -R ${USER}:${USER} $HOME/.cache
-sudo chmod -R 755 $HOME/.cache
 
 echo "------------------------------------------------------------------------------------"
 echo "Move documents folders to subvolume/username/ and link them back to $HOME except for /Downloads" 
