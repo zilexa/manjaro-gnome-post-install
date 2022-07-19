@@ -571,10 +571,10 @@ EOF
 
 
 echo "_________________________________________________________________________"
-echo "                   ISOLATE & SIMPLIFY PERSONAL FOLDERS                   "
-echo "                                                                         "
+echo "                   SETUP ADDITIONAL BTRFS SUBVOLUMES                     "
+echo "  Isolate & simplify userdata, exclude temp data from snapshots/backups  "
 echo "_________________________________________________________________________"
-echo "Create subvolume for personal documents folders" 
+echo "Create subvolumes for userdata, for downloads and for user cache" 
 echo "-----------------------------------------------"
 # Temporarily mount filesystem root to create a new root subvolume
 sudo mount /mnt/drives/system
@@ -585,18 +585,18 @@ sudo mkdir -p /mnt/users
 sudo btrfs subvolume create /mnt/drives/system/@users
 # create a root subvolume for the Downloads folder, to exclude it from snapshots and backups
 sudo btrfs subvolume create /mnt/drives/system/@downloads
-
+# create a root subvolume for the $HOME/.cache folder, to exclude it from snapshots and backups
+sudo btrfs subvolume create /mnt/drives/system/@usercache
 # Get system fs UUID
 fs_uuid=$(findmnt / -o UUID -n)
 
 # Add subvolumes to fstab to mount at boot
 sudo tee -a /etc/fstab &>/dev/null << EOF
-# Mount @downloads subvolume
+UUID=${fs_uuid} /home/${USER}/.cache  btrfs   subvol=@usercache,defaults,noatime,compress-force=zstd:1  0  0
 UUID=${fs_uuid} /home/${USER}/Downloads  btrfs   subvol=@downloads,defaults,noatime,x-gvfs-hide,compress-force=zstd:1  0  0
 # Mount @users subvolume
 UUID=${fs_uuid} /mnt/users  btrfs   subvol=@users,defaults,noatime,compress-force=zstd:1  0  0
 EOF
-sudo systemctl daemon-reload
 
 # Set permissions for /mnt/users/${USER} folder
 sudo chown -R ${USER}:${USER} /mnt/users/${USER}
@@ -605,11 +605,17 @@ sudo chmod -R 755 /mnt/users/${USER}
 sudo chown -R ${USER}:${USER} /mnt/drives/system/@downloads
 sudo chmod -R 755 /mnt/drives/system/@downloads
 
-# Move files from Downloads folder to root subvolume
+# Clear the mountpoints by moving their contents to the subvolume (@downloads) or to a temporary location (
 mv $HOME/Downloads/* /mnt/drives/system/@downloads
+mv $HOME/.cache/* /mnt/drives/system/@usercache
+sudo rm -rf $HOME/.cache
+mkdir $HOME/.cache
 
 # Mount the new fstab, this will also mount the @downloads root subvolume to #HOME/Downloads
+sudo systemctl daemon-reload
 sudo mount -a
+sudo chown -R ${USER}:${USER} $HOME/.cache
+sudo chmod -R 755 $HOME/.cache
 
 echo "------------------------------------------------------------------------------------"
 echo "Move documents folders to subvolume/username/ and link them back to $HOME except for /Downloads" 
@@ -758,45 +764,45 @@ esac
 
 # Configure RDP credentials, Manjaro Gnome has built-in RDP support for screen sharing. However no UI is available yet to set the credentials.
 # After credentials have been created, you can simply enable/disable RDP by toggling "Screen Sharing" via Settings > Sharing. 
-echo "---------------------------------------"
-read -p "Configure Remote Desktop to share your screen securely, if you need support from family/friends? (y/n)" answer
-case ${answer:0:1} in
-    y|Y )
-    echo "Please create credentials to allow access by others:"
-    read -p 'Remote Desktop access username: ' rdpuser
-    read -p 'Remote Desktop access password (only letters and/or numbers!): ' rdppw
-    echo "Your username/password will be $rdpuser/$rdppw."
-    read -p "A self-signed certificate is required and will be created. Hit [ENTER] to start and prepare to answer questions for the certificate." 
+#echo "---------------------------------------"
+#read -p "Configure Remote Desktop to share your screen securely, if you need support from family/friends? (y/n)" answer
+#case ${answer:0:1} in
+#    y|Y )
+#    echo "Please create credentials to allow access by others:"
+#    read -p 'Remote Desktop access username: ' rdpuser
+#    read -p 'Remote Desktop access password (only letters and/or numbers!): ' rdppw
+#    echo "Your username/password will be $rdpuser/$rdppw."
+#    read -p "A self-signed certificate is required and will be created. Hit [ENTER] to start and prepare to answer questions for the certificate." 
     # Download the code snippet that generates RDP credentials
-    cd /tmp
-    wget -O /tmp/grd_rdp_credentials.c "https://gitlab.gnome.org/-/snippets/1778/raw/master/grd_rdp_credentials.c"
+#    cd /tmp
+#    wget -O /tmp/grd_rdp_credentials.c "https://gitlab.gnome.org/-/snippets/1778/raw/master/grd_rdp_credentials.c"
     # Compile the file
-    gcc grd_rdp_credentials.c `pkg-config --libs --cflags libsecret-1`
+#    gcc grd_rdp_credentials.c `pkg-config --libs --cflags libsecret-1`
     # Use the program to store the credentials via libsecret
-    ./a.out $rdpuser $rdppw
+#    ./a.out $rdpuser $rdppw
     # Create the server certificate and private keyfile
-    openssl genrsa -out tls.key 4096
-    openssl req -new -key tls.key -out tls.csr
-    openssl x509 -req -days 730 -signkey tls.key -in tls.csr -out tls.crt
+#   openssl genrsa -out tls.key 4096
+#   openssl req -new -key tls.key -out tls.csr
+#   openssl x509 -req -days 730 -signkey tls.key -in tls.csr -out tls.crt
     # Move the certificate and keyfile to a better location
-    mkdir $HOME/.config/remote-desktop
-    mv tls.key $HOME/.config/remote-desktop/tls.key
-    mv tls.crt $HOME/.config/remote-desktop/tls.crt
+#    mkdir $HOME/.config/remote-desktop
+#    mv tls.key $HOME/.config/remote-desktop/tls.key
+#    mv tls.crt $HOME/.config/remote-desktop/tls.crt
     # Set the location of the two files
-    dconf write /org/gnome/desktop/remote-desktop/rdp/tls-key "'$HOME/.config/remote-desktop/tls.key'" 
-    dconf write /org/gnome/desktop/remote-desktop/rdp/tls-cert "'$HOME/.config/remote-desktop/tls.crt'"
-    gsettings set org.gnome.desktop.remote-desktop.rdp view-only false
+#    dconf write /org/gnome/desktop/remote-desktop/rdp/tls-key "'$HOME/.config/remote-desktop/tls.key'" 
+#    dconf write /org/gnome/desktop/remote-desktop/rdp/tls-cert "'$HOME/.config/remote-desktop/tls.crt'"
+#    gsettings set org.gnome.desktop.remote-desktop.rdp view-only false
     # Cleanup
-    rm /tmp/tls.csr
-    rm /tmp/a.out
-    rm /tmp/grd_rdp_credentials.c
+#    rm /tmp/tls.csr
+#    rm /tmp/a.out
+#    rm /tmp/grd_rdp_credentials.c
 
-    echo "RDP credentials configured. Note RDP is still disabled! You can enable/disable RDP easily via Settings > Sharing > Share Screen."
-    ;;
-    * )
-        echo "RDP credentials not configured. Enabling 'Share Screen' will only work for VNC (slow), not RDP."
-    ;;
-esac
+#    echo "RDP credentials configured. Note RDP is still disabled! You can enable/disable RDP easily via Settings > Sharing > Share Screen."
+#    ;;
+#    * )
+#        echo "RDP credentials not configured. Enabling 'Share Screen' will only work for VNC (slow), not RDP."
+#    ;;
+#esac
 
 
 # Install LibreOffice languagepack
@@ -807,7 +813,7 @@ case ${answer:0:1} in
     y|Y )
     echo "Please type the 2-letter countrycode for the language you would like to install, for example "de" for German language (no caps):"
     read -p 'countrycode for example "nl" and hit ENTER: ' lang
-    sudo pamac install --no-confirm libreoffice-fresh-$lang
+    sudo pamac install --no-confirm libreoffice-fresh-$lang hunspell-$lang hyphen-$lang
     ;;
     * )
         echo "Not installing a languagepack for LibreOffice..." 
