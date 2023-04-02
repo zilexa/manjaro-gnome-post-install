@@ -23,14 +23,12 @@ sudo sed -Ei '/NoUpdateHideIcon/s/^#//' /etc/pamac.conf
 sudo sed -Ei '/DownloadUpdates/s/^#//' /etc/pamac.conf
 sudo sed -Ei '/EnableAUR/s/^#//' /etc/pamac.conf
 sudo sed -Ei '/CheckAURUpdates/s/^#//' /etc/pamac.conf
-# Mirrors
-# Mirrorshopping is bad practice an can lead to unwanted results (wrong continent if there are no updates)
-# The system will take care of this. sudo pacman-mirrors -g --continent -P https --api
 
-# Update mirrors
-sudo pacman-mirrors --fasttrack
-# Update the system
-pamac update -a --no-confirm
+
+# Query mirrors servers (on this continent only) to ensure updates are downloaded via the fastest HTTPS server
+pacman-mirrors --continent --api -P https
+# Perform update, force refresh of update database files
+pamac update --force-refresh --no-confirm
 
 
 echo "___________________________________________________________________________________"
@@ -38,11 +36,14 @@ echo "                                                                          
 echo "                                   APPLICATIONS                                    "    
 echo "             Install must-have applications for various common tasks               "
 echo "___________________________________________________________________________________"
+# Install packages that should be installed by default:  (Why it is not installed by default? I'm clueless)
+# Regquired to install discovered printers
+sudo pamac install --no-confirm system-config-printer
+# Required to automatically change screen rotation based on sensor
+sudo pamac install --no-confirm iio-sensor-proxy
+
 # Install system cleanup tool
 sudo pamac install --no-confirm bleachbit 
-
-# Install required package to be able to install discovered network printers (Why it is not installed by default? I'm clueless)
-sudo pamac install --no-confirm system-config-printer
 
 # Install ability to connect to Wireguard VPN with automatic network configuration
 sudo pamac install --no-confirm wireguard-tools
@@ -98,6 +99,8 @@ sudo pamac install --no-confirm extension-manager
 sudo pamac install --no-confirm gnome-gesture-improvements
 # Install Custom Hot Corners Extended
 sudo pamac install --no-confirm gnome-shell-extension-custom-hot-corners-extended
+# Install Improved OSK to support on-screen keyboard in all applications
+sudo pamac install --no-confirm gnome-shell-extension-improvedosk
 
 # Install local extensions to be updated automatically by the better Extension Manager that was just installed
 cd /tmp
