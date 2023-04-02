@@ -118,12 +118,13 @@ rm /tmp/gnome-shell-extension-installer.sh
 
 #Enable extensions (Workspace indicator, thumb drive menu, Gesture Improvements)
 gsettings set org.gnome.shell disabled-extensions "['material-shell@papyelgringo', 'vertical-overview@RensAlthuis.github.com', 'dash-to-dock@micxgx.gmail.com', 'unite@hardpixel.eu', 'places-menu@gnome-shell-extensions.gcampax.github.com']"
-gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'custom-hot-corners-extended@G-dH.github.com', 'gestureImprovements@gestures', 'BingWallpaper@ineffable-gmail.com', 'allowlockedremotedesktop@kamens.us']"
+gsettings set org.gnome.shell enabled-extensions "['pamac-updates@manjaro.org', 'gnome-ui-tune@itstime.tech', 'x11gestures@joseexposito.github.io', 'ding@rastersoft.com', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'custom-hot-corners-extended@G-dH.github.com', 'gestureImprovements@gestures', 'BingWallpaper@ineffable-gmail.com', 'allowlockedremotedesktop@kamens.us', 'improvedosk@nick-shmyrev.dev']"
 
 ## Configure Hot Corners
 gsettings --schemadir /usr/share/glib-2.0/schemas set org.gnome.shell.extensions.custom-hot-corners-extended.corner:/org/gnome/shell/extensions/custom-hot-corners-extended/monitor-0-top-left-0/ action 'toggle-arcmenu'
 gsettings --schemadir /usr/share/glib-2.0/schemas set org.gnome.shell.extensions.custom-hot-corners-extended.corner:/org/gnome/shell/extensions/custom-hot-corners-extended/monitor-0-bottom-right-0/ action 'show-desktop-mon'  
 gsettings --schemadir /usr/share/glib-2.0/schemas set org.gnome.shell.extensions.custom-hot-corners-extended.corner:/org/gnome/shell/extensions/custom-hot-corners-extended/monitor-0-bottom-left-0/ action 'toggle-overview'  
+gsettings --schemadir /usr/share/glib-2.0/schemas set org.gnome.shell.extensions.custom-hot-corners-extended.corner:/org/gnome/shell/extensions/custom-hot-corners-extended//misc panel-menu-enable 'false'
 
 ## Configure gestureImprovements
 gsettings --schemadir /usr/share/gnome-shell/extensions/gestureImprovements@gestures/schemas set org.gnome.shell.extensions.gestureImprovements pinch-3-finger-gesture 'NONE'
@@ -134,6 +135,8 @@ gsettings --schemadir /usr/share/gnome-shell/extensions/gestureImprovements@gest
 gsettings --schemadir $HOME/.local/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org.gnome.shell.extensions.bingwallpaper icon-name 'low-frame-symbolic'
 gsettings --schemadir $HOME/.local/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org.gnome.shell.extensions.bingwallpaper download-folder "~/Pictures/Wallpapers/"
 gsettings --schemadir $HOME/.local/share/gnome-shell/extensions/BingWallpaper@ineffable-gmail.com/schemas set org.gnome.shell.extensions.bingwallpaper random-interval 18000
+
+
 
 echo "___________________________________________________________________________________"
 echo "                                                                                   "
