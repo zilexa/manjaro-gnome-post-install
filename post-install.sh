@@ -9,7 +9,7 @@ echo "                                 remove unused apps                       
 echo "___________________________________________________________________________________"
 # Remove unused apps
 # temporarily remove OnlyOffice and install after LibreOffice. This way, OnlyOffice will be the default for Office files, LibreOfice will be the alternative choice.
-sudo pamac remove --no-confirm geary firefox-gnome-theme-maia gnome-shell-extension-x11gestures touchegg
+sudo pamac remove --no-confirm geary firefox-gnome-theme-maia gnome-shell-extension-x11gestures touchegg touche
 
 
 echo "___________________________________________________________________________________"
@@ -239,6 +239,8 @@ rm /tmp/libreoffice-profile.tar.xz
 
 echo "---------------------------------------" 
 echo "Firefox default settings and addons"
+# Enable Firefox support for Wayland
+sudo sh -c "echo MOZ_ENABLE_WAYLAND=1 >> /etc/environment"
 # For current and future system users and profiles
 # Create default policies (install minimal set of extensions and theme, enable syncing of your toolbar layout, disable default Mozilla bookmarks)
 # first delete existing profiles
@@ -255,6 +257,7 @@ EOF
 # -Use system default file manager - include toolbar layout in Sync - Enable bookmarks bar - set toolbar layout
 sudo tee -a /usr/lib/firefox/firefox.cfg &>/dev/null << EOF
 // IMPORTANT: Start your code on the 2nd line
+defaultPref("dom.w3c_touch_events.enabled",1);
 defaultPref("widget.use-xdg-desktop-portal.file-picker",1);
 defaultPref("widget.use-xdg-desktop-portal.mime-handler",1);
 defaultPref("services.sync.prefs.sync.browser.uiCustomization.state",true);
