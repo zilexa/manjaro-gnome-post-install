@@ -203,7 +203,7 @@ gsettings set org.mate.pluma bracket-matching true
 gsettings set org.mate.pluma display-line-numbers true
 gsettings set org.mate.pluma display-overview-map true
 gsettings set org.mate.pluma auto-indent true
-gsettings set org.mate.pluma active-plugins "['time', 'spell', 'sort', 'snippets', 'modelines', 'filebrowser', 'docinfo']"
+gsettings set org.mate.pluma active-plugins "['time', 'sort', 'snippets', 'modelines', 'filebrowser', 'docinfo']"
 gsettings set org.mate.pluma color-scheme 'cobalt'
 
 #Configuration of Pluma for root/elevated privileges
@@ -212,7 +212,7 @@ sudo -u root dbus-launch gsettings set org.mate.pluma bracket-matching true
 sudo -u root dbus-launch gsettings set org.mate.pluma display-line-numbers true
 sudo -u root dbus-launch gsettings set org.mate.pluma display-overview-map true
 sudo -u root dbus-launch gsettings set org.mate.pluma auto-indent true
-sudo -u root dbus-launch gsettings set org.mate.pluma active-plugins "['time', 'spell', 'sort', 'snippets', 'modelines', 'filebrowser', 'docinfo']"
+sudo -u root dbus-launch gsettings set org.mate.pluma active-plugins "['time', 'sort', 'snippets', 'modelines', 'filebrowser', 'docinfo']"
 sudo -u root dbus-launch gsettings set org.mate.pluma color-scheme 'cobalt'
 
 
